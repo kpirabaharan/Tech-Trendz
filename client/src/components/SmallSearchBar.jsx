@@ -1,15 +1,15 @@
 import { SearchIcon } from '../icons/SearchIcon';
 
-export const SearchBar = ({ isTopOfPage }) => {
+export const SmallSearchBar = ({ isTopOfPage }) => {
   return (
-    <div class='relative w-[300px]'>
-      <div class='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
+    <div className='flex left-[50%] translate-x-[-50%] justify-center w-5/6 fixed pt-[84px]'>
+      <div class='absolute bottom-4 left-0 flex items-center pl-3 pointer-events-none'>
         <SearchIcon className={'w-5 h-5'} />
       </div>
       <input
         type='search'
         id='search'
-        class='block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-700 focus:ring-blue-500 focus:border-blue-500'
+        class='block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         placeholder='Search Products...'
         required
       />
