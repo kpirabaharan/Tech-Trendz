@@ -8,9 +8,13 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import Product from './models/Product.js';
+import { products } from './data/index.js';
+import productRoutes from './routes/product.js';
+
 /* CONFIGURATIONS */
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
@@ -22,6 +26,10 @@ app.use(morgan('common'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+
+/* ROUTES */
+app.use('/products', productRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
@@ -33,5 +41,7 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    /* INSERT ONCE */
+    // Product.insertMany(products);
   })
   .catch((err) => console.log(`Error did not connect: ${err}`));
