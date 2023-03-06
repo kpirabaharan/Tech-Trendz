@@ -8,8 +8,8 @@ import store from './state';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <Provider Provider={store}> */}
-    <App />
-    {/* </Provider> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 );

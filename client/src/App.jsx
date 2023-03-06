@@ -13,7 +13,9 @@ function App() {
       children: [
         {
           index: true,
+          id: 'products',
           element: <ProductPage />,
+          // loader: productsLoader,
         },
         // {
         //   path: 'product/:productId',
