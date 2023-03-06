@@ -8,8 +8,6 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import Product from './models/Product.js';
-import { products } from './data/index.js';
 import productRoutes from './routes/product.js';
 
 /* CONFIGURATIONS */
