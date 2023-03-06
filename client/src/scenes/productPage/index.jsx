@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
 import Navbar from '../../components/Navbar';
 import SmallSearchBar from '../../components/SmallSearchBar';
+import ProductGrid from '../widgets/ProductGrid';
 
 const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const navbarBackground = isTopOfPage ? '' : 'bg-deep-blue';
+
+  const products = useRouteLoaderData('products');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,24 +31,24 @@ const ProductPage = () => {
           <SmallSearchBar />
         </div>
       )}
-      <div className='w-5/6 mx-auto'>
-        <section className='grid grid-cols-3 pt-48 pb-48'>
-          <div className='flex justify-center'>
-            <h1>Yo</h1>
-          </div>
-          <div>
-            <h1>Yo</h1>
-          </div>
-          <div>
-            <h1>Yo</h1>
-          </div>
-          <div>
-            <h1>Yo</h1>
-          </div>
-        </section>
+      <div className='w-5/6 mx-auto pt-60 sm:pt-40'>
+        <ProductGrid products={products} />
       </div>
     </div>
   );
 };
 
 export default ProductPage;
+
+export const productsLoader = async () => {
+  const response = await fetch('http://localhost:8080/products', {
+    method: 'GET',
+  });
+
+  if (!response.ok) {
+    throw new Error('Fetch Response Failed!');
+  }
+
+  const products = await response.json();
+  return products;
+};
