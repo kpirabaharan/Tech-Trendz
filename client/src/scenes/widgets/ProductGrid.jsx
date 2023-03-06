@@ -1,11 +1,14 @@
+import ProductItem from './ProductItem';
+
 const ProductGrid = ({ products }) => {
-  console.log(products);
   return (
-    <div className='grid grid-cols-3 text-center'>
-      <h1>Products</h1>
-      <h1>List</h1>
-      <h1>Page</h1>
-    </div>
+    <ul>
+      <div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 sm:grid-cols-3'>
+        {products.map((product) => (
+          <ProductItem className='mx-2' key={product._id} product={product} />
+        ))}
+      </div>
+    </ul>
   );
 };
 
