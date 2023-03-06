@@ -4,7 +4,14 @@ import SearchBar from './SearchBar';
 
 const Navbar = ({ isTopOfPage }) => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
-  const navbarBackground = isTopOfPage ? '' : 'bg-deep-blue';
+  let navbarBackground = '';
+  if (isAboveSmallScreens) {
+    if (isTopOfPage) {
+      navbarBackground = '';
+    } else {
+      navbarBackground = 'bg-white bg-opacity-75';
+    }
+  }
 
   return (
     <nav className={`${navbarBackground} z-40 w-full fixed top-0 py-6`}>
