@@ -1,33 +1,35 @@
-import { useState, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import useMediaQuery from './hooks/useMediaQuery';
-import Navbar from './scenes/Navbar';
-import { SmallSearchBar } from './components/SmallSearchBar';
+import ProductPage from './scenes/productPage';
+import ProductDetailPage from './scenes/productDetailPage';
+import CartPage from './scenes/cartPage';
+
+import './index.css';
 
 function App() {
-  const [isTopOfPage, setIsTopOfPage] = useState(true);
-  const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
-  const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
-  const navbarBackground = isTopOfPage ? '' : 'bg-deep-blue';
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) setIsTopOfPage(true);
-      if (window.scrollY !== 0) setIsTopOfPage(false);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      children: [
+        {
+          index: true,
+          element: <ProductPage />,
+        },
+        // {
+        //   path: 'product/:productId',
+        //   element: <ProductDetailPage />,
+        // },
+        // {
+        //   path: 'cart',
+        //   element: <CartPage />,
+        // },
+      ],
+    },
+  ]);
 
   return (
-    <div className='app bg-deep-blue'>
-      <Navbar isTopOfPage={isTopOfPage} />
-      {!isAboveSmallScreens && (
-        <div className={`fixed w-full h-[170px] ${navbarBackground}`}>
-          <SmallSearchBar isTopOfPage={isTopOfPage} />
-        </div>
-      )}
+    <div className='app'>
+      <RouterProvider router={router} />
     </div>
   );
 }

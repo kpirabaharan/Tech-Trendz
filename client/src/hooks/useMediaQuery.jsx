@@ -12,6 +12,7 @@ const useMediaQuery = (query) => {
     window.addEventListener('resize', listener);
     return () => window.removeEventListener('resize', listener);
   }, [isMatches, query]);
+
   return isMatches;
 };
 

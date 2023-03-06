@@ -1,6 +1,6 @@
 import { SearchIcon } from '../icons/SearchIcon';
 
-export const SmallSearchBar = ({ isTopOfPage }) => {
+const SmallSearchBar = () => {
   return (
     <div className='flex left-[50%] translate-x-[-50%] justify-center w-5/6 fixed pt-[84px]'>
       <div class='absolute bottom-4 left-0 flex items-center pl-3 pointer-events-none'>
@@ -22,3 +22,5 @@ export const SmallSearchBar = ({ isTopOfPage }) => {
     </div>
   );
 };
+
+export default SmallSearchBar;

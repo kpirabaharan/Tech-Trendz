@@ -1,6 +1,6 @@
 import { SearchIcon } from '../icons/SearchIcon';
 
-export const SearchBar = ({ isTopOfPage }) => {
+const SearchBar = () => {
   return (
     <div class='relative w-[300px]'>
       <div class='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -22,3 +22,5 @@ export const SearchBar = ({ isTopOfPage }) => {
     </div>
   );
 };
+
+export default SearchBar;

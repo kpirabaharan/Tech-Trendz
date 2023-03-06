@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
 import useMediaQuery from '../hooks/useMediaQuery';
 import { CartIcon } from '../icons/CartIcon';
-import { SearchBar } from '../components/SearchBar';
+import SearchBar from './SearchBar';
 
 const Navbar = ({ isTopOfPage }) => {
-  const [isMenuToggled, setIsMenuToggled] = useState(false);
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const navbarBackground = isTopOfPage ? '' : 'bg-deep-blue';
 
@@ -16,7 +13,7 @@ const Navbar = ({ isTopOfPage }) => {
         {isAboveSmallScreens ? (
           <div className='flex justify-between items-center gap-8'>
             <form>
-              <SearchBar isTopOfPage={isTopOfPage} />
+              <SearchBar />
             </form>
             <CartIcon />
           </div>
