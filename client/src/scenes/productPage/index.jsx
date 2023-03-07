@@ -4,8 +4,9 @@ import { useRouteLoaderData } from 'react-router-dom';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import Navbar from '../../components/Navbar';
 import SearchBar from '../../components/SearchBar';
-import ProductGrid from '../widgets/ProductGrid';
 import ProductCarousel from '../widgets/ProductCarousel';
+import ProductQuery from '../widgets/ProductQuery';
+import ProductGrid from '../widgets/ProductGrid';
 import Footer from '../widgets/Footer';
 
 const ProductPage = () => {
@@ -40,7 +41,10 @@ const ProductPage = () => {
       <div className='w-full mx-auto pt-[120px] sm:pt-24'>
         <ProductCarousel products={products} />
       </div>
-      <div className='w-[90%] mx-auto md:h-full py-8 sm:pt-8'>
+      <div className='mx-auto pt-2'>
+        <ProductQuery />
+      </div>
+      <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
         <ProductGrid products={products} />
       </div>
       <div className='bg-cyan-100'>
