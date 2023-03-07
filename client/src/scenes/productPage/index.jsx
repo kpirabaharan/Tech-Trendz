@@ -41,7 +41,7 @@ const ProductPage = () => {
         <ProductCarousel products={products} />
       </div>
 
-      <div className='w-[90%] mx-auto md:h-full pt-32 sm:pt-8'>
+      <div className='w-[90%] mx-auto md:h-full pt-8 sm:pt-8'>
         <ProductGrid products={products} />
       </div>
     </div>

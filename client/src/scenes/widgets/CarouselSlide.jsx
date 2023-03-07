@@ -2,7 +2,7 @@ const CarouselSlide = ({ product }) => {
   return (
     <div className='flex justify-center pt-6 pb-10'>
       <img
-        className='max-w-[100%] h-[400px] w-auto'
+        className='h-[200px] sm:h-[400px] md:h-[500px]'
         src={`http://localhost:8080/assets/${product.picturePath}`}
         alt={product.picturePath}
       />
