@@ -13,6 +13,11 @@ const ProductItem = ({ product }) => {
         <p className='text-sm '>{product.brand}</p>
       </div>
       <p className='text-sm font-bold'>{`$${product.cost} CAD`}</p>
+      <div className='flex justify-between'>
+        <button className='bg-white ml-2 rounded-lg px-2'>-</button>
+        <p>0</p>
+        <button className='bg-white mr-2 rounded-lg px-2'>+</button>
+      </div>
     </div>
   );
 };

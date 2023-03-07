@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import SearchBar from '../../components/SearchBar';
 import ProductGrid from '../widgets/ProductGrid';
 import ProductCarousel from '../widgets/ProductCarousel';
+import Footer from '../widgets/Footer';
 
 const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
@@ -36,13 +37,14 @@ const ProductPage = () => {
           </div>
         )}
       </div>
-
       <div className='w-full mx-auto pt-[120px] sm:pt-24'>
         <ProductCarousel products={products} />
       </div>
-
-      <div className='w-[90%] mx-auto md:h-full pt-8 sm:pt-8'>
+      <div className='w-[90%] mx-auto md:h-full py-8 sm:pt-8'>
         <ProductGrid products={products} />
+      </div>
+      <div className='bg-cyan-100'>
+        <Footer />
       </div>
     </div>
   );
