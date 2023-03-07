@@ -5,11 +5,12 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import Navbar from '../../components/Navbar';
 import SearchBar from '../../components/SearchBar';
 import ProductGrid from '../widgets/ProductGrid';
+import ProductCarousel from '../widgets/ProductCarousel';
 
 const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const [isTopOfPage, setIsTopOfPage] = useState(true);
-  const searchBarBackground = isTopOfPage ? '' : 'bg-white bg-opacity-75';
+  const searchBarBackground = isTopOfPage ? '' : 'bg-blue';
 
   const products = useRouteLoaderData('products');
 
@@ -24,14 +25,23 @@ const ProductPage = () => {
   }, []);
 
   return (
-    <div>
-      <Navbar isTopOfPage={isTopOfPage} />
-      {!isAboveSmallScreens && (
-        <div className={`fixed w-full h-[120px] ${searchBarBackground}`}>
-          <SearchBar isSmallScreen={true} />
-        </div>
-      )}
-      <div className='w-5/6 mx-auto pt-60 sm:pt-40'>
+    <div className='flex flex-col'>
+      <div
+        className={`z-[40] fixed h-[7.5rem] sm:h-16 w-full flex flex-col ${searchBarBackground}`}
+      >
+        <Navbar isTopOfPage={isTopOfPage} />
+        {!isAboveSmallScreens && (
+          <div>
+            <SearchBar isSmallScreen={true} />
+          </div>
+        )}
+      </div>
+
+      <div className='w-full mx-auto pt-[120px] sm:pt-24'>
+        <ProductCarousel products={products} />
+      </div>
+
+      <div className='w-[90%] mx-auto md:h-full pt-32 sm:pt-8'>
         <ProductGrid products={products} />
       </div>
     </div>
