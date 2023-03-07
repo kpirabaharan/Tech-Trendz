@@ -1,5 +1,6 @@
 import useMediaQuery from '../hooks/useMediaQuery';
 import { CartIcon } from '../icons/CartIcon';
+import { PersonIcon } from '../icons/PersonIcon';
 import SearchBar from './SearchBar';
 
 const Navbar = ({ isTopOfPage }) => {
@@ -14,7 +15,7 @@ const Navbar = ({ isTopOfPage }) => {
   }
 
   return (
-    <nav className={`${navbarBackground} z-40 w-full fixed top-0 py-6`}>
+    <nav className={`${navbarBackground} z-40 w-full fixed top-0 py-3`}>
       <div className='flex items-center justify-between mx-auto w-5/6'>
         <h4 className='font-playfair text-3xl font-bold'>E-Commerce</h4>
         {isAboveSmallScreens ? (
@@ -22,10 +23,14 @@ const Navbar = ({ isTopOfPage }) => {
             <form>
               <SearchBar />
             </form>
+            <PersonIcon />
             <CartIcon />
           </div>
         ) : (
-          <CartIcon />
+          <div className='flex gap-8'>
+            <PersonIcon />
+            <CartIcon />
+          </div>
         )}
       </div>
     </nav>

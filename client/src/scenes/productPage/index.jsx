@@ -27,7 +27,7 @@ const ProductPage = () => {
     <div>
       <Navbar isTopOfPage={isTopOfPage} />
       {!isAboveSmallScreens && (
-        <div className={`fixed w-full h-[170px] ${searchBarBackground}`}>
+        <div className={`fixed w-full h-[120px] ${searchBarBackground}`}>
           <SearchBar isSmallScreen={true} />
         </div>
       )}
