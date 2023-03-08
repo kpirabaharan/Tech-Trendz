@@ -5,6 +5,6 @@ import { fetchProducts } from '../controllers/product.js';
 const router = express.Router();
 
 /* READ */
-router.get('/', fetchProducts);
+router.get('/:mode', fetchProducts);
 
 export default router;
