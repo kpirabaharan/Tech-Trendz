@@ -1,34 +1,27 @@
-import { useDispatch } from 'react-redux';
-
-import { fetchProductData } from '../../state/product-actions';
+import { Link } from 'react-router-dom';
 
 const ProductQuery = () => {
-  const dispatch = useDispatch();
-
-  const onQueryPressed = (mode) => {
-    dispatch(fetchProductData(mode));
-  };
-
   return (
     <div className='flex justify-center gap-8 font-playfair'>
-      <button
-        className='py-2 bg-gray-400 w-[100px]'
-        onClick={() => onQueryPressed('all')}
+      <Link
+        className='text-center py-2 border-gray-400 hover:bg-gray-200 border-2 w-[100px] rounded-lg'
+        to={'?mode=all'}
       >
-        <p>All</p>
-      </button>
-      <button
-        className='py-2 bg-gray-400 w-[100px]'
-        onClick={() => onQueryPressed('new')}
+        All
+      </Link>
+      <Link
+        className='text-center py-2 border-gray-400 hover:bg-gray-200 border-2 w-[100px] rounded-lg'
+        to={'?mode=new'}
       >
-        <p>New</p>
-      </button>
-      <button
-        className='py-2 bg-gray-400 w-[100px]'
-        onClick={() => onQueryPressed('top')}
+        New
+      </Link>
+      <Link
+        className='text-center py-2 border-gray-400 hover:bg-gray-200 border-2 w-[100px] rounded-lg'
+        to={'?mode=top'}
       >
-        <p>Top Rated</p>
-      </button>
+        Top Rated
+      </Link>
+      {/* </button> */}
     </div>
   );
 };

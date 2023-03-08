@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouteError, useRouteLoaderData } from 'react-router-dom';
+import {
+  useRouteError,
+  useRouteLoaderData,
+  useSearchParams,
+} from 'react-router-dom';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { fetchProductData } from '../../state/product-actions';
@@ -15,6 +19,8 @@ const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const dispatch = useDispatch();
   const products = useRouteLoaderData('products');
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get('mode');
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const searchBarBackground = isTopOfPage ? '' : 'bg-blue';
 
@@ -29,8 +35,12 @@ const ProductPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchProductData('all'));
-  }, []);
+    var prodMode = 'all';
+    if (mode) {
+      prodMode = mode;
+    }
+    dispatch(fetchProductData(prodMode));
+  }, [mode]);
 
   return (
     <div className='flex flex-col'>
