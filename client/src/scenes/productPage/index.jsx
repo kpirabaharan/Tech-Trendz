@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
@@ -11,10 +12,12 @@ import Footer from '../widgets/Footer';
 
 const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
+  const mode = useSelector((state) => state.products.mode);
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const searchBarBackground = isTopOfPage ? '' : 'bg-blue';
-
   const products = useRouteLoaderData('products');
+
+  const [productsData, setProductsData] = useState(products);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +28,26 @@ const ProductPage = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    console.log({ 'Fetch Request Sent': mode });
+    const fetchProducts = async () => {
+      const response = await fetch(`http://localhost:8080/products/${mode}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Fetch Response Failed!');
+      } else {
+        const products = await response.json();
+        console.log(products);
+        return products;
+      }
+    };
+    const products = fetchProducts();
+    console.log(products);
+    setProductsData(products);
+  }, [mode]);
 
   return (
     <div className='flex flex-col'>
@@ -41,7 +64,7 @@ const ProductPage = () => {
       <div className='w-full mx-auto pt-[120px] sm:pt-24'>
         <ProductCarousel products={products} />
       </div>
-      <div className='mx-auto pt-2'>
+      <div className='mx-auto pt-4'>
         <ProductQuery />
       </div>
       <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
@@ -57,9 +80,7 @@ const ProductPage = () => {
 export default ProductPage;
 
 export const productsLoader = async () => {
-  const response = await fetch('http://localhost:8080/products', {
-    method: 'GET',
-  });
+  const response = await fetch('http://localhost:8080/products/all');
 
   if (!response.ok) {
     throw new Error('Fetch Response Failed!');
