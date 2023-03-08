@@ -1,14 +1,12 @@
 import { useDispatch } from 'react-redux';
-import { setMode } from '../../state/product-slice';
+
+import { fetchProductData } from '../../state/product-actions';
 
 const ProductQuery = () => {
   const dispatch = useDispatch();
 
   const onQueryPressed = (mode) => {
-    console.log({
-      mode: mode,
-    });
-    dispatch(setMode({mode}));
+    dispatch(fetchProductData(mode));
   };
 
   return (

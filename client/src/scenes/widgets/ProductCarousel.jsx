@@ -1,7 +1,8 @@
 // import Swiper core and required modules
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useSelector } from 'react-redux';
+
 import CarouselSlide from './CarouselSlide';
 
 // Import Swiper styles
@@ -10,7 +11,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-const ProductCarousel = ({ products }) => {
+const ProductCarousel = () => {
+  const products = useSelector((state) => state.products.items);
+
   return (
     <Swiper
       className='h-auto'
@@ -20,8 +23,6 @@ const ProductCarousel = ({ products }) => {
       navigation
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       {products.map((product) => (
         <SwiperSlide className='z-[-1]' key={product._id}>
