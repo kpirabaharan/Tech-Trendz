@@ -11,8 +11,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-const ProductCarousel = () => {
-  const products = useSelector((state) => state.products.items);
+const ProductCarousel = ({ products }) => {
+  // const products = useSelector((state) => state.products.items);
 
   return (
     <Swiper

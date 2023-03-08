@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouteError, useRouteLoaderData } from 'react-router-dom';
 
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { fetchProductData } from '../../state/product-actions';
@@ -13,6 +14,7 @@ import Footer from '../widgets/Footer';
 const ProductPage = () => {
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const dispatch = useDispatch();
+  const products = useRouteLoaderData('products');
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const searchBarBackground = isTopOfPage ? '' : 'bg-blue';
 
@@ -43,7 +45,7 @@ const ProductPage = () => {
         )}
       </div>
       <div className='w-full mx-auto pt-[120px] sm:pt-24'>
-        <ProductCarousel />
+        <ProductCarousel products={products} />
       </div>
       <div className='mx-auto pt-4'>
         <ProductQuery />
@@ -60,13 +62,13 @@ const ProductPage = () => {
 
 export default ProductPage;
 
-// export const productsLoader = async () => {
-//   const response = await fetch('http://localhost:8080/products/all');
+export const productsLoader = async () => {
+  const response = await fetch('http://localhost:8080/products/all');
 
-//   if (!response.ok) {
-//     throw new Error('Fetch Response Failed!');
-//   }
+  if (!response.ok) {
+    throw new Error('Fetch Response Failed!');
+  }
 
-//   const products = await response.json();
-//   return products;
-// };
+  const products = await response.json();
+  return products;
+};
