@@ -14,6 +14,8 @@ module.exports = {
         'light-grey': '#EBECF0',
       },
       backgroundImage: (theme) => ({
+        'gradient-bluewhite':
+          'linear-gradient(90deg, #FFFFFF, #A3A3FF, #FFFFFF)',
         'gradient-predawn': 'linear-gradient(90deg, #FFA17F, #00223E)',
         'gradient-shore': 'linear-gradient(90deg, #70e1f5, #ffd194)',
         'gradient-starfall': 'linear-gradient(90deg, #f0c27b, #4b1248)',

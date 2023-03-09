@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import ProductPage, { productsLoader } from './scenes/productPage';
-import ProductDetailPage from './scenes/productDetailPage';
-import CartPage from './scenes/cartPage';
+import RootLayout from './scenes/root';
+import ProductPage, { productsLoader } from './scenes/product';
+import ProductDetailPage from './scenes/productDetail';
+import CartPage from './scenes/cart';
 
 import './index.css';
 
@@ -10,6 +11,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
+      element: <RootLayout />,
       children: [
         {
           index: true,
@@ -17,14 +19,14 @@ function App() {
           element: <ProductPage />,
           loader: productsLoader,
         },
-        // {
-        //   path: 'product/:productId',
-        //   element: <ProductDetailPage />,
-        // },
-        // {
-        //   path: 'cart',
-        //   element: <CartPage />,
-        // },
+        {
+          path: 'product/:productId',
+          element: <ProductDetailPage />,
+        },
+        {
+          path: 'cart',
+          element: <CartPage />,
+        },
       ],
     },
   ]);
