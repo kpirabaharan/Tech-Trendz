@@ -29,7 +29,7 @@ app.use(cors());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 /* ROUTES */
-app.use('/products', productRoutes);
+app.use('/product', productRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

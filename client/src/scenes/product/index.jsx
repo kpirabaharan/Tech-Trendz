@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouteLoaderData, useSearchParams } from 'react-router-dom';
+import { useRouteLoaderData, useSearchParams, json } from 'react-router-dom';
 
 import { fetchProductData } from '../../state/product-actions';
 import ProductCarousel from '../widgets/ProductCarousel';
@@ -14,16 +14,6 @@ const ProductPage = () => {
   const products = useRouteLoaderData('products');
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) setIsTopOfPage(true);
-      if (window.scrollY !== 0) setIsTopOfPage(false);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     var prodMode = 'all';
@@ -56,12 +46,15 @@ const ProductPage = () => {
 export default ProductPage;
 
 export const productsLoader = async () => {
-  const response = await fetch('http://localhost:8080/products/new');
+  const response = await fetch('http://localhost:8080/product/new');
 
   if (!response.ok) {
-    throw new Error('Fetch Response Failed!');
+    throw json(
+      { message: 'Could not fetch details for products.' },
+      { status: 500 },
+    );
+  } else {
+    const products = await response.json();
+    return products;
   }
-
-  const products = await response.json();
-  return products;
 };
