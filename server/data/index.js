@@ -7,6 +7,7 @@ const productIds = [
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
 ];
 
 export const products = [
@@ -62,6 +63,20 @@ export const products = [
     rating: 4.5,
     category: 'Tablet',
     picturePath: 'iPad-Air.png',
+    createdAt: 1115211422,
+    updatedAt: 1115211422,
+    __v: 0,
+  },
+  {
+    _id: productIds[4],
+    name: 'Macbook Pro',
+    brand: 'Apple',
+    cost: 2599.99,
+    description: 'Powerful Laptop',
+    new: true,
+    rating: 5,
+    category: 'Computer',
+    picturePath: 'Macbook-Pro.png',
     createdAt: 1115211422,
     updatedAt: 1115211422,
     __v: 0,
