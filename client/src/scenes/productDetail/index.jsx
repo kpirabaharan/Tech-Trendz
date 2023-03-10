@@ -1,9 +1,11 @@
 import { useRouteLoaderData, json } from 'react-router-dom';
 
+import ProductDetail from '../widgets/ProductDetail';
+
 const ProductDetailPage = () => {
   const product = useRouteLoaderData('product');
 
-  return <div>{product.name}</div>;
+  return <ProductDetail product={product} />;
 };
 
 export default ProductDetailPage;

@@ -22,18 +22,20 @@ function RootLayout() {
   }, []);
 
   return (
-    <div className='flex flex-col'>
+    <>
       <div
-        className={`z-[40] fixed h-[7.5rem] sm:h-16 w-full flex flex-col ${searchBarBackground}`}
+        className={`z-[40] fixed h-[7.5rem] sm:h-16 w-full ${searchBarBackground}`}
       >
         <Navbar isTopOfPage={isTopOfPage} />
         {!isAboveSmallScreens && <SearchBar isSmallScreen={true} />}
       </div>
       <main>
-        {navigation.state === 'loading' && <p>Loading...</p>}
+        <div className='w-full h-full align-middle text-center'>
+          {navigation.state === 'loading' && <p>Loading...</p>}
+        </div>
         <Outlet />
       </main>
-    </div>
+    </>
   );
 }
 
