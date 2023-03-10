@@ -5,7 +5,11 @@ import ProductDetail from '../widgets/ProductDetail';
 const ProductDetailPage = () => {
   const product = useRouteLoaderData('product');
 
-  return <ProductDetail product={product} />;
+  return (
+    <div className='w-5/6 mx-auto md:h-full'>
+      <ProductDetail product={product} />
+    </div>
+  );
 };
 
 export default ProductDetailPage;
