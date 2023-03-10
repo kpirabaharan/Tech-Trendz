@@ -1,31 +1,24 @@
 import { SearchIcon } from '../icons/SearchIcon';
 
-const SearchBar = ({ isSmallScreen }) => {
-  const outerDiv = isSmallScreen
-    ? 'flex left-[50%] translate-x-[-50%] justify-center w-5/6 fixed pt-[60px]'
-    : 'relative w-[300px]';
+const SearchBar = () => {
   return (
-    <div className={outerDiv}>
-      <div
-        className={`absolute ${isSmallScreen ? 'bottom-2' : 'inset-y-0'} left-0 
-        flex items-center pl-3 pointer-events-none`}
-      >
+    <div className='w-5/6 mx-auto sm:relative sm:w-[300px]'>
+      <div className='absolute flex pl-3 bottom-[25px] sm:bottom-[8.6px]'>
         <SearchIcon className={'w-5 h-5'} />
       </div>
       <input
+        className='block w-full p-2 pl-10 text-sm placeholder:text-gray-500 
+        text-gray-900bg-gray-200 rounded-xl border border-gray-300 
+        focus:outline-none focus:border-blue'
         type='search'
         id='search'
-        className='block w-full p-2 pl-10 text-sm placeholder:text-gray-700 text-gray-900 
-          borderborder-gray-300 rounded-lg bg-gray-200 focus:ring-blue-500 focus:border-blue-500'
         placeholder='Search Products...'
         required
       />
-      <div className='pt-[2px]'>
+      <div className='absolute bottom-[21px] sm:bottom-[5px] right-0 pr-[9%] sm:pr-[5px]'>
         <button
-          type='submit'
-          className='text-blue absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 
-          focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
-          px-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          className='rounded-xl text-gray-400 text-sm py-1 px-2 
+        hover:text-blue'
         >
           Search
         </button>
