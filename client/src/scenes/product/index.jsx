@@ -25,7 +25,7 @@ const ProductPage = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='w-full mx-auto pt-[120px] sm:pt-24'>
+      <div className='w-full mx-auto'>
         <ProductCarousel products={products} />
       </div>
       <Line />

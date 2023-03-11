@@ -34,17 +34,29 @@ const Navbar = () => {
             <form>
               <SearchBar />
             </form>
-            <PersonIcon />
-            <CartIcon />
+            <Link to={'/auth'}>
+              <PersonIcon />
+            </Link>
+            <Link to={'/cart'}>
+              <CartIcon />
+            </Link>
           </div>
         ) : (
           <div className='flex items-center gap-8'>
-            <PersonIcon />
-            <CartIcon />
+            <Link to={'/auth'}>
+              <PersonIcon />
+            </Link>
+            <Link to={'/cart'}>
+              <CartIcon />
+            </Link>
           </div>
         )}
       </nav>
-      {!isAboveSmallScreens && <SearchBar />}
+      {!isAboveSmallScreens && (
+        <form>
+          <SearchBar />
+        </form>
+      )}
     </div>
   );
 };

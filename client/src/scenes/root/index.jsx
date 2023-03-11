@@ -12,7 +12,9 @@ function RootLayout() {
         <div className='w-full h-full align-middle text-center'>
           {navigation.state === 'loading' && <p>Loading...</p>}
         </div>
-        <Outlet />
+        <div className='pt-[115px] sm:pt-[63px]'>
+          <Outlet />
+        </div>
       </main>
     </>
   );
