@@ -24,6 +24,7 @@ module.exports = {
       fontFamily: {
         playfair: ['Playfair Display', 'serif'],
         opensans: ['Open Sans', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
       },
     },
     screens: {

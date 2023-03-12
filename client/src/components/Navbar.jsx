@@ -34,7 +34,7 @@ const Navbar = () => {
             <form>
               <SearchBar />
             </form>
-            <Link to={'/auth'}>
+            <Link to={'/auth?mode=login'}>
               <PersonIcon />
             </Link>
             <Link to={'/cart'}>
@@ -43,7 +43,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className='flex items-center gap-8'>
-            <Link to={'/auth'}>
+            <Link to={'/auth?mode=login'}>
               <PersonIcon />
             </Link>
             <Link to={'/cart'}>
