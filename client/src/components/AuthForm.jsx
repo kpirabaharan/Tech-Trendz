@@ -20,17 +20,17 @@ const AuthForm = () => {
 
       <div className='flex flex-col gap-8 py-8'>
         {!isLogin && (
-          <div className='flex flex-col gap-8 md:gap-0 md:flex-row'>
+          <div className='flex flex-col gap-8 sm:gap-0 sm:flex-row'>
             <div className='relative z-0 basis-1/2'>
               <input
                 type='text'
-                id='first-name'
-                name='first-name'
+                id='firstName'
+                name='firstName'
                 className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
                 placeholder=' '
               />
               <label
-                htmlFor='first-name'
+                htmlFor='firstName'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
               >
                 First Name
@@ -40,13 +40,13 @@ const AuthForm = () => {
             <div className='relative z-0 basis-1/2'>
               <input
                 type='text'
-                id='last-name'
-                name='last-name'
+                id='lastName'
+                name='lastName'
                 className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
                 placeholder=' '
               />
               <label
-                htmlFor='last-name'
+                htmlFor='lastName'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
               >
                 Last Name
@@ -59,13 +59,13 @@ const AuthForm = () => {
           <div className='relative z-0'>
             <input
               type='date'
-              id='dob'
-              name='dob'
+              id='dateOfBirth'
+              name='dateOfBirth'
               className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
               placeholder=' '
             />
             <label
-              htmlFor='dob'
+              htmlFor='dateOfBirth'
               className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
             >
               Date-of-Birth
@@ -76,13 +76,13 @@ const AuthForm = () => {
           <div className='relative z-0'>
             <input
               type='tel'
-              id='phone'
-              name='phone'
+              id='phoneNumber'
+              name='phoneNumber'
               className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
               placeholder=' '
             />
             <label
-              htmlFor='phone'
+              htmlFor='phoneNumber'
               className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
             >
               Phone Number
@@ -91,7 +91,7 @@ const AuthForm = () => {
         )}
         <div className='relative z-0'>
           <input
-            type='text'
+            type='email'
             id='email'
             name='email'
             className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
@@ -106,7 +106,7 @@ const AuthForm = () => {
         </div>
         <div className='relative z-0'>
           <input
-            type='text'
+            type='password'
             id='password'
             name='password'
             className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
@@ -128,7 +128,7 @@ const AuthForm = () => {
           </p>
         </Link>
         <button
-          class='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+          className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded'
           type='submit'
         >
           {isLogin ? 'Sign In' : 'Register'}
