@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import { useRouteLoaderData, json } from 'react-router-dom';
 
 import ProductDetail from '../widgets/ProductDetail';
 
 const ProductDetailPage = () => {
   const product = useRouteLoaderData('product');
+
+  useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
 
   return (
     <div className='w-5/6 mx-auto md:h-full'>
