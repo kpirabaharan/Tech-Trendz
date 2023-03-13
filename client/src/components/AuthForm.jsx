@@ -1,140 +1,256 @@
+import { useDispatch } from 'react-redux';
 import {
   Form,
   Link,
   useActionData,
   useSearchParams,
   useNavigation,
+  useNavigate,
 } from 'react-router-dom';
+import { Formik } from 'formik';
+import { object, string } from 'yup';
+
+import { setLogin } from '../state/user-slice';
+
+const initialValuesRegister = {
+  firstName: '',
+  lastName: '',
+  dateOfBirth: '',
+  phoneNumber: '',
+  email: '',
+  password: '',
+};
+
+const initialValuesLogin = {
+  email: '',
+  password: '',
+};
+
+const registerSchema = object({
+  firstName: string().required('required'),
+  lastName: string().required('required'),
+  dateOfBirth: string().required('required'),
+  phoneNumber: string().required('required'),
+  email: string().email('invlaid email').required('required'),
+  password: string().required('required'),
+});
+
+const loginSchema = object({
+  email: string().email('invlaid email').required('required'),
+  password: string().required('required'),
+});
 
 const AuthForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get('mode') === 'login';
 
+  const login = async (values, onSubmitProps) => {
+    const response = await fetch(`http://localhost:8080/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw json({ message: 'Could not login!' }, { status: 500 });
+    } else {
+      const { user, token } = await response.json();
+      console.log({ user: user, token: token });
+      dispatch(setLogin({ user, token }));
+      onSubmitProps.resetForm();
+      if (user) {
+        navigate('/');
+      }
+    }
+  };
+
+  const register = async (values, onSubmitProps) => {
+    const response = await fetch('http://localhost:8080/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+
+    const responseData = await response.json();
+    onSubmitProps.resetForm();
+
+    console.log(responseData);
+
+    if (responseData) {
+      navigate('/auth?mode=login');
+    }
+  };
+
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    if (isLogin) {
+      await login(values, onSubmitProps);
+    }
+    if (!isLogin) {
+      await register(values, onSubmitProps);
+    }
+  };
+
   return (
-    <Form method='POST' className=''>
-      <div className='py-2'>
-        <h1 className='text-4xl font-roboto font-bold'>
-          {isLogin ? 'Sign In' : 'Register'}
-        </h1>
-      </div>
+    <Formik
+      onSubmit={handleFormSubmit}
+      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+      validationSchema={isLogin ? loginSchema : registerSchema}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        resetForm,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <div className='py-2'>
+            <h1 className='text-4xl font-roboto font-bold'>
+              {isLogin ? 'Sign In' : 'Register'}
+            </h1>
+          </div>
 
-      <div className='flex flex-col gap-8 py-8'>
-        {!isLogin && (
-          <div className='flex flex-col gap-8 sm:gap-0 sm:flex-row'>
-            <div className='relative z-0 basis-1/2'>
+          <div className='flex flex-col gap-8 py-8'>
+            {!isLogin && (
+              <div className='flex flex-col gap-8 sm:gap-0 sm:flex-row'>
+                <div className='relative z-0 basis-1/2'>
+                  <input
+                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    id='firstName'
+                    name='firstName'
+                    type='text'
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.firstName}
+                    placeholder=''
+                  />
+                  <label
+                    htmlFor='firstName'
+                    className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                  >
+                    First Name
+                  </label>
+                </div>
+
+                <div className='relative z-0 basis-1/2'>
+                  <input
+                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    id='lastName'
+                    name='lastName'
+                    type='text'
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.lastName}
+                    placeholder=' '
+                  />
+                  <label
+                    htmlFor='lastName'
+                    className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                  >
+                    Last Name
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {!isLogin && (
+              <div className='relative z-0'>
+                <input
+                  className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                  id='dateOfBirth'
+                  name='dateOfBirth'
+                  type='date'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.dateOfBirth}
+                  placeholder=' '
+                />
+                <label
+                  htmlFor='dateOfBirth'
+                  className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                >
+                  Date-of-Birth
+                </label>
+              </div>
+            )}
+            {!isLogin && (
+              <div className='relative z-0'>
+                <input
+                  className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                  id='phoneNumber'
+                  name='phoneNumber'
+                  type='tel'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.phoneNumber}
+                  placeholder=' '
+                />
+                <label
+                  htmlFor='phoneNumber'
+                  className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                >
+                  Phone Number
+                </label>
+              </div>
+            )}
+            <div className='relative z-0'>
               <input
-                type='text'
-                id='firstName'
-                name='firstName'
                 className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                id='email'
+                name='email'
+                type='email'
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
                 placeholder=' '
               />
               <label
-                htmlFor='firstName'
+                htmlFor='email'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
               >
-                First Name
+                Email
               </label>
             </div>
-
-            <div className='relative z-0 basis-1/2'>
+            <div className='relative z-0'>
               <input
-                type='text'
-                id='lastName'
-                name='lastName'
                 className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                id='password'
+                name='password'
+                type='password'
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
                 placeholder=' '
               />
               <label
-                htmlFor='lastName'
+                htmlFor='password'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
               >
-                Last Name
+                Password
               </label>
             </div>
           </div>
-        )}
 
-        {!isLogin && (
-          <div className='relative z-0'>
-            <input
-              type='date'
-              id='dateOfBirth'
-              name='dateOfBirth'
-              className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=' '
-            />
-            <label
-              htmlFor='dateOfBirth'
-              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+          <div className='flex flex-row justify-between'>
+            <Link to={`?mode=${isLogin ? 'register' : 'login'}`}>
+              <p className='underline'>
+                {isLogin ? 'Register Instead' : 'Sign In Instead'}
+              </p>
+            </Link>
+            <button
+              className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded'
+              type='submit'
             >
-              Date-of-Birth
-            </label>
+              {isLogin ? 'Sign In' : 'Register'}
+            </button>
           </div>
-        )}
-        {!isLogin && (
-          <div className='relative z-0'>
-            <input
-              type='tel'
-              id='phoneNumber'
-              name='phoneNumber'
-              className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=' '
-            />
-            <label
-              htmlFor='phoneNumber'
-              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-            >
-              Phone Number
-            </label>
-          </div>
-        )}
-        <div className='relative z-0'>
-          <input
-            type='email'
-            id='email'
-            name='email'
-            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-            placeholder=' '
-          />
-          <label
-            htmlFor='email'
-            className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-          >
-            Email
-          </label>
-        </div>
-        <div className='relative z-0'>
-          <input
-            type='password'
-            id='password'
-            name='password'
-            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-            placeholder=' '
-          />
-          <label
-            htmlFor='password'
-            className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-          >
-            Password
-          </label>
-        </div>
-      </div>
-
-      <div className='flex flex-row justify-between'>
-        <Link to={`?mode=${isLogin ? 'register' : 'login'}`}>
-          <p className='underline'>
-            {isLogin ? 'Register Instead' : 'Sign In Instead'}
-          </p>
-        </Link>
-        <button
-          className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded'
-          type='submit'
-        >
-          {isLogin ? 'Sign In' : 'Register'}
-        </button>
-      </div>
-    </Form>
+        </form>
+      )}
+    </Formik>
   );
 };
 
