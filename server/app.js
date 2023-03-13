@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 import Product from './models/Product.js';
 import { products } from './data/index.js';
 import productRoutes from './routes/product.js';
+import authRoutes from './routes/auth.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,7 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 /* ROUTES */
 app.use('/product', productRoutes);
+app.use('/auth', authRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

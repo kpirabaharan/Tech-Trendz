@@ -1,8 +1,8 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 
 import { fetchProducts, fetchProduct } from '../controllers/product.js';
 
-const router = express.Router();
+const router = Router();
 
 /* READ */
 router.get('/:mode', fetchProducts);
