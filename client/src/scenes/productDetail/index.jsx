@@ -32,7 +32,7 @@ export const productLoader = async ({ request, params }) => {
     );
   } else {
     const product = await response.json();
-    console.log(product);
+
     return product;
   }
 };
