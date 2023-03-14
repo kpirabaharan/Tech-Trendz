@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const searchBarBackground = isTopOfPage
     ? 'border-b-[1px] bg-white'
-    : 'bg-blue bg-opacity-75';
+    : 'bg-custom-blue';
 
   useEffect(() => {
     const handleScroll = () => {

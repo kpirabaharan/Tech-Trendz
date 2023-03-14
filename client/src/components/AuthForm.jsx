@@ -283,7 +283,7 @@ const AuthForm = () => {
                 value={values.password}
                 placeholder=' '
               />
-              {errors.password && touched.password && (
+              {!isLogin && errors.password && touched.password && (
                 <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
                   {errors.password}
                 </span>
@@ -307,7 +307,7 @@ const AuthForm = () => {
               </p>
             </Link>
             <button
-              className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-blue py-2 px-4 border border-gray-500 hover:border-blue rounded'
+              className='bg-transparent hover:text-blue-700 font-semibold hover:text-blue py-2 px-4 border border-gray-500 hover:border-blue rounded'
               type='submit'
             >
               {isLogin ? 'Sign In' : 'Register'}
