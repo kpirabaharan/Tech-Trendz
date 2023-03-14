@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const productSlice = createSlice({
-  name: 'product',
+  name: 'products',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchProductData.fulfilled, (state, { payload }) => {
@@ -15,7 +15,5 @@ const productSlice = createSlice({
     });
   },
 });
-
-export const productActions = productSlice.actions;
 
 export default productSlice.reducer;
