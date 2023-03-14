@@ -22,14 +22,14 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  user: userSliceReduceer,
+  user: persistReducer(persistConfig, userSliceReduceer),
   products: productSliceReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+// const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
