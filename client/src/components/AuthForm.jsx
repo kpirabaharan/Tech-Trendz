@@ -8,7 +8,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { Formik } from 'formik';
-import { object, string } from 'yup';
+import { object, string, number, date } from 'yup';
+import { subYears } from 'date-fns';
 
 import { setLogin } from '../state/user-slice';
 
@@ -27,17 +28,25 @@ const initialValuesLogin = {
 };
 
 const registerSchema = object({
-  firstName: string().required('required'),
-  lastName: string().required('required'),
-  dateOfBirth: string().required('required'),
-  phoneNumber: string().required('required'),
-  email: string().email('invlaid email').required('required'),
-  password: string().required('required'),
+  firstName: string().required('Invalid First Name'),
+  lastName: string().required('Invalid Last Name'),
+  dateOfBirth: date().required().max(subYears(new Date(), 13)),
+  phoneNumber: string()
+    .required('Invalid Phone Number')
+    .matches(/^[0-9]+$/, 'Must be Only digits')
+    .min(10, 'Must be Exactly 10 Digits')
+    .max(10, 'Must be Exactly 10 Digits'),
+  email: string().email('Invalid Email').required('Invalid Email'),
+  password: string()
+    .required('Invalid Password')
+    .min(5, 'Must Have At Least 5 Characters!'),
 });
 
 const loginSchema = object({
-  email: string().email('invlaid email').required('required'),
-  password: string().required('required'),
+  email: string().email('Invalid Email').required('Invalid Email'),
+  password: string()
+    .required('Invalid Password')
+    .min(5, 'Must Have At Least 5 Characters!'),
 });
 
 const AuthForm = () => {
@@ -74,9 +83,8 @@ const AuthForm = () => {
     });
 
     const responseData = await response.json();
-    onSubmitProps.resetForm();
 
-    console.log(responseData);
+    onSubmitProps.resetForm();
 
     if (responseData) {
       navigate('/auth?mode=login');
@@ -119,7 +127,11 @@ const AuthForm = () => {
               <div className='flex flex-col gap-8 sm:gap-0 sm:flex-row'>
                 <div className='relative z-0 basis-1/2'>
                   <input
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                      errors.firstName && touched.firstName
+                        ? 'border-red-700'
+                        : 'border-gray-600'
+                    } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                     id='firstName'
                     name='firstName'
                     type='text'
@@ -128,6 +140,11 @@ const AuthForm = () => {
                     value={values.firstName}
                     placeholder=''
                   />
+                  {errors.firstName && touched.firstName && (
+                    <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                      {errors.firstName}
+                    </span>
+                  )}
                   <label
                     htmlFor='firstName'
                     className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -138,7 +155,11 @@ const AuthForm = () => {
 
                 <div className='relative z-0 basis-1/2'>
                   <input
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                      errors.lastName && touched.lastName
+                        ? 'border-red-700'
+                        : 'border-gray-600'
+                    } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                     id='lastName'
                     name='lastName'
                     type='text'
@@ -147,6 +168,11 @@ const AuthForm = () => {
                     value={values.lastName}
                     placeholder=' '
                   />
+                  {errors.lastName && touched.lastName && (
+                    <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                      {errors.lastName}
+                    </span>
+                  )}
                   <label
                     htmlFor='lastName'
                     className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -160,7 +186,11 @@ const AuthForm = () => {
             {!isLogin && (
               <div className='relative z-0'>
                 <input
-                  className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                  className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                    errors.dateOfBirth && touched.dateOfBirth
+                      ? 'border-red-700'
+                      : 'border-gray-600'
+                  } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                   id='dateOfBirth'
                   name='dateOfBirth'
                   type='date'
@@ -169,6 +199,11 @@ const AuthForm = () => {
                   value={values.dateOfBirth}
                   placeholder=' '
                 />
+                {errors.dateOfBirth && touched.dateOfBirth && (
+                  <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                    {errors.dateOfBirth}
+                  </span>
+                )}
                 <label
                   htmlFor='dateOfBirth'
                   className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -180,7 +215,11 @@ const AuthForm = () => {
             {!isLogin && (
               <div className='relative z-0'>
                 <input
-                  className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                  className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                    errors.phoneNumber && touched.phoneNumber
+                      ? 'border-red-700'
+                      : 'border-gray-600'
+                  } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                   id='phoneNumber'
                   name='phoneNumber'
                   type='tel'
@@ -189,6 +228,11 @@ const AuthForm = () => {
                   value={values.phoneNumber}
                   placeholder=' '
                 />
+                {errors.phoneNumber && touched.phoneNumber && (
+                  <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                    {errors.phoneNumber}
+                  </span>
+                )}
                 <label
                   htmlFor='phoneNumber'
                   className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -199,7 +243,11 @@ const AuthForm = () => {
             )}
             <div className='relative z-0'>
               <input
-                className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                  errors.email && touched.email
+                    ? 'border-red-700'
+                    : 'border-gray-600'
+                } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                 id='email'
                 name='email'
                 type='email'
@@ -208,6 +256,11 @@ const AuthForm = () => {
                 value={values.email}
                 placeholder=' '
               />
+              {errors.email && touched.email && (
+                <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                  {errors.email}
+                </span>
+              )}
               <label
                 htmlFor='email'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -217,7 +270,11 @@ const AuthForm = () => {
             </div>
             <div className='relative z-0'>
               <input
-                className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 ${
+                  errors.password && touched.password
+                    ? 'border-red-700'
+                    : 'border-gray-600'
+                } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
                 id='password'
                 name='password'
                 type='password'
@@ -226,6 +283,11 @@ const AuthForm = () => {
                 value={values.password}
                 placeholder=' '
               />
+              {errors.password && touched.password && (
+                <span className='flex items-center font-medium tracking-wide text-red-700 text-xs mt-1 ml-1'>
+                  {errors.password}
+                </span>
+              )}
               <label
                 htmlFor='password'
                 className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
@@ -236,13 +298,16 @@ const AuthForm = () => {
           </div>
 
           <div className='flex flex-row justify-between'>
-            <Link to={`?mode=${isLogin ? 'register' : 'login'}`}>
-              <p className='underline'>
+            <Link
+              to={`?mode=${isLogin ? 'register' : 'login'}`}
+              onClick={resetForm}
+            >
+              <p className='underline hover:text-blue'>
                 {isLogin ? 'Register Instead' : 'Sign In Instead'}
               </p>
             </Link>
             <button
-              className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded'
+              className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-blue py-2 px-4 border border-gray-500 hover:border-blue rounded'
               type='submit'
             >
               {isLogin ? 'Sign In' : 'Register'}
