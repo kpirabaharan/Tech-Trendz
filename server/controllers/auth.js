@@ -21,6 +21,20 @@ export const register = async (req, res) => {
       password: passwordHash,
     });
 
+    const emailUserCheck = await User.findOne({ email });
+    if (emailUserCheck) {
+      return res
+        .status(409)
+        .json({ error: 'A user with that email address exists.' });
+    }
+
+    const phoneUserCheck = await User.findOne({ phoneNumber });
+    if (phoneUserCheck) {
+      return res
+        .status(409)
+        .json({ error: 'A user with that phone number exists.' });
+    }
+
     const savedUser = await newUser.save();
     savedUser.password = undefined;
     console.log({ Registered: savedUser });
