@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addToCart } from './cart-actions';
+import { addToCart, fetchCart } from './cart-actions';
 
 const initialState = {
   items: [],
-  total: 0,
+  totalAmount: 0,
+  totalQuantity: 0,
 };
 
 const cartSlice = createSlice({
@@ -13,7 +14,13 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(addToCart.fulfilled, (state, { payload }) => {
       state.items = payload.items;
-      state.total = payload.total;
+      state.totalAmount = payload.totalAmount;
+      state.totalQuantity = payload.totalQuantity;
+    });
+    builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
+      state.items = payload.items;
+      state.totalAmount = payload.totalAmount;
+      state.totalQuantity = payload.totalQuantity;
     });
   },
 });

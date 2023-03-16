@@ -16,8 +16,24 @@ export const addToCart = createAsyncThunk(
         { status: 500 },
       );
     } else {
-      const { items, total } = await response.json();
-      return { items, total };
+      const { items, totalAmount, totalQuantity } = await response.json();
+      return { items, totalAmount, totalQuantity };
+    }
+  },
+);
+
+export const fetchCart = createAsyncThunk(
+  'cart/:userId',
+  async ({ userId }) => {
+    const response = await fetch(`http://localhost:8080/cart/${userId}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw json({ message: 'Could not fetch cart.' }, { status: 500 });
+    } else {
+      const { items, totalAmount, totalQuantity } = await response.json();
+      return { items, totalAmount, totalQuantity };
     }
   },
 );
