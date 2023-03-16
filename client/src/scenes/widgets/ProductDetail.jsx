@@ -1,6 +1,22 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { addToCart } from '../../state/cart-actions';
+
 const ProductDetail = ({ product }) => {
+  const userId = useSelector((state) => {
+    if (state.user.user) {
+      return state.user.user._id;
+    }
+    return null;
+  });
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ productId: product._id, userId }));
+  };
+
   return (
     <div className='flex flex-col justify-start h-[90vh] pt-4 z-0'>
       <div className='flex flex-row justify-center h-[50%]'>
@@ -23,8 +39,12 @@ const ProductDetail = ({ product }) => {
             </div>
           </div>
           <div>
-            <button class='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'>
-              Add to Cart
+            <button
+              className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
+              disabled={userId == null ? true : false}
+              onClick={handleAddToCart}
+            >
+              {userId == null ? 'Sign in to Add to Cart' : 'Add to Cart'}
             </button>
           </div>
         </div>

@@ -1,14 +1,7 @@
 import { useDispatch } from 'react-redux';
-import {
-  Form,
-  Link,
-  useActionData,
-  useSearchParams,
-  useNavigation,
-  useNavigate,
-} from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
-import { object, string, number, date } from 'yup';
+import { object, string, date } from 'yup';
 import { subYears } from 'date-fns';
 
 import { setLogin } from '../state/user-slice';
@@ -30,7 +23,9 @@ const initialValuesLogin = {
 const registerSchema = object({
   firstName: string().required('Invalid First Name'),
   lastName: string().required('Invalid Last Name'),
-  dateOfBirth: date().required().max(subYears(new Date(), 13)),
+  dateOfBirth: date()
+    .required('Date of Birth Required')
+    .max(subYears(new Date(), 13)),
   phoneNumber: string()
     .required('Invalid Phone Number')
     .matches(/^[0-9]+$/, 'Must be Only digits')
