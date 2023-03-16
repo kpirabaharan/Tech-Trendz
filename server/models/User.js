@@ -12,19 +12,59 @@ const UserSchema = new mongoose.Schema(
     },
     email: { type: String, required: true, unique: true, max: 50 },
     password: { type: String, required: true, min: 5 },
-    items: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true,
+    cart: {
+      items: [
+        {
+          productId: { type: String, required: true },
+          name: { type: String, rquired: true },
+          cost: { type: Number, required: true },
+          quantity: { type: Number, required: true },
         },
-        quantity: { type: Number, required: true },
-      },
-    ],
+      ],
+      totalAmount: { type: Number, required: true, default: 0 },
+    },
   },
   { timestamps: true },
 );
+
+UserSchema.methods.addToCart = function (productId, name, cost) {
+  /* Find Product Index in Cart if Exists */
+  const cartProductIndex = this.cart.items.findIndex((cp) => {
+    return cp.productId.toString() === productId.toString();
+  });
+
+  const updatedCartItems = [...this.cart.items];
+  var updatedCost = 0;
+
+  /* Create Product in Cart or Increase Quantity of Product */
+  if (cartProductIndex >= 0) {
+    updatedCartItems[cartProductIndex].quantity += 1;
+  } else {
+    updatedCartItems.push({
+      productId: productId,
+      name: name,
+      cost: cost,
+      quantity: 1,
+    });
+  }
+  updatedCartItems.forEach((item) => {
+    updatedCost += item.quantity * item.cost;
+  });
+
+  this.cart.items = updatedCartItems;
+  this.cart.totalAmount = updatedCost;
+
+  return this.save();
+};
+
+UserSchema.methods.deleteFromCart = function (productId) {
+  /* Filter out Product from Cart */
+  const updatedCartItems = this.cart.items.filter((item) => {
+    return item.productId.toString() !== productId.toString();
+  });
+  this.cart.items = updatedCartItems;
+  return this.save();
+};
 
 const User = mongoose.model('User', UserSchema);
 
