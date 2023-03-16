@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema(
           quantity: { type: Number, required: true },
         },
       ],
+      totalQuantity: { type: Number, required: true, default: 0 },
       totalAmount: { type: Number, required: true, default: 0 },
     },
   },
@@ -35,6 +36,7 @@ UserSchema.methods.addToCart = function (productId, name, cost) {
 
   const updatedCartItems = [...this.cart.items];
   var updatedCost = 0;
+  var updatedQuantity = 0;
 
   /* Create Product in Cart or Increase Quantity of Product */
   if (cartProductIndex >= 0) {
@@ -49,10 +51,12 @@ UserSchema.methods.addToCart = function (productId, name, cost) {
   }
   updatedCartItems.forEach((item) => {
     updatedCost += item.quantity * item.cost;
+    updatedQuantity += item.quantity;
   });
 
   this.cart.items = updatedCartItems;
   this.cart.totalAmount = updatedCost;
+  this.cart.totalQuantity = updatedQuantity;
 
   return this.save();
 };
