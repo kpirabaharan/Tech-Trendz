@@ -39,13 +39,23 @@ const ProductDetail = ({ product }) => {
             </div>
           </div>
           <div>
-            <button
-              className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
-              disabled={userId == null ? true : false}
-              onClick={handleAddToCart}
-            >
-              {userId == null ? 'Sign in to Add to Cart' : 'Add to Cart'}
-            </button>
+            {userId == null ? (
+              <Link
+                className='bg-white hover:bg-gray-100 text-gray-800 
+                  font-semibold py-2 px-4 border border-gray-400 rounded shadow'
+                to={'/auth?mode=login'}
+              >
+                Sign in to Add to Cart
+              </Link>
+            ) : (
+              <button
+                className='bg-white hover:bg-gray-100 text-gray-800 
+                  font-semibold py-2 px-4 border border-gray-400 rounded shadow'
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         </div>
       </div>

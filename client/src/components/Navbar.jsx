@@ -40,9 +40,13 @@ const Navbar = () => {
             <form>
               <SearchBar />
             </form>
-            <Link to={'/cart'}>
-              <CartIcon />
-            </Link>
+            {user ? (
+              <Link to={'/cart'}>
+                <CartIcon />
+              </Link>
+            ) : (
+              <></>
+            )}
             {user ? (
               <button onClick={() => dispatch(setLogout())}>
                 <LogoutIcon />
