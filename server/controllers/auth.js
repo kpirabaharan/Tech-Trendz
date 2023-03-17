@@ -4,10 +4,9 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 export const register = async (req, res) => {
+  const { firstName, lastName, dateOfBirth, phoneNumber, email, password } =
+    req.body;
   try {
-    const { firstName, lastName, dateOfBirth, phoneNumber, email, password } =
-      req.body;
-
     /* Encrypt Password */
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
@@ -45,9 +44,8 @@ export const register = async (req, res) => {
   }
 };
 export const login = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-
     /* Find User */
     const user = await User.findOne({ email: email });
     if (!user) {

@@ -1,8 +1,8 @@
 import Product from '../models/Product.js';
 
 export const fetchProducts = async (req, res) => {
+  const { mode } = req.params;
   try {
-    const { mode } = req.params;
     if (mode === 'all') {
       var products = await Product.find();
     }
@@ -20,9 +20,8 @@ export const fetchProducts = async (req, res) => {
 };
 
 export const fetchProduct = async (req, res) => {
+  const { productId } = req.params;
   try {
-    const { productId } = req.params;
-
     const product = await Product.findById(productId);
 
     res.status(200).json(product);

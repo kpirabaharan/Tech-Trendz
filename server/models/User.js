@@ -59,6 +59,8 @@ UserSchema.methods.addToCart = function (
       quantity: 1,
     });
   }
+
+  /* Update Total Cost and Quantity after Cart is Updated */
   updatedCartItems.forEach((item) => {
     updatedCost += item.quantity * item.cost;
     updatedQuantity += item.quantity;
@@ -71,13 +73,54 @@ UserSchema.methods.addToCart = function (
   return this.save();
 };
 
+UserSchema.methods.removeFromCart = function (productId) {
+  /* Find Product Index in Cart */
+  const cartProductIndex = this.cart.items.findIndex((cp) => {
+    return cp.productId.toString() === productId.toString();
+  });
+
+  var updatedCartItems = [...this.cart.items];
+  var updatedCost = 0;
+  var updatedQuantity = 0;
+
+  /* Remove Product in Cart or Decrease Quantity of Product */
+  if (updatedCartItems[cartProductIndex].quantity == 1) {
+    updatedCartItems = updatedCartItems.filter((item) => {
+      return item.productId.toString() !== productId.toString();
+    });
+  } else {
+    updatedCartItems[cartProductIndex].quantity -= 1;
+  }
+
+  /* Update Total Cost and Quantity after Cart is Updated */
+  updatedCartItems.forEach((item) => {
+    updatedCost += item.quantity * item.cost;
+    updatedQuantity += item.quantity;
+  });
+
+  this.cart.items = updatedCartItems;
+  this.cart.totalAmount = updatedCost;
+  this.cart.totalQuantity = updatedQuantity;
+  return this.save();
+};
+
 UserSchema.methods.removeAllFromCart = function (productId) {
   /* Filter out Product from Cart */
-  console.log('Executed');
   const updatedCartItems = this.cart.items.filter((item) => {
     return item.productId.toString() !== productId.toString();
   });
+
+  var updatedCost = 0;
+  var updatedQuantity = 0;
+  /* Update Total Cost and Quantity after Cart is Updated */
+  updatedCartItems.forEach((item) => {
+    updatedCost += item.quantity * item.cost;
+    updatedQuantity += item.quantity;
+  });
+
   this.cart.items = updatedCartItems;
+  this.cart.totalAmount = updatedCost;
+  this.cart.totalQuantity = updatedQuantity;
   return this.save();
 };
 
