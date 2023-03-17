@@ -21,7 +21,13 @@ export const addToCart = async (req, res) => {
     const { productId, userId } = req.body;
     const user = await User.findById(userId);
     const product = await Product.findById(productId);
-    await user.addToCart(productId, product.name, product.cost);
+    await user.addToCart(
+      productId,
+      product.name,
+      product.brand,
+      product.cost,
+      product.picturePath,
+    );
     res.status(201).json({
       items: user.cart.items,
       totalAmount: user.cart.totalAmount,

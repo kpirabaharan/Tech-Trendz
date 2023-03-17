@@ -17,7 +17,9 @@ const UserSchema = new mongoose.Schema(
         {
           productId: { type: String, required: true },
           name: { type: String, rquired: true },
+          brand: { type: String, required: true },
           cost: { type: Number, required: true },
+          picturePath: { type: String, required: true },
           quantity: { type: Number, required: true },
         },
       ],
@@ -28,7 +30,13 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-UserSchema.methods.addToCart = function (productId, name, cost) {
+UserSchema.methods.addToCart = function (
+  productId,
+  name,
+  brand,
+  cost,
+  picturePath,
+) {
   /* Find Product Index in Cart if Exists */
   const cartProductIndex = this.cart.items.findIndex((cp) => {
     return cp.productId.toString() === productId.toString();
@@ -43,9 +51,11 @@ UserSchema.methods.addToCart = function (productId, name, cost) {
     updatedCartItems[cartProductIndex].quantity += 1;
   } else {
     updatedCartItems.push({
-      productId: productId,
-      name: name,
-      cost: cost,
+      productId,
+      name,
+      brand,
+      cost,
+      picturePath,
       quantity: 1,
     });
   }
