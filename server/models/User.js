@@ -71,8 +71,9 @@ UserSchema.methods.addToCart = function (
   return this.save();
 };
 
-UserSchema.methods.deleteFromCart = function (productId) {
+UserSchema.methods.removeAllFromCart = function (productId) {
   /* Filter out Product from Cart */
+  console.log('Executed');
   const updatedCartItems = this.cart.items.filter((item) => {
     return item.productId.toString() !== productId.toString();
   });

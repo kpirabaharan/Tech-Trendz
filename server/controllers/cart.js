@@ -39,8 +39,18 @@ export const addToCart = async (req, res) => {
   }
 };
 
-export const removeFromCart = async (req, res) => {
+export const removeAllFromCart = async (req, res) => {
   try {
+    const { productId, userId } = req.body;
+    console.log(productId);
+    console.log(userId);
+    const user = await User.findById(userId);
+    await user.removeAllFromCart(productId);
+    res.status(200).json({
+      items: user.cart.items,
+      totalAmount: user.cart.totalAmount,
+      totalQuantity: user.cart.totalQuantity,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err.message });
