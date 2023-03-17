@@ -26,10 +26,10 @@ const CartPage = () => {
       ) : (
         <>
           <div
-            className='m-0 py-8 flex justify-center items-center bg-gradient-white
+            className='m-0 py-8 flex justify-center items-center bg-gradient-bluewhite
            '
           >
-            <div className='w-[70%] py-4 bg-white rounded-[20px] shadow-2xl '>
+            <div className='w-[80%] md:w-[70%] py-4 bg-white rounded-[20px] shadow-2xl '>
               <div
                 className='m-auto w-[90%] h-[15%] flex justify-between 
               items-center'
@@ -48,6 +48,7 @@ const CartPage = () => {
                 return (
                   <CartItem
                     key={item._id}
+                    id={item.productId}
                     name={item.name}
                     brand={item.brand}
                     cost={item.cost}
