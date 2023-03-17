@@ -77,3 +77,21 @@ export const removeAllFromCart = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const clearCart = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+
+    await user.clearCart();
+
+    res.status(200).json({
+      items: user.cart.items,
+      totalAmount: user.cart.totalAmount,
+      totalQuantity: user.cart.totalQuantity,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+};

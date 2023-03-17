@@ -124,6 +124,11 @@ UserSchema.methods.removeAllFromCart = function (productId) {
   return this.save();
 };
 
+UserSchema.methods.clearCart = function () {
+  this.cart = { items: [], totalQuantity: 0, totalAmount: 0 };
+  return this.save();
+};
+
 const User = mongoose.model('User', UserSchema);
 
 export default User;
