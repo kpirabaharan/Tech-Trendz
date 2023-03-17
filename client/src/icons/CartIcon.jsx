@@ -1,10 +1,10 @@
-export const CartIcon = () => {
+export const CartIcon = ({ w = '20px', h = '20px' }) => {
   return (
     <svg
       className='feather feather-shopping-cart'
       xmlns='http://www.w3.org/2000/svg'
-      width='20px'
-      height='20px'
+      width={w}
+      height={h}
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'

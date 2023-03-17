@@ -38,6 +38,27 @@ export const addToCart = createAsyncThunk(
   },
 );
 
+export const removeFromCart = createAsyncThunk(
+  'cart/removeFromCart',
+  async ({ productId, userId }) => {
+    const response = await fetch(`http://localhost:8080/cart/remove`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId, userId }),
+    });
+
+    if (!response.ok) {
+      throw json(
+        { message: 'Could not remove products from cart.' },
+        { status: 500 },
+      );
+    } else {
+      const { items, totalAmount, totalQuantity } = await response.json();
+      return { items, totalAmount, totalQuantity };
+    }
+  },
+);
+
 export const removeAllFromCart = createAsyncThunk(
   'cart/removeAllFromCart',
   async ({ productId, userId }) => {
@@ -45,6 +66,27 @@ export const removeAllFromCart = createAsyncThunk(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ productId, userId }),
+    });
+
+    if (!response.ok) {
+      throw json(
+        { message: 'Could not remove products from cart.' },
+        { status: 500 },
+      );
+    } else {
+      const { items, totalAmount, totalQuantity } = await response.json();
+      return { items, totalAmount, totalQuantity };
+    }
+  },
+);
+
+export const clearCart = createAsyncThunk(
+  'cart/clearCart',
+  async ({ userId }) => {
+    const response = await fetch(`http://localhost:8080/cart/clear`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
     });
 
     if (!response.ok) {

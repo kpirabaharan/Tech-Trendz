@@ -1,7 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addToCart, removeAllFromCart } from '../../state/cart-actions';
+import {
+  addToCart,
+  removeFromCart,
+  removeAllFromCart,
+} from '../../state/cart-actions';
 
 const CartItem = ({ id, name, brand, cost, image, quantity }) => {
   const userId = useSelector((state) => state.user.user._id);
@@ -9,6 +13,14 @@ const CartItem = ({ id, name, brand, cost, image, quantity }) => {
 
   const handleRemoveAllFromCart = () => {
     dispatch(removeAllFromCart({ productId: id, userId }));
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart({ productId: id, userId }));
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ productId: id, userId }));
   };
 
   return (
@@ -37,29 +49,29 @@ const CartItem = ({ id, name, brand, cost, image, quantity }) => {
       <div className='flex flex-row-reverse w-[115px] justify-between items-center'>
         <button
           className='flex justify-center items-center text-[20px] text-[#202020]
-          font-opensans font-bold colo w-[40px] h-[40px] rounded-[50%] bg-[#d9d9d9]
-          cursor-pointer'
+          font-opensans font-bold colo w-[40px] h-[40px] rounded-[50%] bg-[#d9d9d9]'
+          onClick={handleAddToCart}
         >
           +
         </button>
         <div className='text-[20px] font-opensans font-extrabold text-[#202020]'>
           {quantity}
         </div>
-        <div
+        <button
           className='flex justify-center items-center text-[20px] text-[#202020]
-          font-opensans font-bold colo w-[40px] h-[40px] rounded-[50%] bg-[#d9d9d9]
-          cursor-pointer'
+          font-opensans font-bold colo w-[40px] h-[40px] rounded-[50%] bg-[#d9d9d9]'
+          onClick={handleRemoveFromCart}
         >
           -
-        </div>
+        </button>
       </div>
       <div className='h-full text-right w-[120px]'>
         <div className='pt-[22px] text-[26px] font-opensans font-bold text-[#202020]'>
-          ${quantity * cost}
+          ${(quantity * cost).toFixed(2)}
         </div>
         <button
           className='pt-[5px] text-[14px] font-opensans font-semibold 
-        text-[#E44C4C] cursor-pointer'
+        text-[#E44C4C]'
           onClick={handleRemoveAllFromCart}
         >
           Remove
