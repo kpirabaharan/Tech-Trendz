@@ -28,14 +28,12 @@ const ProductPage = () => {
       <div className='w-full mx-auto'>
         <ProductCarousel products={products} />
       </div>
-      <Line />
-      <div className='mx-auto pt-4'>
+      <div className='mx-auto pt-10'>
         <ProductQuery />
       </div>
       <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
         <ProductGrid />
       </div>
-      <Line />
       <div className='bg-cyan-100'>
         <Footer />
       </div>

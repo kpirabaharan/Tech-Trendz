@@ -1,35 +1,68 @@
 // import Swiper core and required modules
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
-import CarouselSlide from './CarouselSlide';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import { DotIcon } from '../../icons/DotIcon';
+import { LeftChevron } from '../../icons/LeftChevron';
+import { RightChevron } from '../../icons/RightChevron';
 
 const ProductCarousel = ({ products }) => {
-  // const products = useSelector((state) => state.products.items);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? products.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === products.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const goToSlide = (slideIndex) => {
+    setCurrentIndex(slideIndex);
+  };
 
   return (
-    <Swiper
-      className='h-auto'
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      spaceBetween={50}
-      slidesPerView={1}
-      navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-    >
-      {products.map((product) => (
-        <SwiperSlide className='z-[-1]' key={product._id}>
-          <CarouselSlide key={product._id} product={product} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className='max-w-[1400px] h-[400px] w-full m-auto px-4 relative group'>
+      <div
+        style={{
+          backgroundImage: `url(http://localhost:8080/assets/${products[currentIndex].picturePath})`,
+          backgroundRepeat: 'no-repeat',
+        }}
+        className='w-full h-full rounded-2xl bg-center bg-contain duration-500 block object-contain'
+      ></div>
+
+      {/* Left Arrow */}
+      <div
+        className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] left-5
+      text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'
+      >
+        <LeftChevron onClickFn={prevSlide} />
+      </div>
+
+      {/* Right Arrow */}
+      <div
+        className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] right-5
+      text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'
+      >
+        <RightChevron onClickFn={nextSlide} />
+      </div>
+
+      {/* Dots */}
+      <div className='flex top-4 justify-center py-2'>
+        {products.map((product, index) => (
+          <div
+            key={product._id}
+            className='cursor-pointer'
+            onClick={() => goToSlide(index)}
+          >
+            <DotIcon isIndex={index == currentIndex} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
