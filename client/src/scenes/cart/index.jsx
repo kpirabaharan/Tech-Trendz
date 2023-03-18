@@ -112,7 +112,7 @@ const CartPage = () => {
             <button
               className='mt-[5px] w-full h-[40px] border-none 
                   bg-gradient-blue rounded-[20px] cursor-pointer text-[16px]
-                  font-opensans font-semibold text-[#202020]'
+                  font-opensans font-semibold text-[#202020] hover:text-white'
             >
               Checkout
             </button>
