@@ -7,19 +7,20 @@ import {
   removeAllFromCart,
   clearCart,
 } from '../controllers/cart.js';
+import { verifyToken } from '../middleware/auth.js';
 
 const router = Router();
 
 /* Read */
-router.get('/:userId', fetchCart);
+router.get('/:userId', verifyToken, fetchCart);
 
 /* Manipulate Cart */
-router.post('/add', addToCart);
+router.post('/add', verifyToken, addToCart);
 
-router.post('/remove', removeFromCart);
+router.post('/remove', verifyToken, removeFromCart);
 
-router.post('/removeAll', removeAllFromCart);
+router.post('/removeAll', verifyToken, removeAllFromCart);
 
-router.post('/clear', clearCart);
+router.post('/clear', verifyToken, clearCart);
 
 export default router;
