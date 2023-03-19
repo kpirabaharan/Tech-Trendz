@@ -7,6 +7,7 @@ import useMediaQuery from '../hooks/useMediaQuery';
 import { CartIcon } from '../icons/CartIcon';
 import { PersonIcon } from '../icons/PersonIcon';
 import { LogoutIcon } from '../icons/Logout';
+import { ShoppingBagIcon } from '../icons/ShoppingBagIcon';
 import SearchBar from './SearchBar';
 
 const Navbar = () => {
@@ -37,14 +38,19 @@ const Navbar = () => {
           <h4 className='font-playfair text-3xl font-bold'>E-Commerce</h4>
         </Link>
         {isAboveSmallScreens ? (
-          <div className='flex justify-between items-center gap-8'>
+          <div className='flex justify-between items-center gap-6'>
             <form>
               <SearchBar />
             </form>
             {user ? (
-              <Link to={'/cart'}>
-                <CartIcon />
-              </Link>
+              <>
+                <Link to={'/order'}>
+                  <ShoppingBagIcon />
+                </Link>
+                <Link to={'/cart'}>
+                  <CartIcon />
+                </Link>
+              </>
             ) : (
               <></>
             )}
@@ -64,11 +70,16 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <div className='flex items-center gap-8'>
+          <div className='flex items-center gap-6'>
             {user ? (
-              <Link to={'/cart'}>
-                <CartIcon />
-              </Link>
+              <>
+                <Link to={'/order'}>
+                  <ShoppingBagIcon />
+                </Link>
+                <Link to={'/cart'}>
+                  <CartIcon />
+                </Link>
+              </>
             ) : (
               <></>
             )}

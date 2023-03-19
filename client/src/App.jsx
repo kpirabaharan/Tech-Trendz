@@ -4,6 +4,7 @@ import RootLayout from './scenes/root';
 import ProductPage, { productsLoader } from './scenes/product';
 import ProductDetailPage, { productLoader } from './scenes/productDetail';
 import CartPage from './scenes/cart';
+import OrderPage from './scenes/order';
 import AuthenticationPage from './scenes/authentication';
 
 import './index.css';
@@ -31,6 +32,10 @@ function App() {
         {
           path: 'cart',
           element: <CartPage />,
+        },
+        {
+          path: 'order',
+          element: <OrderPage />,
         },
         {
           path: 'auth',
