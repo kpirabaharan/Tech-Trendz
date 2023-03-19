@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { setLogout } from '../state/user-slice';
+import { cartLogout } from '../state/cart-slice';
 import useMediaQuery from '../hooks/useMediaQuery';
 import { CartIcon } from '../icons/CartIcon';
 import { PersonIcon } from '../icons/PersonIcon';
@@ -58,6 +59,7 @@ const Navbar = () => {
               <button
                 onClick={() => {
                   navigate('/');
+                  dispatch(cartLogout());
                   return dispatch(setLogout());
                 }}
               >
@@ -87,6 +89,7 @@ const Navbar = () => {
               <button
                 onClick={() => {
                   navigate('/');
+                  dispatch(cartLogout());
                   return dispatch(setLogout());
                 }}
               >

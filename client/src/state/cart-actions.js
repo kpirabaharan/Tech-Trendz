@@ -3,9 +3,10 @@ import { json } from 'react-router-dom';
 
 export const fetchCart = createAsyncThunk(
   'cart/:userId',
-  async ({ userId }) => {
+  async ({ userId, token }) => {
     const response = await fetch(`http://localhost:8080/cart/${userId}`, {
       method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!response.ok) {
@@ -19,10 +20,13 @@ export const fetchCart = createAsyncThunk(
 
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
-  async ({ productId, userId }) => {
+  async ({ productId, userId, token }) => {
     const response = await fetch(`http://localhost:8080/cart/add`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ productId, userId }),
     });
 
@@ -40,10 +44,13 @@ export const addToCart = createAsyncThunk(
 
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
-  async ({ productId, userId }) => {
+  async ({ productId, userId, token }) => {
     const response = await fetch(`http://localhost:8080/cart/remove`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ productId, userId }),
     });
 
@@ -61,10 +68,13 @@ export const removeFromCart = createAsyncThunk(
 
 export const removeAllFromCart = createAsyncThunk(
   'cart/removeAllFromCart',
-  async ({ productId, userId }) => {
+  async ({ productId, userId, token }) => {
     const response = await fetch(`http://localhost:8080/cart/removeAll`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ productId, userId }),
     });
 
@@ -82,10 +92,13 @@ export const removeAllFromCart = createAsyncThunk(
 
 export const clearCart = createAsyncThunk(
   'cart/clearCart',
-  async ({ userId }) => {
+  async ({ userId, token }) => {
     const response = await fetch(`http://localhost:8080/cart/clear`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ userId }),
     });
 

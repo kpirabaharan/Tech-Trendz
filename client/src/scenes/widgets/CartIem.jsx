@@ -9,18 +9,19 @@ import {
 
 const CartItem = ({ id, name, brand, cost, image, quantity }) => {
   const userId = useSelector((state) => state.user.user._id);
+  const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
 
   const handleRemoveAllFromCart = () => {
-    dispatch(removeAllFromCart({ productId: id, userId }));
+    dispatch(removeAllFromCart({ productId: id, userId, token }));
   };
 
   const handleRemoveFromCart = () => {
-    dispatch(removeFromCart({ productId: id, userId }));
+    dispatch(removeFromCart({ productId: id, userId, token }));
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ productId: id, userId }));
+    dispatch(addToCart({ productId: id, userId, token }));
   };
 
   return (

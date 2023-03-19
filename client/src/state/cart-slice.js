@@ -17,6 +17,13 @@ const initialState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
+  reducers: {
+    cartLogout: (state) => {
+      state.items = [];
+      state.totalAmount = 0;
+      state.totalQuantity = 0;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchCart.fulfilled, (state, { payload }) => {
       state.items = payload.items;
@@ -45,5 +52,7 @@ const cartSlice = createSlice({
     });
   },
 });
+
+export const { cartLogout } = cartSlice.actions;
 
 export default cartSlice.reducer;

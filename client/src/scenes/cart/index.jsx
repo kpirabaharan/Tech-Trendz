@@ -10,15 +10,16 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
   const userId = useSelector((state) => state.user.user._id);
+  const token = useSelector((state) => state.user.token);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   useEffect(() => {
-    dispatch(fetchCart({ userId }));
+    dispatch(fetchCart({ userId, token }));
   }, []);
 
   const handleClearCart = () => {
-    dispatch(clearCart({ userId }));
+    dispatch(clearCart({ userId, token }));
   };
 
   return (
@@ -68,7 +69,6 @@ const CartPage = () => {
             </button>
           </div>
           {cart.map((item, index) => {
-            console.log(index);
             return (
               <>
                 <CartItem
@@ -81,7 +81,10 @@ const CartPage = () => {
                   quantity={item.quantity}
                 />
                 {cart.length - 1 != index ? (
-                  <hr className='w-[90%] m-auto border-t-[1px] border-dashed' />
+                  <hr
+                    key={index}
+                    className='w-[90%] m-auto border-t-[1px] border-dashed'
+                  />
                 ) : (
                   <></>
                 )}

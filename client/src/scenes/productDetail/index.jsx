@@ -13,6 +13,12 @@ const ProductDetailPage = () => {
     }
     return null;
   });
+  const token = useSelector((state) => {
+    if (state.user.token) {
+      return state.user.token;
+    }
+    return null;
+  });
 
   useEffect(() => {
     // 👇️ scroll to top on page load
@@ -20,7 +26,7 @@ const ProductDetailPage = () => {
   }, []);
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ productId: product._id, userId }));
+    dispatch(addToCart({ productId: product._id, userId, token }));
   };
 
   return (

@@ -61,7 +61,6 @@ const AuthForm = () => {
       throw json({ message: 'Could not login!' }, { status: 500 });
     } else {
       const { user, token } = await response.json();
-      console.log({ user: user, token: token });
       dispatch(setLogin({ user, token }));
       onSubmitProps.resetForm();
       if (user) {
