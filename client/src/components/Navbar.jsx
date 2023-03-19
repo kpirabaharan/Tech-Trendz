@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { setLogout } from '../state/user-slice';
 import useMediaQuery from '../hooks/useMediaQuery';
@@ -10,6 +10,7 @@ import { LogoutIcon } from '../icons/Logout';
 import SearchBar from './SearchBar';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
   const dispatch = useDispatch();
   const [isTopOfPage, setIsTopOfPage] = useState(true);
@@ -48,7 +49,12 @@ const Navbar = () => {
               <></>
             )}
             {user ? (
-              <button onClick={() => dispatch(setLogout())}>
+              <button
+                onClick={() => {
+                  navigate('/');
+                  return dispatch(setLogout());
+                }}
+              >
                 <LogoutIcon />
               </button>
             ) : (
@@ -59,11 +65,20 @@ const Navbar = () => {
           </div>
         ) : (
           <div className='flex items-center gap-8'>
-            <Link to={'/cart'}>
-              <CartIcon />
-            </Link>
             {user ? (
-              <button onClick={() => dispatch(setLogout())}>
+              <Link to={'/cart'}>
+                <CartIcon />
+              </Link>
+            ) : (
+              <></>
+            )}
+            {user ? (
+              <button
+                onClick={() => {
+                  navigate('/');
+                  return dispatch(setLogout());
+                }}
+              >
                 <LogoutIcon />
               </button>
             ) : (

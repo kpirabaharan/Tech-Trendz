@@ -52,18 +52,21 @@ const ProductDetailPage = () => {
           </div>
           <>
             {userId == null ? (
-              <Link
-                className='bg-white hover:bg-gray-100 text-gray-800 
-            font-semibold py-2 px-4 border border-gray-400 rounded shadow'
-                to={'/auth?mode=login'}
-              >
-                Sign in to Add to Cart
-              </Link>
+              <div className='mx-auto'>
+                <Link
+                  className='flex justify-center bg-gradient-blue 
+                  hover:bg-gradient-blue w-[80%] min-w-[200px] text-gray-800 
+                  hover:text-white font-semibold py-2 px-4 rounded-[20px] shadow'
+                  to={'/auth?mode=login'}
+                >
+                  Sign in to Add to Cart
+                </Link>
+              </div>
             ) : (
               <button
                 className='bg-gradient-blue hover:bg-gradient-blue w-[80%]
                  min-w-[200px] mx-auto text-gray-800 hover:text-white 
-                 font-semibold py-2 px-4 borderborder-gray-400 rounded-[20px] shadow'
+                 font-semibold py-2 px- rounded-[20px] shadow'
                 onClick={handleAddToCart}
               >
                 Add to Cart
@@ -75,56 +78,6 @@ const ProductDetailPage = () => {
     </div>
   );
 };
-
-{
-  /* <div
-className='m-0 py-8 flex h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)] 
-bg-gradient-bluewhite'
->
-<div className='w-5/6 mx-auto flex flex-col justify-center z-0'>
-  <div className='flex flex-row justify-center h-[50%]'>
-    <div className='flex justify-center basis-1/2'>
-      <img
-        className='h-auto w-auto block object-contain'
-        src={`http://localhost:8080/assets/${product.picturePath}`}
-        alt={product.picturePath}
-      />
-    </div>
-    <div className='flex flex-col basis-1/2 justify-between'>
-      <div className='flex flex-col'>
-        <Link className='text-gray-600' to={'..'} relative='route'>
-          Home
-        </Link>
-        <div className='flex flex-col pt-16'>
-          <p className='text-xl font-bold'>{product.name}</p>
-          <p>${product.cost}</p>
-          <p className='text-sm pt-4'>{product.description}</p>
-        </div>
-      </div>
-      <div>
-        {userId == null ? (
-          <Link
-            className='bg-white hover:bg-gray-100 text-gray-800 
-            font-semibold py-2 px-4 border border-gray-400 rounded shadow'
-            to={'/auth?mode=login'}
-          >
-            Sign in to Add to Cart
-          </Link>
-        ) : (
-          <button
-            className='bg-white hover:bg-gray-100 text-gray-800 
-            font-semibold py-2 px-4 border border-gray-400 rounded shadow'
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-          </button>
-        )}
-      </div>
-    </div>
-  </div>
-</div>
-</div> */
-}
 
 export default ProductDetailPage;
 
