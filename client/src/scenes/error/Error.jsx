@@ -25,7 +25,7 @@ const ErrorPage = () => {
       <main>
         <div
           className='pt-[115px] sm:pt-[63px] flex flex-col justify-center items-center
-          h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)] '
+          h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)]'
         >
           <PageContent title={title}>
             <p>{message}</p>

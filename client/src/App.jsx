@@ -6,6 +6,8 @@ import ProductDetailPage, { productLoader } from './scenes/productDetail';
 import CartPage from './scenes/cart';
 import OrderPage from './scenes/order';
 import AuthenticationPage from './scenes/authentication';
+import PaymentSuccessPage from './scenes/payment/success';
+import PaymentCancelPage from './scenes/payment/cancel';
 
 import './index.css';
 import ErrorPage from './scenes/error/Error';
@@ -40,6 +42,19 @@ function App() {
         {
           path: 'auth',
           element: <AuthenticationPage />,
+        },
+        {
+          path: 'payment',
+          children: [
+            {
+              path: 'success',
+              element: <PaymentSuccessPage />,
+            },
+            {
+              path: 'cancel',
+              element: <PaymentCancelPage />,
+            },
+          ],
         },
       ],
     },
