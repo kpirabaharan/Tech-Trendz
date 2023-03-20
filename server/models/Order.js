@@ -1,21 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 const OrderSchema = new mongoose.Schema(
   {
     products: [
       {
-        product: { type: Object, required: true },
+        productId: { type: String, required: true },
+        name: { type: String, rquired: true },
+        brand: { type: String, required: true },
+        cost: { type: Number, required: true },
+        picturePath: { type: String, required: true },
         quantity: { type: Number, required: true },
       },
     ],
     totalAmount: { type: Number, required: true },
     totalQuantity: { type: Number, required: true },
-    user: {
-      userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User',
-      },
+    userId: {
+      type: Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
   },
   { timestamps: true },
