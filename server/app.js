@@ -13,6 +13,7 @@ import { products } from './data/index.js';
 import productRoutes from './routes/product.js';
 import authRoutes from './routes/auth.js';
 import cartRoutes from './routes/cart.js';
+import orderRoutes from './routes/order.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,7 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use('/auth', authRoutes);
 app.use('/product', productRoutes);
 app.use('/cart', cartRoutes);
+app.use('/order', orderRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
