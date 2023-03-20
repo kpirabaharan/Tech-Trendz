@@ -14,11 +14,12 @@ const OrderSchema = new mongoose.Schema(
     ],
     totalAmount: { type: Number, required: true },
     totalQuantity: { type: Number, required: true },
-    userId: {
+    user: {
       type: Types.ObjectId,
       required: true,
       ref: 'User',
     },
+    date: { type: Date, required: true },
   },
   { timestamps: true },
 );

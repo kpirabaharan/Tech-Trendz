@@ -45,7 +45,7 @@ const CartPage = () => {
 
   return (
     <div
-      className='m-0 py-8 flex h-[calc(100vh-63px)] justify-center items-start 
+      className='m-0 py-8 flex h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)] justify-center items-start 
     bg-gradient-bluewhite'
     >
       {isLoading ? (

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { setLogout } from '../state/user-slice';
 import { cartLogout } from '../state/cart-slice';
+import { orderLogout } from '../state/order-slice';
 import useMediaQuery from '../hooks/useMediaQuery';
 import { CartIcon } from '../icons/CartIcon';
 import { PersonIcon } from '../icons/PersonIcon';
@@ -60,6 +61,7 @@ const Navbar = () => {
                 onClick={() => {
                   navigate('/');
                   dispatch(cartLogout());
+                  dispatch(orderLogout());
                   return dispatch(setLogout());
                 }}
               >
@@ -90,6 +92,7 @@ const Navbar = () => {
                 onClick={() => {
                   navigate('/');
                   dispatch(cartLogout());
+                  dispatch(orderLogout());
                   return dispatch(setLogout());
                 }}
               >
