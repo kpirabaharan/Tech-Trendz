@@ -6,6 +6,28 @@ const initialState = {
   items: [],
 };
 
+const formatDate = (date) => {
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  let year = date.getFullYear();
+  let month = monthNames[date.getMonth()];
+  let day = date.getDate().toString().padStart(2, '0');
+  return `${month} ${day}, ${year}`;
+};
+
 const orderSlice = createSlice({
   name: 'orders',
   initialState,
@@ -17,27 +39,6 @@ const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchOrders.fulfilled, (state, { payload }) => {
       state.items = payload.map((order) => {
-        const formatDate = (date) => {
-          const monthNames = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December',
-          ];
-
-          let year = date.getFullYear();
-          let month = monthNames[date.getMonth()];
-          let day = date.getDate().toString().padStart(2, '0');
-          return `${month} ${day}, ${year}`;
-        };
         const date = new Date(order.date);
         const secondDate = new Date(date.getTime() + 345600000);
 
@@ -58,27 +59,6 @@ const orderSlice = createSlice({
     });
     builder.addCase(successfulOrder.fulfilled, (state, { payload }) => {
       state.items = payload.map((order) => {
-        const formatDate = (date) => {
-          const monthNames = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December',
-          ];
-
-          let year = date.getFullYear();
-          let month = monthNames[date.getMonth()];
-          let day = date.getDate().toString().padStart(2, '0');
-          return `${month} ${day}, ${year}`;
-        };
         const date = new Date(order.date);
         const secondDate = new Date(date.getTime() + 345600000);
 

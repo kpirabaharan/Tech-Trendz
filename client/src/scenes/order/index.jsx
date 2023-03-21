@@ -56,6 +56,7 @@ const OrderPage = () => {
               orderName={`${order.orderFirstName} ${order.orderLastName}`}
               orderEmail={order.orderEmail}
               orderDate={order.orderDate}
+              products={order.products}
               deliveryDate={order.deliveryDate}
               totalAmount={order.totalAmount}
               totalQuantity={order.totalQuantity}
