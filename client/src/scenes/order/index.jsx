@@ -17,20 +17,20 @@ const OrderPage = () => {
 
   return (
     <div
-      className='m-0 py-8 flex h-[calc(100vh-63px)] justify-center items-start 
+      className='m-0 py-8 flex h-full min-h-[calc(100vh-115px)] sm:min-h-[calc(100vh-63px)] 
+        justify-center items-start 
         bg-gradient-bluewhite'
     >
       {orders.length == 0 ? (
         <div
-          className='w-[90%] md:w-[70%] h-full bg-white rounded-[20px] shadow-2xl 
+          className='w-[90%] md:w-[70%] h-[calc(100vh-179px)] 
+            sm:h-[calc(100vh-127px)] py-4 bg-white rounded-[20px] shadow-2xl 
             flex flex-col justify-center items-center gap-4'
         >
-          <p className='text-3xl font-bold pt-4 text-[#E44C4C]'>
+          <p className='text-3xl font-bold text-[#E44C4C]'>
             You have no orders yet!
           </p>
-          <div className='flex flex-wrap w-[355px] text-center'>
-            <p className='text-xl font-bold'>Return home!</p>
-          </div>
+          <p className='text-xl font-bold'>Return home!</p>
           <Link to={`/`}>
             <h4
               className='px-4 py-2 border-none 

@@ -76,11 +76,5 @@ const OrderItem = ({
     </div>
   );
 };
-// border-left:1px solid #38546d;
-//      border-right:1px solid #16222c;
-//      height:80px;
-//      position:absolute;
-//      right:249px;
-//      top:10px;
 
 export default OrderItem;

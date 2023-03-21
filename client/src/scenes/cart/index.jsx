@@ -45,8 +45,8 @@ const CartPage = () => {
 
   return (
     <div
-      className='m-0 py-8 flex h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)] justify-center items-start 
-    bg-gradient-bluewhite'
+      className='m-0 py-8 flex h-full min-h-[calc(100vh-115px)] sm:min-h-[calc(100vh-63px)] justify-center
+     items-start bg-gradient-bluewhite'
     >
       {isLoading ? (
         <>
@@ -62,8 +62,9 @@ const CartPage = () => {
         <>
           {cart.length == 0 ? (
             <div
-              className='w-[90%] md:w-[70%] h-full bg-white rounded-[20px] shadow-2xl 
-            flex flex-col justify-center items-center gap-4'
+              className='w-[90%] md:w-[70%] h-[calc(100vh-179px)] sm:h-[calc(100vh-127px)] 
+              py-8 bg-white rounded-[20px] shadow-2xl flex flex-col justify-center
+              items-center gap-4'
             >
               <CartIcon w='200px' h='200px' />
               <p className='text-3xl font-bold pt-4 text-[#E44C4C]'>
