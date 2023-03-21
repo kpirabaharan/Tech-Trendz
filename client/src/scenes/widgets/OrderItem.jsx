@@ -13,7 +13,6 @@ const OrderItem = ({
   totalAmount,
   totalQuantity,
 }) => {
-  console.log(products);
   return (
     <div className='m-auto w-[90%]'>
       <p

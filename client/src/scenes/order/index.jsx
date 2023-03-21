@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import OrderItem from '../widgets/OrderItem';
 import { fetchOrders } from '../../state/order-actions';
@@ -55,8 +56,8 @@ const OrderPage = () => {
               orderId={order.orderId}
               orderName={`${order.orderFirstName} ${order.orderLastName}`}
               orderEmail={order.orderEmail}
-              orderDate={order.orderDate}
               products={order.products}
+              orderDate={order.orderDate}
               deliveryDate={order.deliveryDate}
               totalAmount={order.totalAmount}
               totalQuantity={order.totalQuantity}

@@ -3,6 +3,51 @@ import Stripe from 'stripe';
 import Order from '../models/Order.js';
 import User from '../models/User.js';
 
+const formatOrders = (orders) => {
+  const formatDate = (date) => {
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    let year = date.getFullYear();
+    let month = monthNames[date.getMonth()];
+    let day = date.getDate().toString().padStart(2, '0');
+    return `${month} ${day}, ${year}`;
+  };
+
+  orders.reverse();
+
+  return orders.map((order) => {
+    const date = new Date(order.date);
+    const secondDate = new Date(date.getTime() + 345600000);
+
+    const orderDate = formatDate(date);
+    const estimatedDeliveryDate = formatDate(secondDate);
+    return {
+      orderId: order._id,
+      orderFirstName: order.user.firstName,
+      orderLastName: order.user.lastName,
+      orderEmail: order.user.email,
+      orderDate: orderDate,
+      deliveryDate: estimatedDeliveryDate,
+      products: order.products,
+      totalAmount: order.totalAmount,
+      totalQuantity: order.totalQuantity,
+    };
+  });
+};
+
 const makeOrder = async (userId) => {
   const user = await User.findById(userId);
 
@@ -40,8 +85,10 @@ export const getOrder = async (req, res) => {
       'firstName lastName email',
     );
 
+    const formattedOrders = formatOrders(orders);
+
     res.status(200).json({
-      orders: orders,
+      orders: formattedOrders,
     });
   } catch (err) {
     console.log(err);
@@ -93,10 +140,12 @@ export const successfulOrder = async (req, res) => {
       'firstName lastName email',
     );
 
+    const formattedOrders = formatOrders(orders);
+
     await user.clearCart();
 
     res.status(201).json({
-      orders: orders,
+      orders: formattedOrders,
     });
   } catch (err) {
     console.log(err);
