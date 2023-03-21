@@ -25,7 +25,7 @@ const CartItem = ({ id, name, brand, cost, image, quantity }) => {
   };
 
   return (
-    <div className='m-auto w-[90%] h-[180px] flex  items-center'>
+    <div className='m-auto w-[90%] h-[180px] flex items-center'>
       <div className='w-[15%] flex justify-center'>
         <img
           className='h-[120px] block object-contain'

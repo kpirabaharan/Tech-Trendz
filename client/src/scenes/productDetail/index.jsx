@@ -31,18 +31,18 @@ const ProductDetailPage = () => {
 
   return (
     <div
-      className='m-0 flex sm:flex-row flex-col bg-gradient-bluewhite sm:bg-transparent
+      className='m-0 flex md:flex-row flex-col bg-gradient-bluewhite md:bg-transparent
       h-[calc(100vh-115px)] sm:h-[calc(100vh-63px)]'
     >
-      <div className='bg-gradient-bluewhite basis-1/2 sm:basis-2/3 flex'>
+      <div className='bg-gradient-bluewhite basis-1/2 md:basis-2/3 flex'>
         <img
-          className='h-[350px] sm:h-[50%] w-[80%] m-auto block object-contain'
+          className='h-[350px] md:h-[50%] w-[80%] m-auto block object-contain'
           src={`http://localhost:8080/assets/${product.picturePath}`}
           alt={product.picturePath}
         />
       </div>
       <div
-        className='basis-1/2 sm:basis-1/3 px-2 py-4 sm:py-0 sm:bg-white flex 
+        className='basis-1/2 md:basis-1/3 px-2 py-4 md:py-0 md:bg-white flex 
         items-center justify-center w-5/6 mx-auto'
       >
         <div className='h-[400px] max-h-full w-full flex flex-col justify-between'>
