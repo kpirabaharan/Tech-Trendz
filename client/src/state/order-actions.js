@@ -4,12 +4,15 @@ import { json } from 'react-router-dom';
 export const fetchOrders = createAsyncThunk(
   'order/:userId',
   async ({ userId, token }) => {
-    const response = await fetch(`http://localhost:8080/order/${userId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${import.meta.env.VITE_NODE_SERVER}order/${userId}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw json({ message: 'Could not fetch orders!' }, { status: 500 });
@@ -24,14 +27,17 @@ export const fetchOrders = createAsyncThunk(
 export const successfulOrder = createAsyncThunk(
   'order/success',
   async ({ userId, token }) => {
-    const response = await fetch(`http://localhost:8080/order/success`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${import.meta.env.VITE_NODE_SERVER}order/success`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),
       },
-      body: JSON.stringify({ userId }),
-    });
+    );
 
     if (!response.ok) {
       throw json(

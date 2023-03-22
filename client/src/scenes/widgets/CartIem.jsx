@@ -29,7 +29,7 @@ const CartItem = ({ id, name, brand, cost, image, quantity }) => {
       <div className='w-[15%] flex justify-center'>
         <img
           className='h-[120px] block object-contain'
-          src={`http://localhost:8080/assets/${image}`}
+          src={`${import.meta.env.VITE_NODE_SERVER}assets/${image}`}
           alt={image}
         />
       </div>

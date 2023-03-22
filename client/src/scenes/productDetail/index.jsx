@@ -37,7 +37,9 @@ const ProductDetailPage = () => {
       <div className='bg-gradient-bluewhite basis-1/2 md:basis-2/3 flex'>
         <img
           className='h-[350px] md:h-[50%] w-[80%] m-auto block object-contain'
-          src={`http://localhost:8080/assets/${product.picturePath}`}
+          src={`${import.meta.env.VITE_NODE_SERVER}assets/${
+            product.picturePath
+          }`}
           alt={product.picturePath}
         />
       </div>
@@ -90,7 +92,9 @@ export default ProductDetailPage;
 export const productLoader = async ({ request, params }) => {
   const id = params.productId;
 
-  const response = await fetch(`http://localhost:8080/product/item/${id}`);
+  const response = await fetch(
+    `${import.meta.env.VITE_NODE_SERVER}product/item/${id}`,
+  );
 
   if (!response.ok) {
     throw json(

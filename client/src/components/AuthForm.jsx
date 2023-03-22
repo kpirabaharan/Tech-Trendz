@@ -51,11 +51,14 @@ const AuthForm = () => {
   const isLogin = searchParams.get('mode') === 'login';
 
   const login = async (values, onSubmitProps) => {
-    const response = await fetch(`http://localhost:8080/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_NODE_SERVER}auth/login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      },
+    );
 
     if (!response.ok) {
       throw json({ message: 'Could not login!' }, { status: 500 });
@@ -70,11 +73,14 @@ const AuthForm = () => {
   };
 
   const register = async (values, onSubmitProps) => {
-    const response = await fetch('http://localhost:8080/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_NODE_SERVER}auth/register`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      },
+    );
 
     const responseData = await response.json();
 

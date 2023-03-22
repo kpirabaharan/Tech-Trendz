@@ -7,7 +7,9 @@ const ProductItem = ({ product }) => {
         <Link to={`/product/${product._id}`}>
           <img
             className='h-[180px] max-w-[100%] block object-contain'
-            src={`http://localhost:8080/assets/${product.picturePath}`}
+            src={`${import.meta.env.VITE_NODE_SERVER}assets/${
+              product.picturePath
+            }`}
             alt={product.picturePath}
           />
         </Link>

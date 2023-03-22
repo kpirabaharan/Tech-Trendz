@@ -4,9 +4,12 @@ import { json } from 'react-router-dom';
 export const fetchProductData = createAsyncThunk(
   'products/fetchData',
   async (mode) => {
-    const response = await fetch(`http://localhost:8080/product/${mode}`, {
-      method: 'GET',
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_NODE_SERVER}product/${mode}`,
+      {
+        method: 'GET',
+      },
+    );
 
     if (!response.ok) {
       throw json(

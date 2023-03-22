@@ -8,7 +8,9 @@ const OrderProducts = ({ product }) => {
         <div className='w-[75%] flex justify-center'>
           <img
             className='block object-contain h-[50px]'
-            src={`http://localhost:8080/assets/${product.picturePath}`}
+            src={`${import.meta.env.VITE_NODE_SERVER}assets/${
+              product.picturePath
+            }`}
             alt={product.picturePath}
           />
         </div>

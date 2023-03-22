@@ -28,7 +28,9 @@ const ProductCarousel = ({ products }) => {
     <div className='max-w-[1400px] h-[400px] w-full m-auto px-4 relative group'>
       <div
         style={{
-          backgroundImage: `url(http://localhost:8080/assets/${products[currentIndex].picturePath})`,
+          backgroundImage: `url(${import.meta.env.VITE_NODE_SERVER}assets/${
+            products[currentIndex].picturePath
+          })`,
           backgroundRepeat: 'no-repeat',
         }}
         className='w-full h-full rounded-2xl bg-center bg-contain duration-500 block object-contain'

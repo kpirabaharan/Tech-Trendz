@@ -44,7 +44,9 @@ const ProductPage = () => {
 export default ProductPage;
 
 export const productsLoader = async () => {
-  const response = await fetch('http://localhost:8080/product/new');
+  const response = await fetch(
+    `${import.meta.env.VITE_NODE_SERVER}product/new`,
+  );
 
   if (!response.ok) {
     throw json(

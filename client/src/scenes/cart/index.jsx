@@ -38,7 +38,7 @@ const CartPage = () => {
 
   const handleOrder = async () => {
     setIsLoading(true);
-    const response = await fetch(`http://localhost:8080/order/`, {
+    const response = await fetch(`${import.meta.env.VITE_NODE_SERVER}order/`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
