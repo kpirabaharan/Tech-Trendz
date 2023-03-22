@@ -70,9 +70,9 @@ const ProductDetailPage = () => {
               </div>
             ) : (
               <button
-                className='bg-gradient-blue hover:bg-gradient-blue w-[80%]
-                 min-w-[200px] mx-auto text-gray-800 hover:text-white 
-                 font-semibold py-2 px- rounded-[20px] shadow'
+                className='bg-blue-500 hover:bg-blue-300 w-[80%]
+                  min-w-[200px] mx-auto text-white font-semibold py-2 
+                  rounded-[20px] shadow transition-colors duration-300'
                 onClick={handleAddToCart}
               >
                 Add to Cart

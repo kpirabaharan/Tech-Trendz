@@ -14,7 +14,7 @@ const OrderProducts = ({ product }) => {
         </div>
       </div>
       <div className='flex flex-col flex-1 justify-center pl-4'>
-        <p className='text-[22px] font-opensans text-[#616161]'>
+        <p className='text-[22px] font-opensans text-[#202020]'>
           {product.name}
         </p>
         <p className='font-opensans text-[#7c7c7c]'>{product.brand}</p>

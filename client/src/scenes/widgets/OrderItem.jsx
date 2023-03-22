@@ -66,8 +66,8 @@ const OrderItem = ({
             <hr className='border-dashed' />
           </div>
           <div className='flex flex-row justify-between pt-2'>
-            <p className='text-[#202020] text-[22px]'>Total</p>
-            <p className='text-[#202020] text-[22px]'>
+            <p className='text-[#202020] text-[22px] font-semibold'>Total</p>
+            <p className='text-[#202020] text-[22px] font-semibold'>
               ${(totalAmount * 1.13).toFixed(2)}
             </p>
           </div>

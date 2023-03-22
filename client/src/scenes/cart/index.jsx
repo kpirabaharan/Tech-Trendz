@@ -117,7 +117,8 @@ const CartPage = () => {
                     </h3>
                     <button
                       className='text-[14px] font-opensans font-semibold border-b-[1px]
-                 text-[#E44C4C] border-[#E44C4C]'
+                      text-[#E44C4C] hover:text-[#fb7272] transition-colors duration-300 
+                      border-[#E44C4C] hover:border-[#fb7272]'
                       onClick={handleClearCart}
                     >
                       Remove All
@@ -151,7 +152,7 @@ const CartPage = () => {
                     <div className='w-full flex justify-between'>
                       <div>
                         <p
-                          className='text-[22px] font-opensans font-bold 
+                          className='text-[22px] font-opensans font-semibold 
                     text-[#202020]'
                         >
                           Sub-Total
@@ -163,14 +164,15 @@ const CartPage = () => {
                           {totalQuantity} Items
                         </p>
                       </div>
-                      <p className='text-[36px] font-opensans font-bold text-[#202020]'>
+                      <p className='text-[36px] font-opensans font-semibold text-[#202020]'>
                         ${totalAmount.toFixed(2)}
                       </p>
                     </div>
                     <button
-                      className='mt-[5px] w-full h-[40px] border-none 
-                  bg-gradient-blue rounded-[20px] cursor-pointer text-[16px]
-                  font-opensans font-semibold text-[#202020] hover:text-white'
+                      className='mt-[5px] w-full h-[40px] border-none bg-blue-500 
+                        hover:bg-blue-300 rounded-[20px] cursor-pointer text-[16px]
+                        font-opensans font-semibold text-white transition-colors 
+                        duration-300'
                       onClick={handleOrder}
                     >
                       Checkout

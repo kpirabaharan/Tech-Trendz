@@ -8,7 +8,11 @@ const ProductQuery = () => {
     <div className='flex justify-center gap-8 font-playfair'>
       <Link
         className={`
-          ${mode == 'all' ? 'bg-blue-300' : 'hover:bg-gray-200'}
+          ${
+            mode == 'all'
+              ? 'bg-blue-300'
+              : 'hover:bg-gray-200 transition-colors duration-300'
+          }
         text-center py-2 border-gray-400  border-2 w-[100px] rounded-lg`}
         to={'/?mode=all'}
         onClick={() => setMode('all')}
@@ -17,7 +21,11 @@ const ProductQuery = () => {
       </Link>
       <Link
         className={`
-          ${mode == 'new' ? 'bg-blue-300' : 'hover:bg-gray-200'}
+          ${
+            mode == 'new'
+              ? 'bg-blue-300'
+              : 'hover:bg-gray-200 transition-colors duration-300'
+          }
         text-center py-2 border-gray-400  border-2 w-[100px] rounded-lg`}
         to={'/?mode=new'}
         onClick={() => setMode('new')}
@@ -26,7 +34,11 @@ const ProductQuery = () => {
       </Link>
       <Link
         className={`
-          ${mode == 'top' ? 'bg-blue-300' : 'hover:bg-gray-200'}
+          ${
+            mode == 'top'
+              ? 'bg-blue-300'
+              : 'hover:bg-gray-200 transition-colors duration-300'
+          }
         text-center py-2 border-gray-400  border-2 w-[100px] rounded-lg`}
         to={'/?mode=top'}
         onClick={() => setMode('top')}
