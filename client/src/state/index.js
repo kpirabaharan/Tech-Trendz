@@ -25,8 +25,8 @@ const persistConfig = {
 
 const reducers = combineReducers({
   user: persistReducer(persistConfig, userSliceReduceer),
-  cart: persistReducer(persistConfig, cartSliceReducer),
-  orders: persistReducer(persistConfig, orderSliceReducer),
+  cart: cartSliceReducer,
+  orders: orderSliceReducer,
   products: productSliceReducer,
 });
 
