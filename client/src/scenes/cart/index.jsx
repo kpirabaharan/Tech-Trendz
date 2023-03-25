@@ -126,7 +126,7 @@ const CartPage = () => {
                   </div>
                   {cart.map((item, index) => {
                     return (
-                      <>
+                      <div key={item._id}>
                         <CartItem
                           key={item._id}
                           id={item.productId}
@@ -144,7 +144,7 @@ const CartPage = () => {
                         ) : (
                           <></>
                         )}
-                      </>
+                      </div>
                     );
                   })}
                   <hr className='w-[90%] m-auto' />

@@ -4,6 +4,7 @@ import { fetchProductData } from './product-actions';
 
 const initialState = {
   items: [],
+  numOfProducts: 0,
 };
 
 const productSlice = createSlice({
@@ -11,7 +12,8 @@ const productSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchProductData.fulfilled, (state, { payload }) => {
-      state.items = payload;
+      state.items = payload.products;
+      state.numOfProducts = payload.numOfProducts;
     });
   },
 });

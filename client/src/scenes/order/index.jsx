@@ -75,6 +75,7 @@ const OrderPage = () => {
               </div>
               {orders.map((order) => (
                 <OrderItem
+                  key={order.orderId}
                   orderId={order.orderId}
                   orderName={`${order.orderFirstName} ${order.orderLastName}`}
                   orderEmail={order.orderEmail}

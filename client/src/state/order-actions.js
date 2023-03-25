@@ -18,7 +18,6 @@ export const fetchOrders = createAsyncThunk(
       throw json({ message: 'Could not fetch orders!' }, { status: 500 });
     } else {
       const { orders } = await response.json();
-      console.log(orders);
       return { orders };
     }
   },
