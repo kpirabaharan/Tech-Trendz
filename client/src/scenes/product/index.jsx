@@ -9,7 +9,7 @@ import ProductGrid from '../widgets/ProductGrid';
 import Pagination from '../../components/Pagination';
 import Footer from '../widgets/Footer';
 
-let PageSize = 1;
+let PageSize = 2;
 
 const ProductPage = () => {
   const dispatch = useDispatch();
