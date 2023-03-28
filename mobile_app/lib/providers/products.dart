@@ -15,8 +15,8 @@ class Products with ChangeNotifier {
     return [..._products];
   }
 
-  Future<void> fetchCarousel() async {
-    final url = Uri.parse('http://localhost:8080/product/carousel');
+  Future<void> fetchProducts() async {
+    final url = Uri.parse('http://localhost:8080/product/');
     final response = await http.get(
       url,
     );

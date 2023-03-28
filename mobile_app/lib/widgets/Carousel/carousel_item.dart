@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../models/product.dart';
 
@@ -12,7 +13,6 @@ class CarouselItem extends StatelessWidget {
     return Column(
       children: [
         Card(
-          color: Colors.white,
           elevation: 16,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: SizedBox(
@@ -22,7 +22,7 @@ class CarouselItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  'http://localhost:8080/assets/${product.picturePath}',
+                  '${dotenv.env['API_URL']}assets/${product.picturePath}',
                   errorBuilder: (context, error, stackTrace) =>
                       const Center(child: Text('Could not load Image')),
                   fit: BoxFit.contain,

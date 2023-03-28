@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import './providers/auth.dart';
 import './providers/products.dart';
 import './providers/orders.dart';
 import './screens/product_page.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  await dotenv.load();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
