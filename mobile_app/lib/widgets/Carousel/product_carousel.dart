@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/product.dart';
+import '../../models/product.dart';
+import 'carousel_item.dart';
 
 class ProductCarousel extends StatefulWidget {
   const ProductCarousel({super.key});
@@ -58,33 +59,19 @@ class _ProductCarouselState extends State<ProductCarousel> {
           return const Center(child: CircularProgressIndicator());
         } else {
           if (snapshot.error != null) {
-            // Do Error Handling Here
             return const Center(child: Text('An Error Occured!'));
           } else {
             return SizedBox(
               height: 200,
               child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: products.length,
-                  separatorBuilder: (context, index) => const SizedBox(
-                        width: 8,
-                      ),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      color: Colors.white,
-                      elevation: 16,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      child: SizedBox(
-                        width: 150,
-                        child: Center(
-                            child: Text(
-                          products[index].name,
-                          style: const TextStyle(color: Colors.black),
-                        )),
-                      ),
-                    );
-                  }),
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(8),
+                itemCount: products.length,
+                separatorBuilder: (context, index) => const SizedBox(
+                  width: 8,
+                ),
+                itemBuilder: (context, index) => CarouselItem(product: products[index]),
+              ),
             );
           }
         }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/product_carousel.dart';
+import '../widgets/Carousel/product_carousel.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -9,7 +9,6 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text('Products'),
         actions: [
           IconButton(
@@ -22,7 +21,19 @@ class ProductPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ProductCarousel(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
+            child: Text(
+              'New Products',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          ProductCarousel(),
+        ],
+      ),
     );
   }
 }
