@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/product_carousel.dart';
+
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
@@ -20,7 +22,7 @@ class ProductPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: CircularProgressIndicator()),
+      body: ProductCarousel(),
     );
   }
 }

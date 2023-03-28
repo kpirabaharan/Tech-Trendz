@@ -20,11 +20,11 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Products>(
           create: (ctx) => Products('', []),
-          update: (ctz, auth, previousProducts) => Products('', []),
+          update: (ctx, auth, previousProducts) => Products('', []),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           create: (ctx) => Orders('', []),
-          update: (ctz, auth, previousOrders) => Orders('', []),
+          update: (ctx, auth, previousOrders) => Orders('', []),
         ),
       ],
       child: Consumer<Auth>(
