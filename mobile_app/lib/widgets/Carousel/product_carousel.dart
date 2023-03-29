@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/product.dart';
@@ -19,7 +20,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
 
   Future _obtainCarouselProductsFuture() async {
     try {
-      final url = Uri.parse('http://localhost:8080/product/carousel');
+      final url = Uri.parse('${dotenv.env['API_URL']}product/carousel');
       final response = await http.get(
         url,
       );
@@ -70,7 +71,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
                 separatorBuilder: (context, index) => const SizedBox(
                   width: 8,
                 ),
-                itemBuilder: (context, index) => CarouselItem(product: products[index]),
+                itemBuilder: (context, index) => CarouselItem(product: products[index], itemSize:150),
               ),
             );
           }

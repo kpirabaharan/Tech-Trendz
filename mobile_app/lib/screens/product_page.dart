@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/Carousel/product_carousel.dart';
+import '../widgets/products_grid.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -32,6 +33,7 @@ class ProductPage extends StatelessWidget {
             ),
           ),
           ProductCarousel(),
+          ProductsGrid(),
         ],
       ),
     );

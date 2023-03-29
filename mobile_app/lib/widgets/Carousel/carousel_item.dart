@@ -5,8 +5,9 @@ import '../../models/product.dart';
 
 class CarouselItem extends StatelessWidget {
   final Product product;
+  final double itemSize;
 
-  const CarouselItem({super.key, required this.product});
+  const CarouselItem({super.key, required this.product, this.itemSize = 500});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class CarouselItem extends StatelessWidget {
           elevation: 16,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: SizedBox(
-            width: 150,
-            child: Container(
+            width: itemSize,
+            child: SizedBox(
               height: 150,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
