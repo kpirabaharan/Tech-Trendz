@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteLoaderData, useSearchParams, json } from 'react-router-dom';
 
 import { fetchProductData } from '../../state/product-actions';
-import ProductCarousel from '../widgets/ProductCarousel';
+import CategoryQuery from '../widgets/CategoryQuery';
 import ProductQuery from '../widgets/ProductQuery';
+import ProductCarousel from '../widgets/ProductCarousel';
 import ProductGrid from '../widgets/ProductGrid';
 import Pagination from '../../components/Pagination';
 import Footer from '../widgets/Footer';
@@ -45,7 +46,8 @@ const ProductPage = () => {
           onModeChange={(mode) => setCurrentMode(mode)}
         />
       </div>
-      <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
+      <div className='flex flex-col sm:flex-row w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
+        <CategoryQuery />
         <ProductGrid />
       </div>
       <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
