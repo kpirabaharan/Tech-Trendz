@@ -11,6 +11,14 @@ const CategoryQuery = () => {
               className={`hover:bg-gray-200 transition-colors duration-300 
               text-center py-2 border-gray-400  border-2 w-[100px] rounded-lg`}
             >
+              <p>All</p>
+            </div>
+          </li>
+          <li>
+            <div
+              className={`hover:bg-gray-200 transition-colors duration-300 
+              text-center py-2 border-gray-400  border-2 w-[100px] rounded-lg`}
+            >
               <p>Phones</p>
             </div>
           </li>

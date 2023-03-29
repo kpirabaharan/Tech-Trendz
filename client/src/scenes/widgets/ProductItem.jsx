@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom';
 
 const ProductItem = ({ product }) => {
   return (
-    <div className='bg-gray-300 mx-4 my-4 py-2 px-2 rounded-[20px] z-20 shadow-2xl'>
+    <div
+      className='bg-gray-300 mx-4 my-4 py-2 px-2 rounded-[20px] z-20 shadow-2xl
+        max-w-[300px]'
+    >
       <div className='flex justify-center'>
         <Link to={`/product/${product._id}`}>
           <img

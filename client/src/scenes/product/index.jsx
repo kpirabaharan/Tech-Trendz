@@ -19,6 +19,7 @@ const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentMode, setCurrentMode] = useState('all');
+  const [currentCategory, setCurrentCategory] = useState('all');
   const mode = searchParams.get('mode');
   const page = searchParams.get('page');
 
