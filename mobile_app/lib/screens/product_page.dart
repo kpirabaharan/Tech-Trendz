@@ -29,13 +29,27 @@ class ProductPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
             child: Text(
-              'New Products',
+              'Featured Products',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          ProductCarousel(),
-          ModeQuery(),
-          ProductsGrid(),
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                ProductCarousel(),
+                Container(
+                  color: Theme.of(context).canvasColor,
+                  width: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    child: Expanded(child: ModeQuery()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(flex: 2, child: ProductsGrid()),
         ],
       ),
     );

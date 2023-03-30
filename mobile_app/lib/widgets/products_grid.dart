@@ -16,20 +16,18 @@ class ProductsGrid extends StatelessWidget {
             : Consumer<Products>(
                 builder: (ctx, products, ch) => products.products.isEmpty
                     ? ch as Widget
-                    : Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          child: GridView.builder(
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 1 / 1,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemBuilder: (context, index) =>
-                                CarouselItem(product: products.products[index]),
-                            itemCount: products.products.length,
+                    : Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1 / 1,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
                           ),
+                          itemBuilder: (context, index) =>
+                              CarouselItem(product: products.products[index]),
+                          itemCount: products.products.length,
                         ),
                       ),
                 child: const Center(

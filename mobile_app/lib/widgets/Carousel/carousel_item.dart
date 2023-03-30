@@ -10,22 +10,21 @@ class CarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Card(
+    return Container(
+      width: 300,
+      child: Card(
         elevation: 16,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: GridTile(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              '${dotenv.env['API_URL']}assets/${product.picturePath}',
-              errorBuilder: (context, error, stackTrace) =>
-                  const Center(child: Text('Could not load Image')),
-              fit: BoxFit.contain,
-            ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.network(
+            '${dotenv.env['API_URL']}assets/${product.picturePath}',
+            errorBuilder: (context, error, stackTrace) =>
+                const Center(child: Text('Could not load Image')),
+            fit: BoxFit.contain,
           ),
         ),
       ),
-    ]);
+    );
   }
 }

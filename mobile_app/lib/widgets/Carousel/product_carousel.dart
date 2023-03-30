@@ -65,7 +65,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
           } else {
             return CarouselSlider(
               options: CarouselOptions(
-                height: 200.0,
+                height: 250,
                 viewportFraction: 0.6,
                 enableInfiniteScroll: true,
                 reverse: false,

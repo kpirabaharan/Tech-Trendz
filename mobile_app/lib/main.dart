@@ -34,8 +34,29 @@ class MyApp extends StatelessWidget {
         builder: (context, value, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'E-Commerce',
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+            fontFamily: 'Nunito',
+            textTheme: TextTheme(
+              headlineMedium: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            fontFamily: 'Nunito',
+            textTheme: TextTheme(
+              headlineMedium: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(foregroundColor: Colors.white),
+            ),
+          ),
           themeMode: ThemeMode.dark,
           home: ProductPage(),
           routes: {},
