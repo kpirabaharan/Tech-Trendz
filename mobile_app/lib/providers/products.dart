@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,9 +9,19 @@ import '../models/product.dart';
 
 class Products with ChangeNotifier {
   List<Product> _products = [];
+  String _category = 'all';
 
   List<Product> get products {
     return [..._products];
+  }
+
+  String get mode {
+    return _category;
+  }
+
+  Future<void> setMode(String mode) async {
+    _category = mode;
+    await fetchProducts(mode);
   }
 
   Future<void> fetchProducts(String mode) async {
@@ -37,7 +48,6 @@ class Products with ChangeNotifier {
           .toList();
 
       _products = extractedProducts;
-      print(_products);
     } catch (err) {
       print(err);
     }
