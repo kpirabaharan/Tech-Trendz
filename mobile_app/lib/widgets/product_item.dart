@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../../models/product.dart';
+import '../models/product.dart';
 
-class CarouselItem extends StatelessWidget {
+class ProductItem extends StatelessWidget {
   final Product product;
-
-  const CarouselItem({super.key, required this.product});
+  const ProductItem({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     return Container(
-      width: mediaQuery.width * 0.5,
       child: Card(
         elevation: 16,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -42,7 +40,7 @@ class CarouselItem extends StatelessWidget {
                   Spacer(),
                   Center(
                     child: Container(
-                      height: 150,
+                      height: 120,
                       child: Image.network(
                         '${dotenv.env['API_URL']}assets/${product.picturePath}',
                         errorBuilder: (context, error, stackTrace) =>

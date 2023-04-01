@@ -6,14 +6,15 @@ import 'carousel_item.dart';
 
 class ProductCarousel extends StatelessWidget {
   final List<Product> products;
-  
+
   const ProductCarousel({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
     return CarouselSlider(
       options: CarouselOptions(
-        height: 250,
+        height: double.infinity,
         viewportFraction: 0.6,
         enableInfiniteScroll: true,
         reverse: false,

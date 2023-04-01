@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:e_commerce/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -74,7 +75,6 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Rebuilt');
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
@@ -101,8 +101,8 @@ class _ProductPageState extends State<ProductPage> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            Expanded(
-              flex: 2,
+            Container(
+              height: 250,
               child: Stack(
                 children: [
                   ProductCarousel(products: carouselProducts),
@@ -119,23 +119,15 @@ class _ProductPageState extends State<ProductPage> {
                       setMode: _setMode,
                     )),
             Expanded(
-              flex: 5,
-              child: Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                child: Consumer<Products>(
-                  builder: (context, products, child) => GridView(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1 / 1,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    children: products.products
-                        .map(
-                          (prod) => CarouselItem(product: prod) as Widget,
-                        )
-                        .toList(),
+              child: Consumer<Products>(
+                builder: (context, products, child) => GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1 / 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
+                  children: products.products.map((prod) => ProductItem(product: prod)).toList(),
                 ),
               ),
             ),

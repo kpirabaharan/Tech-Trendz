@@ -25,7 +25,6 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts(String mode) async {
-    print(mode);
     final url = Uri.parse('${dotenv.env['API_URL']}product/mobile/$mode');
     try {
       final response = await http.get(
