@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:e_commerce/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -8,18 +7,20 @@ import 'package:provider/provider.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
-import '../widgets/Carousel/product_carousel.dart';
-import '../widgets/Carousel/carousel_item.dart';
+import './auth_screen.dart';
+import './cart_screen.dart';
 import '../widgets/mode_query.dart';
+import '../widgets/carousel/product_carousel.dart';
+import '../widgets/product_item.dart';
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _ProductScreenState extends State<ProductScreen> {
   late Future _productCarouselFuture;
   late Future _productFuture;
 
@@ -82,11 +83,15 @@ class _ProductPageState extends State<ProductPage> {
           title: Text('Products'),
           actions: [
             IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).pushNamed(AuthScreen.routeName),
+              },
               icon: Icon(Icons.person),
             ),
             IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).pushNamed(CartScreen.routeName),
+              },
               icon: Icon(Icons.shopping_cart),
             ),
           ],
@@ -120,14 +125,17 @@ class _ProductPageState extends State<ProductPage> {
                     )),
             Expanded(
               child: Consumer<Products>(
-                builder: (context, products, child) => GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                builder: (context, products, child) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GridView(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1 / 1,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    children: products.products.map((prod) => ProductItem(product: prod)).toList(),
                   ),
-                  children: products.products.map((prod) => ProductItem(product: prod)).toList(),
                 ),
               ),
             ),

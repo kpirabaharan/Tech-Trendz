@@ -5,7 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import './providers/auth.dart';
 import './providers/products.dart';
 import './providers/orders.dart';
-import './screens/product_page.dart';
+import 'screens/product_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/cart_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
           title: 'E-Commerce',
           theme: ThemeData(
             fontFamily: 'Nunito',
-            textTheme: TextTheme(
+            textTheme: const TextTheme(
               headlineMedium: TextStyle(
                 fontFamily: 'Nunito',
                 fontSize: 18,
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             fontFamily: 'Nunito',
-            textTheme: TextTheme(
+            textTheme: const TextTheme(
               headlineMedium: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -58,8 +60,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: ThemeMode.dark,
-          home: ProductPage(),
-          routes: {},
+          home: ProductScreen(),
+          routes: {
+            CartScreen.routeName: (ctx) => CartScreen(),
+            AuthScreen.routeName: (ctx) => AuthScreen(),
+          },
         ),
       ),
     );
