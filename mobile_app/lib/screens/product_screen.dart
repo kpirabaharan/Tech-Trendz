@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
+import '../providers/auth.dart';
 import './auth_screen.dart';
 import './cart_screen.dart';
 import '../widgets/mode_query.dart';
@@ -76,24 +77,45 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isAuth = Provider.of<Auth>(context).isAuth;
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
           title: Text('Products'),
-          actions: [
-            IconButton(
-              onPressed: () => {
-                Navigator.of(context).pushNamed(AuthScreen.routeName),
-              },
-              icon: Icon(Icons.person),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF3366FF),
+                    const Color(0xFF00CCFF),
+                  ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
             ),
+          ),
+          actions: [
             IconButton(
               onPressed: () => {
                 Navigator.of(context).pushNamed(CartScreen.routeName),
               },
               icon: Icon(Icons.shopping_cart),
             ),
+            isAuth
+                ? IconButton(
+                    onPressed: () => {
+                      Navigator.of(context).pushNamed(AuthScreen.routeName),
+                    },
+                    icon: Icon(Icons.logout),
+                  )
+                : IconButton(
+                    onPressed: () => {
+                      Navigator.of(context).pushNamed(AuthScreen.routeName),
+                    },
+                    icon: Icon(Icons.person),
+                  ),
           ],
         ),
         body: Column(

@@ -39,6 +39,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   carousel_slider: ^4.2.1
   intl: ^0.18.0
+  flutter_stripe: ^9.0.0+1
 
 dev_dependencies:
   flutter_test:

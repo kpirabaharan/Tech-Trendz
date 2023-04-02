@@ -21,9 +21,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  @override
-  AuthMode authMode = AuthMode.login;
-
   void showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -85,10 +82,27 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Authenticate'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  const Color(0xFF3366FF),
+                  const Color(0xFF00CCFF),
+                ],
+                begin: const FractionalOffset(0.0, 0.0),
+                end: const FractionalOffset(1.0, 0.0),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Container(
@@ -106,32 +120,25 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: deviceSize.width * 0.90,
-                        child: AuthForm(authMode, login, register),
+              ? const Center(child: CircularProgressIndicator())
+              : CustomScrollView(
+                  slivers: [
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Container(
+                              width: deviceSize.width * 0.90,
+                              child: AuthForm(login, register),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-          Column(
-            children: [
-              SizedBox(height: 50),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: IconButton(
-                  icon: Platform.isIOS ? Icon(Icons.arrow_back_ios) : Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              )
-            ],
-          )
         ],
       ),
     );
