@@ -77,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isAuth = Provider.of<Auth>(context).isAuth;
+    final isAuth = Provider.of<Auth>(context, listen: false).isAuth;
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
@@ -97,12 +97,13 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () => {
-                Navigator.of(context).pushNamed(CartScreen.routeName),
-              },
-              icon: Icon(Icons.shopping_cart),
-            ),
+            if (isAuth)
+              IconButton(
+                onPressed: () => {
+                  Navigator.of(context).pushNamed(CartScreen.routeName),
+                },
+                icon: Icon(Icons.shopping_cart),
+              ),
             isAuth
                 ? IconButton(
                     onPressed: () => {

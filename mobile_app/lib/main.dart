@@ -77,10 +77,12 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: ThemeMode.dark,
-          home: FutureBuilder(
-            future: auth.tryAutoLogin(),
-            builder: (context, snapshot) => ProductScreen(),
-          ),
+          home: auth.isAuth
+              ? ProductScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (context, snapshot) => ProductScreen(),
+                ),
           routes: {
             CartScreen.routeName: (ctx) => CartScreen(),
             AuthScreen.routeName: (ctx) => AuthScreen(),

@@ -108,6 +108,9 @@ class Auth with ChangeNotifier {
           'cart': responseData['user']['cart'],
         },
       );
+      print('First Login');
+      print(userData);
+      prefs.setString('userData', userData);
     } catch (err) {
       print(err);
     }
@@ -122,8 +125,6 @@ class Auth with ChangeNotifier {
 
       final extractedUserData =
           json.decode(prefs.getString('userData') as String) as Map<String, dynamic>;
-
-      print(extractedUserData);
 
       _token = extractedUserData['token'] as String;
       _user = User(
@@ -148,6 +149,8 @@ class Auth with ChangeNotifier {
               .toList(),
         ),
       );
+      print('Auto Login');
+      print(extractedUserData);
       notifyListeners();
       return true;
     } catch (err) {
