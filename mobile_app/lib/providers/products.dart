@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -24,7 +25,10 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts(String mode) async {
-    final url = Uri.parse('${dotenv.env['API_URL']}product/mobile/$mode');
+    var url = Uri.parse('${dotenv.env['API_URL']}product/mobile/$mode');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}product/mobile/$mode');
+    }
     try {
       final response = await http.get(
         url,

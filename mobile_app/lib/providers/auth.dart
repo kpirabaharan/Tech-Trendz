@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -51,7 +52,10 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = Uri.parse('${dotenv.env['API_URL']}auth/login');
+    var url = Uri.parse('${dotenv.env['API_URL']}auth/login');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}auth/login');
+    }
 
     try {
       final response = await http.post(
@@ -161,7 +165,10 @@ class Auth with ChangeNotifier {
 
   Future<void> register(String firstName, String lastName, String dateOfBirth, int phoneNumber,
       String email, String password) async {
-    final url = Uri.parse('${dotenv.env['API_URL']}auth/register');
+    var url = Uri.parse('${dotenv.env['API_URL']}auth/register');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}auth/register');
+    }
 
     try {
       final response = await http.post(
@@ -192,7 +199,10 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchCart() async {
-    final url = Uri.parse('${dotenv.env['API_URL']}cart/$userId');
+    var url = Uri.parse('${dotenv.env['API_URL']}cart/$userId');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/$userId');
+    }
     try {
       final response = await http.get(
         url,

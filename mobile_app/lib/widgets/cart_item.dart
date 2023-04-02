@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -16,11 +18,17 @@ class CartItem extends StatelessWidget {
         leading: Container(
           width: 75,
           height: 75,
-          child: Image.network(
-            '${dotenv.env['API_URL']}assets/${item.picturePath}',
-            errorBuilder: (context, error, stackTrace) => const Center(child: Text('Error')),
-            fit: BoxFit.contain,
-          ),
+          child: Platform.isAndroid
+              ? Image.network(
+                  '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}',
+                  errorBuilder: (context, error, stackTrace) => const Center(child: Text('Error')),
+                  fit: BoxFit.contain,
+                )
+              : Image.network(
+                  '${dotenv.env['API_URL']}assets/${item.picturePath}',
+                  errorBuilder: (context, error, stackTrace) => const Center(child: Text('Error')),
+                  fit: BoxFit.contain,
+                ),
         ),
         title: Text(item.name),
         subtitle: Text(item.brand),

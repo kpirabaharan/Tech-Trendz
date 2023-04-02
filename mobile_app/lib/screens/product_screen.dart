@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -29,7 +30,10 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Future _obtainCarouselProductsFuture() async {
     try {
-      final url = Uri.parse('${dotenv.env['API_URL']}product/carousel');
+      var url = Uri.parse('${dotenv.env['API_URL']}product/carousel');
+      if (Platform.isAndroid) {
+        url = Uri.parse('${dotenv.env['ANDROID_API_URL']}product/carousel');
+      }
       final response = await http.get(
         url,
       );
