@@ -56,7 +56,63 @@ class Auth with ChangeNotifier {
       if (response.statusCode == 400) {
         throw HttpException(responseData['msg']);
       }
+
+      _user = User(
+        id: responseData['user']['_id'],
+        firstName: responseData['user']['firstName'],
+        lastName: responseData['user']['lastName'],
+        email: responseData['user']['email'],
+        phoneNumber: responseData['user']['phoneNumber'],
+        dateOfBirth: responseData['user']['dateOfBirth'],
+        cart: Cart(
+          totalAmount: responseData['user']['cart']['totalAmount'],
+          totalQuantity: responseData['user']['cart']['totalQuantity'],
+          cartProducts: (responseData['user']['cart']['items'] as List)
+              .map((item) => CartProducts(
+                    id: item['_id'],
+                    name: item['name'],
+                    brand: item['brand'],
+                    cost: item['cost'],
+                    picturePath: item['picturePath'],
+                    quantity: item['quantity'],
+                  ))
+              .toList(),
+        ),
+      );
+      _token = responseData['token'];
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> register(String firstName, String lastName, String dateOfBirth, int phoneNumber,
+      String email, String password) async {
+    final url = Uri.parse('${dotenv.env['API_URL']}auth/register');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(
+          {
+            'firstName': firstName,
+            'lastName': lastName,
+            'dateOfBirth': dateOfBirth,
+            'phoneNumber': phoneNumber,
+            'email': email,
+            'password': password,
+          },
+        ),
+      );
+      final responseData = json.decode(response.body);
+
+      print(response.statusCode);
       print(responseData);
+
+      if (response.statusCode == 400) {
+        throw HttpException(responseData['msg']);
+      }
     } catch (err) {
       print(err);
     }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -48,6 +47,7 @@ class Products with ChangeNotifier {
           .toList();
 
       _products = extractedProducts;
+      notifyListeners();
     } catch (err) {
       print(err);
     }
