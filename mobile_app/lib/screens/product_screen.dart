@@ -85,44 +85,19 @@ class _ProductScreenState extends State<ProductScreen> {
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
-        appBar: AppBar(
-          title: const Text('E-Commerce'),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF3366FF),
-                    Color(0xFF00CCFF),
-                  ],
-                  begin: FractionalOffset(0.0, 0.0),
-                  end: FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-          ),
-          actions: [
-            if (isAuth)
-              IconButton(
-                onPressed: () => {
-                  Navigator.of(context).pushNamed(CartScreen.routeName),
-                },
-                icon: Icon(Icons.shopping_cart),
-              ),
-            isAuth
-                ? IconButton(
+        appBar: !isAuth
+            ? AppBar(
+                title: const Text('Products'),
+                actions: [
+                  IconButton(
                     onPressed: () => {
                       Navigator.of(context).pushNamed(AuthScreen.routeName),
                     },
-                    icon: Icon(Icons.logout),
-                  )
-                : IconButton(
-                    onPressed: () => {
-                      Navigator.of(context).pushNamed(AuthScreen.routeName),
-                    },
-                    icon: Icon(Icons.person),
+                    icon: const Icon(Icons.person),
                   ),
-          ],
-        ),
+                ],
+              )
+            : null,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,8 +108,8 @@ class _ProductScreenState extends State<ProductScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Container(
-              height: 250,
+            SizedBox(
+              height: 225,
               child: Stack(
                 children: [
                   ProductCarousel(products: carouselProducts),

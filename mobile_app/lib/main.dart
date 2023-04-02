@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 import './providers/auth.dart';
 import './providers/products.dart';
 import './providers/orders.dart';
-import 'screens/product_screen.dart';
-import 'screens/auth_screen.dart';
-import 'screens/cart_screen.dart';
+import './screens/tabs_screen.dart';
+import './screens/product_screen.dart';
+import './screens/auth_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -78,13 +78,12 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: ThemeMode.dark,
           home: auth.isAuth
-              ? ProductScreen()
+              ? TabsScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (context, snapshot) => ProductScreen(),
                 ),
           routes: {
-            CartScreen.routeName: (ctx) => CartScreen(),
             AuthScreen.routeName: (ctx) => AuthScreen(),
           },
         ),

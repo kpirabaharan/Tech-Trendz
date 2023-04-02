@@ -13,11 +13,13 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      decoration: BoxDecoration(border: Border.all(width: 1)),
       child: ListTile(
+        visualDensity: VisualDensity(vertical: 2),
         leading: Container(
-          width: 75,
-          height: 75,
+          decoration: BoxDecoration(border: Border.all(width: 1)),
+          width: 80,
+          height: 100,
           child: Platform.isAndroid
               ? Image.network(
                   '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}',
@@ -33,23 +35,38 @@ class CartItem extends StatelessWidget {
         title: Text(item.name),
         subtitle: Text(item.brand),
         trailing: Container(
-            width: 150,
-            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              IconButton(
-                padding: EdgeInsets.all(5),
-                constraints: BoxConstraints(),
-                onPressed: () => {},
-                icon: Icon(Icons.remove),
-              ),
-              Text(item.quantity.toString()),
-              IconButton(
-                padding: EdgeInsets.all(5),
-                constraints: BoxConstraints(),
-                onPressed: () => {},
-                icon: Icon(Icons.add),
-              ),
-              Text((item.cost * item.quantity).toStringAsFixed(2))
-            ])),
+          decoration: BoxDecoration(border: Border.all(width: 1)),
+          width: 100,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Text(
+                    (item.cost * item.quantity).toStringAsFixed(2),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.all(5),
+                      constraints: BoxConstraints(),
+                      onPressed: () => {},
+                      icon: Icon(Icons.remove),
+                    ),
+                    Text(item.quantity.toString()),
+                    IconButton(
+                      padding: EdgeInsets.all(5),
+                      constraints: BoxConstraints(),
+                      onPressed: () => {},
+                      icon: Icon(Icons.add),
+                    ),
+                  ],
+                )
+              ]),
+        ),
       ),
     );
   }

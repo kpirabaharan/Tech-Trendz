@@ -32,57 +32,43 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _cartFuture,
-        builder: (context, snapshot) => Scaffold(
-              appBar: AppBar(
-                title: const Text('Your Cart'),
-                flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF3366FF),
-                          Color(0xFF00CCFF),
-                        ],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 0.0),
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.clamp),
-                  ),
-                ),
-              ),
-              body: Container(
-                padding: const EdgeInsets.all(8),
-                child: Consumer<Auth>(
-                  builder: (context, user, child) => CustomScrollView(
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
+      future: _cartFuture,
+      builder: (context, snapshot) => Scaffold(
+        body: Container(
+          padding: const EdgeInsets.all(8),
+          child: Consumer<Auth>(
+            builder: (context, user, child) => CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      ...(user.cartItems.map((ci) {
+                        return Column(
                           children: [
-                            ...(user.cartItems.map((ci) => CartItem(item: ci)).toList()),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 15),
-                                child: Text(
-                                  'Total Amount: \$${user.totalAmount}',
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ),
+                            CartItem(item: ci),
+                            const Divider(),
                           ],
+                        );
+                      }).toList()),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20, right: 15),
+                          child: Text(
+                            'Total Amount: \$${user.totalAmount}',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ));
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
-
-// Consumer<Auth>(
-//                 builder: (context, user, child) => CartList(
-//                     items: user.cart,
-//                     totalQuantity: user.totalQuantity,
-//                     totalAmount: user.totalAmount),

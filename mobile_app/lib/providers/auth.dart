@@ -163,6 +163,15 @@ class Auth with ChangeNotifier {
     }
   }
 
+  Future<void> logout() async {
+    _user = null;
+    _token = null;
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    notifyListeners();
+  }
+
   Future<void> register(String firstName, String lastName, String dateOfBirth, int phoneNumber,
       String email, String password) async {
     var url = Uri.parse('${dotenv.env['API_URL']}auth/register');
