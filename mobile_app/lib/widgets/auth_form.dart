@@ -258,7 +258,7 @@ class _AuthFormState extends State<AuthForm> {
                 ),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 2.5)),
                 Row(
-                  children: <Widget>[
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 2,

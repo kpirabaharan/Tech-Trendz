@@ -33,15 +33,24 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Consumer<Auth>(
-        builder: (context, value, child) => MaterialApp(
+        builder: (context, auth, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'E-Commerce',
           theme: ThemeData(
             fontFamily: 'Nunito',
             textTheme: const TextTheme(
-              headlineMedium: TextStyle(
+              titleLarge: TextStyle(
                 fontFamily: 'Nunito',
-                fontSize: 18,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+              headlineMedium: TextStyle(
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -50,6 +59,14 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             fontFamily: 'Nunito',
             textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
               headlineMedium: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -60,7 +77,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: ThemeMode.dark,
-          home: ProductScreen(),
+          home: FutureBuilder(
+            future: auth.tryAutoLogin(),
+            builder: (context, snapshot) => ProductScreen(),
+          ),
           routes: {
             CartScreen.routeName: (ctx) => CartScreen(),
             AuthScreen.routeName: (ctx) => AuthScreen(),

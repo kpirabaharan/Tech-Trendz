@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
@@ -27,7 +28,7 @@ class Auth with ChangeNotifier {
     return token != null;
   }
 
-  List<CartProducts> get cart {
+  List<CartProducts> get cartItems {
     if (_user?.cart != null) {
       if (_user!.cart.cartProducts.isNotEmpty) {
         return [..._user!.cart.cartProducts];
@@ -35,6 +36,18 @@ class Auth with ChangeNotifier {
       return [];
     }
     return [];
+  }
+
+  int get cartLength {
+    return _user!.cart.cartProducts.length;
+  }
+
+  int get totalQuantity {
+    return _user!.cart.totalQuantity;
+  }
+
+  double get totalAmount {
+    return _user!.cart.totalAmount;
   }
 
   Future<void> login(String email, String password) async {
@@ -81,8 +94,65 @@ class Auth with ChangeNotifier {
       );
       _token = responseData['token'];
       notifyListeners();
+
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode(
+        {
+          'token': _token,
+          '_id': responseData['user']['_id'],
+          'firstName': responseData['user']['firstName'],
+          'lastName': responseData['user']['lastName'],
+          'email': responseData['user']['email'],
+          'phoneNumber': responseData['user']['phoneNumber'],
+          'dateOfBirth': responseData['user']['dateOfBirth'],
+          'cart': responseData['user']['cart'],
+        },
+      );
     } catch (err) {
       print(err);
+    }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return false;
+      }
+
+      final extractedUserData =
+          json.decode(prefs.getString('userData') as String) as Map<String, dynamic>;
+
+      print(extractedUserData);
+
+      _token = extractedUserData['token'] as String;
+      _user = User(
+        id: extractedUserData['_id'],
+        firstName: extractedUserData['firstName'],
+        lastName: extractedUserData['lastName'],
+        email: extractedUserData['email'],
+        phoneNumber: extractedUserData['phoneNumber'],
+        dateOfBirth: extractedUserData['dateOfBirth'],
+        cart: Cart(
+          totalAmount: extractedUserData['cart']['totalAmount'],
+          totalQuantity: extractedUserData['cart']['totalQuantity'],
+          cartProducts: (extractedUserData['cart']['items'] as List)
+              .map((item) => CartProducts(
+                    id: item['_id'],
+                    name: item['name'],
+                    brand: item['brand'],
+                    cost: item['cost'],
+                    picturePath: item['picturePath'],
+                    quantity: item['quantity'],
+                  ))
+              .toList(),
+        ),
+      );
+      notifyListeners();
+      return true;
+    } catch (err) {
+      print(err);
+      return false;
     }
   }
 

@@ -82,16 +82,16 @@ class _ProductScreenState extends State<ProductScreen> {
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
         appBar: AppBar(
-          title: Text('Products'),
+          title: const Text('E-Commerce'),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                   colors: [
-                    const Color(0xFF3366FF),
-                    const Color(0xFF00CCFF),
+                    Color(0xFF3366FF),
+                    Color(0xFF00CCFF),
                   ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
+                  begin: FractionalOffset(0.0, 0.0),
+                  end: FractionalOffset(1.0, 0.0),
                   stops: [0.0, 1.0],
                   tileMode: TileMode.clamp),
             ),
@@ -125,7 +125,7 @@ class _ProductScreenState extends State<ProductScreen> {
               padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
               child: Text(
                 'New Products',
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             Container(
