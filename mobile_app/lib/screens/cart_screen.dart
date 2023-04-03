@@ -31,6 +31,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Cart Screen');
     return Scaffold(
       body: FutureBuilder(
         future: _cartFuture,
@@ -64,14 +65,20 @@ class _CartScreenState extends State<CartScreen> {
                                         ],
                                       );
                                     }).toList()),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 20, right: 15),
-                                        child: Text(
-                                          'Total Amount: \$${(user.totalAmount).toStringAsFixed(2)}',
-                                          style: Theme.of(context).textTheme.titleMedium,
-                                        ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Total Items: ${(user.totalQuantity)}',
+                                            style: Theme.of(context).textTheme.titleMedium,
+                                          ),
+                                          Text(
+                                            'Total Amount: \$${(user.totalAmount).toStringAsFixed(2)}',
+                                            style: Theme.of(context).textTheme.titleMedium,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],

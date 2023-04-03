@@ -46,10 +46,6 @@ class Auth with ChangeNotifier {
     return false;
   }
 
-  int get cartLength {
-    return _user!.cart.cartProducts.length;
-  }
-
   int get totalQuantity {
     return _user!.cart.totalQuantity;
   }
@@ -76,7 +72,6 @@ class Auth with ChangeNotifier {
         ),
       );
       final responseData = json.decode(response.body);
-      print(responseData);
 
       if (response.statusCode == 400) {
         throw HttpException(responseData['msg']);
@@ -89,11 +84,11 @@ class Auth with ChangeNotifier {
         email: responseData['user']['email'],
         phoneNumber: responseData['user']['phoneNumber'],
         dateOfBirth: responseData['user']['dateOfBirth'],
-        cart: (responseData['user']['items'] as List).isNotEmpty
+        cart: (responseData['user']['cart']['items'] as List).isNotEmpty
             ? Cart(
-                totalAmount: responseData['user']['totalAmount'],
-                totalQuantity: responseData['user']['totalQuantity'],
-                cartProducts: (responseData['user']['items'] as List)
+                totalAmount: responseData['user']['cart']['totalAmount'],
+                totalQuantity: responseData['user']['cart']['totalQuantity'],
+                cartProducts: (responseData['user']['cart']['items'] as List)
                     .map((item) => CartProducts(
                           id: item['productId'],
                           name: item['name'],
@@ -146,11 +141,11 @@ class Auth with ChangeNotifier {
         email: extractedUserData['email'],
         phoneNumber: extractedUserData['phoneNumber'],
         dateOfBirth: extractedUserData['dateOfBirth'],
-        cart: (extractedUserData['items'] as List).isNotEmpty
+        cart: (extractedUserData['cart']['items'] as List).isNotEmpty
             ? Cart(
-                totalAmount: extractedUserData['totalAmount'],
-                totalQuantity: extractedUserData['totalQuantity'],
-                cartProducts: (extractedUserData['items'] as List)
+                totalAmount: extractedUserData['cart']['totalAmount'],
+                totalQuantity: extractedUserData['cart']['totalQuantity'],
+                cartProducts: (extractedUserData['cart']['items'] as List)
                     .map((item) => CartProducts(
                           id: item['productId'],
                           name: item['name'],
@@ -204,9 +199,6 @@ class Auth with ChangeNotifier {
       );
       final responseData = json.decode(response.body);
 
-      print(response.statusCode);
-      print(responseData);
-
       if (response.statusCode == 400) {
         throw HttpException(responseData['msg']);
       }
@@ -252,7 +244,6 @@ class Auth with ChangeNotifier {
               )
             : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
       );
-
       notifyListeners();
     } catch (err) {
       print(err);

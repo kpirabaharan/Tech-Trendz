@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,42 +7,52 @@ import 'package:provider/provider.dart';
 import '../models/cart.dart';
 import '../providers/auth.dart';
 
-class CartItem extends StatelessWidget {
+class CartItem extends StatefulWidget {
   final CartProducts item;
 
   CartItem({required this.item});
 
   @override
+  State<CartItem> createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem> {
+  late final CartProducts _item;
+  Future<void> handleAddToCart(String productId) async {
+    try {
+      await Provider.of<Auth>(context, listen: false).addToCart(productId);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> handleRemoveFromCart(String productId) async {
+    try {
+      await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> handleRemoveAllFromCart(String productId) async {
+    try {
+      await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  @override
+  void initState() {
+    _item = widget.item;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
-
-    Future<void> handleAddToCart(String productId) async {
-      try {
-        await Provider.of<Auth>(context, listen: false).addToCart(productId);
-      } catch (err) {
-        print(err);
-      }
-    }
-
-    Future<void> handleRemoveFromCart(String productId) async {
-      try {
-        await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
-      } catch (err) {
-        print(err);
-      }
-    }
-
-    Future<void> handleRemoveAllFromCart(String productId) async {
-      try {
-        await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
-      } catch (err) {
-        print(err);
-      }
-    }
-
-    return Container(
+    print('Cart Item');
+    return SizedBox(
         height: 175,
-        // decoration: BoxDecoration(border: Border.all(width: 1)),
         child: Row(
           children: [
             Expanded(
@@ -52,18 +61,18 @@ class CartItem extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Container(
+                child: SizedBox(
                   // decoration: BoxDecoration(border: Border.all(width: 1)),
                   height: 140,
                   child: Platform.isAndroid
                       ? Image.network(
-                          '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}',
+                          '${dotenv.env['ANROID_API_URL']}assets/${_item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
                         )
                       : Image.network(
-                          '${dotenv.env['API_URL']}assets/${item.picturePath}',
+                          '${dotenv.env['API_URL']}assets/${_item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
@@ -79,15 +88,14 @@ class CartItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        // crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            item.name,
+                            _item.name,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
-                          Spacer(),
                           TextButton(
-                            onPressed: () => handleRemoveAllFromCart(item.id),
+                            onPressed: () => handleRemoveAllFromCart(_item.id),
                             child: Text(
                               'Remove',
                               style: DefaultTextStyle.of(context).style.apply(color: Colors.red),
@@ -96,29 +104,29 @@ class CartItem extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        item.brand,
+                        _item.brand,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () => handleRemoveFromCart(item.id),
-                                icon: Icon(Icons.remove),
+                                onPressed: () => handleRemoveFromCart(_item.id),
+                                icon: const Icon(Icons.remove),
                               ),
-                              Text(item.quantity.toString(),
+                              Text(_item.quantity.toString(),
                                   style: Theme.of(context).textTheme.titleMedium),
                               IconButton(
-                                onPressed: () => handleAddToCart(item.id),
-                                icon: Icon(Icons.add),
+                                onPressed: () => handleAddToCart(_item.id),
+                                icon: const Icon(Icons.add),
                               ),
                             ],
                           ),
-                          const Spacer(),
                           Text(
-                            '\$${(item.quantity * item.cost).toStringAsFixed(2)}',
+                            '\$${(_item.quantity * _item.cost).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],

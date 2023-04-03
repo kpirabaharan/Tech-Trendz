@@ -6,7 +6,6 @@ import './providers/auth.dart';
 import './providers/products.dart';
 import './providers/orders.dart';
 import './screens/tabs_screen.dart';
-import './screens/product_screen.dart';
 import './screens/auth_screen.dart';
 
 Future<void> main() async {
@@ -73,13 +72,13 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: ThemeMode.dark,
           home: auth.isAuth
-              ? TabsScreen()
+              ? const TabsScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
-                  builder: (context, snapshot) => TabsScreen(),
+                  builder: (context, snapshot) => const TabsScreen(),
                 ),
           routes: {
-            AuthScreen.routeName: (ctx) => AuthScreen(),
+            AuthScreen.routeName: (ctx) => const AuthScreen(),
           },
         ),
       ),

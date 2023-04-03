@@ -1,5 +1,3 @@
-import './user.dart';
-
 class OrderProducts {
   final String id;
   final String name;

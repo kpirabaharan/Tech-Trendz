@@ -19,13 +19,14 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void initState() {
+    print('Init state');
     _pages = [
       {
-        'page': ProductScreen(),
+        'page': const ProductScreen(),
         'title': 'Products',
       },
       {
-        'page': CartScreen(),
+        'page': const CartScreen(),
         'title': 'Cart',
       }
     ];
@@ -34,13 +35,14 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void didUpdateWidget(TabsScreen oldWidget) {
+    print('didupdatewidget');
     _pages = [
       {
-        'page': ProductScreen(),
+        'page': const ProductScreen(),
         'title': 'Products',
       },
       {
-        'page': CartScreen(),
+        'page': const CartScreen(),
         'title': 'Cart',
       }
     ];
@@ -48,6 +50,7 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void _selectPage(int index) {
+    print('set page');
     setState(() {
       _selectedPageIndex = index;
     });
@@ -55,21 +58,20 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isAuth = Provider.of<Auth>(context, listen: false).isAuth;
-    print(isAuth);
+    print('Tabs Screen');
     return Scaffold(
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['title'] as String),
         actions: [
-          isAuth
-              ? IconButton(
-                  onPressed: () => Provider.of<Auth>(context, listen: false).logout(),
-                  icon: const Icon(Icons.logout),
-                )
-              : IconButton(
-                  onPressed: () => Navigator.of(context).pushNamed(AuthScreen.routeName),
-                  icon: const Icon(Icons.person),
-                )
+          // isAuth
+          //     ? IconButton(
+          //         onPressed: () => Provider.of<Auth>(context, listen: false).logout(),
+          //         icon: const Icon(Icons.logout),
+          //       )
+          //     : IconButton(
+          //         onPressed: () => Navigator.of(context).pushNamed(AuthScreen.routeName),
+          //         icon: const Icon(Icons.person),
+          //       )
         ],
       ),
       body: _pages[_selectedPageIndex]['page'] as Widget,
@@ -80,7 +82,7 @@ class _TabsScreenState extends State<TabsScreen> {
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Shop',
