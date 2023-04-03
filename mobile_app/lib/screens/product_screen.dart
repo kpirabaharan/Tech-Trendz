@@ -85,19 +85,6 @@ class _ProductScreenState extends State<ProductScreen> {
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
-        appBar: !isAuth
-            ? AppBar(
-                title: const Text('Products'),
-                actions: [
-                  IconButton(
-                    onPressed: () => {
-                      Navigator.of(context).pushNamed(AuthScreen.routeName),
-                    },
-                    icon: const Icon(Icons.person),
-                  ),
-                ],
-              )
-            : null,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
               ? TabsScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
-                  builder: (context, snapshot) => ProductScreen(),
+                  builder: (context, snapshot) => TabsScreen(),
                 ),
           routes: {
             AuthScreen.routeName: (ctx) => AuthScreen(),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,6 +20,22 @@ class CartItem extends StatelessWidget {
     Future<void> handleAddToCart(String productId) async {
       try {
         await Provider.of<Auth>(context, listen: false).addToCart(productId);
+      } catch (err) {
+        print(err);
+      }
+    }
+
+    Future<void> handleRemoveFromCart(String productId) async {
+      try {
+        await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
+      } catch (err) {
+        print(err);
+      }
+    }
+
+    Future<void> handleRemoveAllFromCart(String productId) async {
+      try {
+        await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
       } catch (err) {
         print(err);
       }
@@ -57,7 +74,7 @@ class CartItem extends StatelessWidget {
             Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 12, 8, 4),
+                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -69,9 +86,12 @@ class CartItem extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           Spacer(),
-                          Text(
-                            'Remove',
-                            style: DefaultTextStyle.of(context).style.apply(color: Colors.red),
+                          TextButton(
+                            onPressed: () => handleRemoveAllFromCart(item.id),
+                            child: Text(
+                              'Remove',
+                              style: DefaultTextStyle.of(context).style.apply(color: Colors.red),
+                            ),
                           ),
                         ],
                       ),
@@ -85,7 +105,7 @@ class CartItem extends StatelessWidget {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () => handleRemoveFromCart(item.id),
                                 icon: Icon(Icons.remove),
                               ),
                               Text(item.quantity.toString(),
@@ -98,7 +118,7 @@ class CartItem extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            '\$${item.quantity * item.cost}',
+                            '\$${(item.quantity * item.cost).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],

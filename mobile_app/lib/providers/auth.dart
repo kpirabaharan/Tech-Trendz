@@ -39,6 +39,13 @@ class Auth with ChangeNotifier {
     return [];
   }
 
+  bool get isCartEmpty {
+    if (_user!.cart.cartProducts.isEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   int get cartLength {
     return _user!.cart.cartProducts.length;
   }
@@ -69,6 +76,7 @@ class Auth with ChangeNotifier {
         ),
       );
       final responseData = json.decode(response.body);
+      print(responseData);
 
       if (response.statusCode == 400) {
         throw HttpException(responseData['msg']);
@@ -81,20 +89,22 @@ class Auth with ChangeNotifier {
         email: responseData['user']['email'],
         phoneNumber: responseData['user']['phoneNumber'],
         dateOfBirth: responseData['user']['dateOfBirth'],
-        cart: Cart(
-          totalAmount: responseData['user']['cart']['totalAmount'],
-          totalQuantity: responseData['user']['cart']['totalQuantity'],
-          cartProducts: (responseData['user']['cart']['items'] as List)
-              .map((item) => CartProducts(
-                    id: item['_id'],
-                    name: item['name'],
-                    brand: item['brand'],
-                    cost: item['cost'],
-                    picturePath: item['picturePath'],
-                    quantity: item['quantity'],
-                  ))
-              .toList(),
-        ),
+        cart: (responseData['user']['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['user']['totalAmount'],
+                totalQuantity: responseData['user']['totalQuantity'],
+                cartProducts: (responseData['user']['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
       );
       _token = responseData['token'];
       notifyListeners();
@@ -136,20 +146,22 @@ class Auth with ChangeNotifier {
         email: extractedUserData['email'],
         phoneNumber: extractedUserData['phoneNumber'],
         dateOfBirth: extractedUserData['dateOfBirth'],
-        cart: Cart(
-          totalAmount: extractedUserData['cart']['totalAmount'],
-          totalQuantity: extractedUserData['cart']['totalQuantity'],
-          cartProducts: (extractedUserData['cart']['items'] as List)
-              .map((item) => CartProducts(
-                    id: item['_id'],
-                    name: item['name'],
-                    brand: item['brand'],
-                    cost: item['cost'],
-                    picturePath: item['picturePath'],
-                    quantity: item['quantity'],
-                  ))
-              .toList(),
-        ),
+        cart: (extractedUserData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: extractedUserData['totalAmount'],
+                totalQuantity: extractedUserData['totalQuantity'],
+                cartProducts: (extractedUserData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
       );
       notifyListeners();
       return true;
@@ -223,21 +235,24 @@ class Auth with ChangeNotifier {
         email: _user!.email,
         phoneNumber: _user!.phoneNumber,
         dateOfBirth: _user!.dateOfBirth,
-        cart: Cart(
-          totalAmount: responseData['totalAmount'],
-          totalQuantity: responseData['totalQuantity'],
-          cartProducts: (responseData['items'] as List)
-              .map((item) => CartProducts(
-                    id: item['_id'],
-                    name: item['name'],
-                    brand: item['brand'],
-                    cost: item['cost'],
-                    picturePath: item['picturePath'],
-                    quantity: item['quantity'],
-                  ))
-              .toList(),
-        ),
+        cart: (responseData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['totalAmount'],
+                totalQuantity: responseData['totalQuantity'],
+                cartProducts: (responseData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
       );
+
       notifyListeners();
     } catch (err) {
       print(err);
@@ -247,15 +262,186 @@ class Auth with ChangeNotifier {
   Future<void> addToCart(String productId) async {
     var url = Uri.parse('${dotenv.env['API_URL']}cart/add');
     if (Platform.isAndroid) {
-      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/$userId');
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/add');
     }
     try {
-      final response = await http.post(url,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $_token',
-          },
-          body: json.encode({'productId': productId, 'userId': userId}));
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+        body: json.encode({'productId': productId, 'userId': userId}),
+      );
+
+      final responseData = json.decode(response.body);
+
+      _user = User(
+        id: _user!.id,
+        firstName: _user!.firstName,
+        lastName: _user!.lastName,
+        email: _user!.email,
+        phoneNumber: _user!.phoneNumber,
+        dateOfBirth: _user!.dateOfBirth,
+        cart: (responseData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['totalAmount'],
+                totalQuantity: responseData['totalQuantity'],
+                cartProducts: (responseData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
+      );
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> removeFromCart(String productId) async {
+    var url = Uri.parse('${dotenv.env['API_URL']}cart/remove');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/remove');
+    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+        body: json.encode({'productId': productId, 'userId': userId}),
+      );
+
+      final responseData = json.decode(response.body);
+
+      _user = User(
+        id: _user!.id,
+        firstName: _user!.firstName,
+        lastName: _user!.lastName,
+        email: _user!.email,
+        phoneNumber: _user!.phoneNumber,
+        dateOfBirth: _user!.dateOfBirth,
+        cart: (responseData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['totalAmount'],
+                totalQuantity: responseData['totalQuantity'],
+                cartProducts: (responseData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
+      );
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> removeAllFromCart(String productId) async {
+    var url = Uri.parse('${dotenv.env['API_URL']}cart/removeAll');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/removeAll');
+    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+        body: json.encode({'productId': productId, 'userId': userId}),
+      );
+
+      final responseData = json.decode(response.body);
+
+      _user = User(
+        id: _user!.id,
+        firstName: _user!.firstName,
+        lastName: _user!.lastName,
+        email: _user!.email,
+        phoneNumber: _user!.phoneNumber,
+        dateOfBirth: _user!.dateOfBirth,
+        cart: (responseData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['totalAmount'],
+                totalQuantity: responseData['totalQuantity'],
+                cartProducts: (responseData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
+      );
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> clearCart() async {
+    var url = Uri.parse('${dotenv.env['API_URL']}cart/clear');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/clear');
+    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $_token',
+        },
+        body: json.encode({'userId': userId}),
+      );
+
+      final responseData = json.decode(response.body);
+
+      _user = User(
+        id: _user!.id,
+        firstName: _user!.firstName,
+        lastName: _user!.lastName,
+        email: _user!.email,
+        phoneNumber: _user!.phoneNumber,
+        dateOfBirth: _user!.dateOfBirth,
+        cart: (responseData['items'] as List).isNotEmpty
+            ? Cart(
+                totalAmount: responseData['totalAmount'],
+                totalQuantity: responseData['totalQuantity'],
+                cartProducts: (responseData['items'] as List)
+                    .map((item) => CartProducts(
+                          id: item['productId'],
+                          name: item['name'],
+                          brand: item['brand'],
+                          cost: item['cost'],
+                          picturePath: item['picturePath'],
+                          quantity: item['quantity'],
+                        ))
+                    .toList(),
+              )
+            : Cart(cartProducts: [], totalAmount: 0, totalQuantity: 0),
+      );
+      notifyListeners();
     } catch (err) {
       print(err);
     }

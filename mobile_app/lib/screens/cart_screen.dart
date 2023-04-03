@@ -43,35 +43,42 @@ class _CartScreenState extends State<CartScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   child: Consumer<Auth>(
-                    builder: (context, user, child) => CustomScrollView(
-                      slivers: [
-                        SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Column(
-                            children: [
-                              ...(user.cartItems.map((ci) {
-                                return Column(
+                    builder: (context, user, child) => user.isCartEmpty
+                        ? Center(
+                            child: Text(
+                              'Your Cart is Empty',
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
+                          )
+                        : CustomScrollView(
+                            slivers: [
+                              SliverFillRemaining(
+                                hasScrollBody: false,
+                                child: Column(
                                   children: [
-                                    CartItem(item: ci),
-                                    const Divider(),
+                                    ...(user.cartItems.map((ci) {
+                                      return Column(
+                                        children: [
+                                          CartItem(item: ci),
+                                          const Divider(),
+                                        ],
+                                      );
+                                    }).toList()),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 20, right: 15),
+                                        child: Text(
+                                          'Total Amount: \$${(user.totalAmount).toStringAsFixed(2)}',
+                                          style: Theme.of(context).textTheme.titleMedium,
+                                        ),
+                                      ),
+                                    ),
                                   ],
-                                );
-                              }).toList()),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 20, right: 15),
-                                  child: Text(
-                                    'Total Amount: \$${user.totalAmount}',
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),
