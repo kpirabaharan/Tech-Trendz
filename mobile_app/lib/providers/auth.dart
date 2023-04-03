@@ -112,8 +112,6 @@ class Auth with ChangeNotifier {
           'cart': responseData['user']['cart'],
         },
       );
-      print('First Login');
-      print(userData);
       prefs.setString('userData', userData);
     } catch (err) {
       print(err);
@@ -153,8 +151,6 @@ class Auth with ChangeNotifier {
               .toList(),
         ),
       );
-      print('Auto Login');
-      print(extractedUserData);
       notifyListeners();
       return true;
     } catch (err) {
@@ -217,8 +213,49 @@ class Auth with ChangeNotifier {
         url,
         headers: {'Authorization': 'Bearer $_token'},
       );
+
       final responseData = json.decode(response.body);
-      print(responseData);
+
+      _user = User(
+        id: _user!.id,
+        firstName: _user!.firstName,
+        lastName: _user!.lastName,
+        email: _user!.email,
+        phoneNumber: _user!.phoneNumber,
+        dateOfBirth: _user!.dateOfBirth,
+        cart: Cart(
+          totalAmount: responseData['totalAmount'],
+          totalQuantity: responseData['totalQuantity'],
+          cartProducts: (responseData['items'] as List)
+              .map((item) => CartProducts(
+                    id: item['_id'],
+                    name: item['name'],
+                    brand: item['brand'],
+                    cost: item['cost'],
+                    picturePath: item['picturePath'],
+                    quantity: item['quantity'],
+                  ))
+              .toList(),
+        ),
+      );
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future<void> addToCart(String productId) async {
+    var url = Uri.parse('${dotenv.env['API_URL']}cart/add');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}cart/$userId');
+    }
+    try {
+      final response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $_token',
+          },
+          body: json.encode({'productId': productId, 'userId': userId}));
     } catch (err) {
       print(err);
     }

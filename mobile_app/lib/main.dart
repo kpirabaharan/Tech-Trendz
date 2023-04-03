@@ -59,12 +59,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             fontFamily: 'Nunito',
             textTheme: const TextTheme(
-              titleLarge: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
               titleMedium: TextStyle(
-                fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
               headlineMedium: TextStyle(

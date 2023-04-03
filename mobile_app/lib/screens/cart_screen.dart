@@ -31,43 +31,50 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _cartFuture,
-      builder: (context, snapshot) => Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(8),
-          child: Consumer<Auth>(
-            builder: (context, user, child) => CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: [
-                      ...(user.cartItems.map((ci) {
-                        return Column(
-                          children: [
-                            CartItem(item: ci),
-                            const Divider(),
-                          ],
-                        );
-                      }).toList()),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20, right: 15),
-                          child: Text(
-                            'Total Amount: \$${user.totalAmount}',
-                            style: Theme.of(context).textTheme.titleMedium,
+    return Scaffold(
+      body: FutureBuilder(
+        future: _cartFuture,
+        builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () => _obtainCartFuture(),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Consumer<Auth>(
+                    builder: (context, user, child) => CustomScrollView(
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Column(
+                            children: [
+                              ...(user.cartItems.map((ci) {
+                                return Column(
+                                  children: [
+                                    CartItem(item: ci),
+                                    const Divider(),
+                                  ],
+                                );
+                              }).toList()),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 20, right: 15),
+                                  child: Text(
+                                    'Total Amount: \$${user.totalAmount}',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
