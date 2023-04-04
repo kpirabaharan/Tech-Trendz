@@ -16,11 +16,7 @@ class _CartScreenState extends State<CartScreen> {
   late Future _cartFuture;
 
   Future _obtainCartFuture() async {
-    try {
-      await Provider.of<Auth>(context, listen: false).fetchCart();
-    } catch (err) {
-      print(err);
-    }
+    return Provider.of<Auth>(context, listen: false).fetchCart();
   }
 
   @override
@@ -33,6 +29,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     print('Cart Screen');
     return Scaffold(
+      appBar: AppBar(title: Text('Cart')),
       body: FutureBuilder(
         future: _cartFuture,
         builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting

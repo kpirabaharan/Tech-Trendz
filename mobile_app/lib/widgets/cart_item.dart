@@ -17,35 +17,22 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  late final CartProducts _item;
   Future<void> handleAddToCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).addToCart(productId);
-    } catch (err) {
-      print(err);
-    }
+    setState(() {
+      Provider.of<Auth>(context, listen: false).addToCart(productId);
+    });
   }
 
   Future<void> handleRemoveFromCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
-    } catch (err) {
-      print(err);
-    }
+    setState(() {
+      Provider.of<Auth>(context, listen: false).removeFromCart(productId);
+    });
   }
 
   Future<void> handleRemoveAllFromCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  @override
-  void initState() {
-    _item = widget.item;
-    super.initState();
+    setState(() {
+      Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
+    });
   }
 
   @override
@@ -66,13 +53,13 @@ class _CartItemState extends State<CartItem> {
                   height: 140,
                   child: Platform.isAndroid
                       ? Image.network(
-                          '${dotenv.env['ANROID_API_URL']}assets/${_item.picturePath}',
+                          '${dotenv.env['ANROID_API_URL']}assets/${widget.item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
                         )
                       : Image.network(
-                          '${dotenv.env['API_URL']}assets/${_item.picturePath}',
+                          '${dotenv.env['API_URL']}assets/${widget.item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
@@ -91,11 +78,11 @@ class _CartItemState extends State<CartItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            _item.name,
+                            widget.item.name,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           TextButton(
-                            onPressed: () => handleRemoveAllFromCart(_item.id),
+                            onPressed: () => handleRemoveAllFromCart(widget.item.id),
                             child: Text(
                               'Remove',
                               style: DefaultTextStyle.of(context).style.apply(color: Colors.red),
@@ -104,7 +91,7 @@ class _CartItemState extends State<CartItem> {
                         ],
                       ),
                       Text(
-                        _item.brand,
+                        widget.item.brand,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const Spacer(),
@@ -114,19 +101,19 @@ class _CartItemState extends State<CartItem> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () => handleRemoveFromCart(_item.id),
+                                onPressed: () => handleRemoveFromCart(widget.item.id),
                                 icon: const Icon(Icons.remove),
                               ),
-                              Text(_item.quantity.toString(),
+                              Text(widget.item.quantity.toString(),
                                   style: Theme.of(context).textTheme.titleMedium),
                               IconButton(
-                                onPressed: () => handleAddToCart(_item.id),
+                                onPressed: () => handleAddToCart(widget.item.id),
                                 icon: const Icon(Icons.add),
                               ),
                             ],
                           ),
                           Text(
-                            '\$${(_item.quantity * _item.cost).toStringAsFixed(2)}',
+                            '\$${(widget.item.quantity * widget.item.cost).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],

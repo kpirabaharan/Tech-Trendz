@@ -1,3 +1,5 @@
+import 'package:e_commerce/screens/cart_screen.dart';
+import 'package:e_commerce/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -72,12 +74,13 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: ThemeMode.dark,
           home: auth.isAuth
-              ? const TabsScreen()
+              ? const ProductScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
-                  builder: (context, snapshot) => const TabsScreen(),
+                  builder: (context, snapshot) => const ProductScreen(),
                 ),
           routes: {
+            CartScreen.routeName: (ctx) => const CartScreen(),
             AuthScreen.routeName: (ctx) => const AuthScreen(),
           },
         ),

@@ -58,18 +58,12 @@ class _ProductScreenState extends State<ProductScreen> {
     }
   }
 
-  Future _obtainProductsFuture() async {
-    try {
-      await Provider.of<Products>(context, listen: false).fetchProducts('all');
-    } catch (err) {
-      print(err);
-    }
+  Future _obtainProductsFuture() {
+    return Provider.of<Products>(context, listen: false).fetchProducts('all');
   }
 
   void _setMode(String mode) {
-    setState(() {
-      Provider.of<Products>(context, listen: false).setMode(mode);
-    });
+    Provider.of<Products>(context, listen: false).setMode(mode);
   }
 
   @override
@@ -86,6 +80,22 @@ class _ProductScreenState extends State<ProductScreen> {
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
+        appBar: AppBar(
+          actions: [
+            isAuth
+                ? IconButton(
+                    onPressed: () => Provider.of<Auth>(context, listen: false).logout(),
+                    icon: const Icon(Icons.logout),
+                  )
+                : IconButton(
+                    onPressed: () => Navigator.of(context).pushNamed(AuthScreen.routeName),
+                    icon: const Icon(Icons.person),
+                  ),
+            IconButton(
+                onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeName),
+                icon: Icon(Icons.shopping_cart))
+          ],
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

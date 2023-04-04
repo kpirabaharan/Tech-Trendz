@@ -4,14 +4,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../models/product.dart';
 import 'carousel_item.dart';
 
-class ProductCarousel extends StatelessWidget {
+class ProductCarousel extends StatefulWidget {
   final List<Product> products;
 
   const ProductCarousel({super.key, required this.products});
 
   @override
+  State<ProductCarousel> createState() => _ProductCarouselState();
+}
+
+class _ProductCarouselState extends State<ProductCarousel> {
+  @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
+    print('Product carousel');
     return CarouselSlider(
       options: CarouselOptions(
         height: double.infinity,
@@ -25,7 +30,7 @@ class ProductCarousel extends StatelessWidget {
         enlargeCenterPage: true,
         enlargeFactor: 0.5,
       ),
-      items: products
+      items: widget.products
           .map((prod) => Builder(
                 builder: (BuildContext context) => CarouselItem(product: prod),
               ))

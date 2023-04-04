@@ -8,6 +8,7 @@ class ModeQuery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Query Widget');
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
