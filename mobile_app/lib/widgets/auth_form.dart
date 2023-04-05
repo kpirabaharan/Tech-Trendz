@@ -22,7 +22,6 @@ class _AuthFormState extends State<AuthForm> {
   TextEditingController dateCtl = TextEditingController();
 
   final _lastNameFocusNode = FocusNode();
-  final _dateFocusNode = FocusNode();
   final _phoneNumberFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
@@ -35,6 +34,15 @@ class _AuthFormState extends State<AuthForm> {
     'email': '',
     'password': '',
   };
+
+  @override
+  void dispose() {
+    _lastNameFocusNode.dispose();
+    _phoneNumberFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
 
   void _switchAuth() {
     if (_authMode == AuthMode.login) {
