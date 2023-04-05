@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/product.dart';
+import '../arguments/product_arguments.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
@@ -44,7 +45,7 @@ class ProductItem extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pushNamed(
                       ProductDetailScreen.routeName,
-                      arguments: product.id,
+                      arguments: ProductArguments(isCarousel: false, product: product),
                     );
                   },
                   child: Hero(

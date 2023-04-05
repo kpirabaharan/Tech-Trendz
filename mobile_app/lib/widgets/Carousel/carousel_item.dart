@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../models/product.dart';
+import '../../arguments/product_arguments.dart';
+import '../../screens/product_detail_screen.dart';
 
 class CarouselItem extends StatelessWidget {
   final Product product;
@@ -40,21 +42,24 @@ class CarouselItem extends StatelessWidget {
               Text(product.name),
               Spacer(),
               Center(
-                child: Container(
-                  height: 150,
-                  child: Platform.isAndroid
-                      ? Image.network(
-                          '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Could not load Image')),
-                          fit: BoxFit.contain,
-                        )
-                      : Image.network(
-                          '${dotenv.env['API_URL']}assets/${product.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Could not load Image')),
-                          fit: BoxFit.contain,
-                        ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      ProductDetailScreen.routeName,
+                      arguments: ProductArguments(isCarousel: true, product: product),
+                    );
+                  },
+                  child: Container(
+                    height: 150,
+                    child: Image.network(
+                      Platform.isAndroid
+                          ? '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}'
+                          : '${dotenv.env['API_URL']}assets/${product.picturePath}',
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(child: Text('Could not load Image')),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
               ),
               Spacer(),

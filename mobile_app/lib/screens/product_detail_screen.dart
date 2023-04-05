@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products.dart';
+import '../models/product.dart';
+import '../arguments/product_arguments.dart';
 import '../providers/auth.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   static const routeName = '/product-detail-screen';
-  const ProductDetailScreen({super.key});
+  ProductDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final productId = ModalRoute.of(context)!.settings.arguments as String;
-    final loadedProduct = Provider.of<Products>(context, listen: false).findById(productId);
     final mediaQuery = MediaQuery.of(context);
+    final productArgs = ModalRoute.of(context)!.settings.arguments as ProductArguments;
+    final product = productArgs.product;
+    final isCarousel = productArgs.isCarousel;
 
     Future<void> handleAddToCart(String productId) async {
       try {
@@ -34,18 +36,28 @@ class ProductDetailScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               // titlePadding: EdgeInsetsDirectional.only(bottom: 5),
               // title: Text(loadedProduct.name),
-              background: Hero(
-                tag: productId,
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(25, mediaQuery.viewPadding.top, 25, 0),
-                  child: Image.network(
-                    Platform.isAndroid
-                        ? '${dotenv.env['ANDROID_API_URL']}assets/${loadedProduct.picturePath}'
-                        : '${dotenv.env['API_URL']}assets/${loadedProduct.picturePath}',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
+              background: isCarousel
+                  ? Container(
+                      padding: EdgeInsets.fromLTRB(25, mediaQuery.viewPadding.top, 25, 0),
+                      child: Image.network(
+                        Platform.isAndroid
+                            ? '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}'
+                            : '${dotenv.env['API_URL']}assets/${product.picturePath}',
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                  : Hero(
+                      tag: product.id,
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(25, mediaQuery.viewPadding.top, 25, 0),
+                        child: Image.network(
+                          Platform.isAndroid
+                              ? '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}'
+                              : '${dotenv.env['API_URL']}assets/${product.picturePath}',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
             ),
           ),
           SliverList(
@@ -55,18 +67,18 @@ class ProductDetailScreen extends StatelessWidget {
               width: null,
             ),
             Text(
-              loadedProduct.name,
+              product.name,
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.center,
             ),
             Text(
-              loadedProduct.description,
+              product.description,
               textAlign: TextAlign.center,
               softWrap: true,
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
-              '\$${(loadedProduct.cost).toStringAsFixed(2)}',
+              '\$${(product.cost).toStringAsFixed(2)}',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall,
             )
@@ -75,7 +87,7 @@ class ProductDetailScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => handleAddToCart(productId),
+        onPressed: () => handleAddToCart(product.id),
         icon: Icon(Icons.add_shopping_cart),
         label: const Text('Add to Cart'),
       ),
