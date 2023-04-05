@@ -53,7 +53,7 @@ class CartItem extends StatelessWidget {
                     height: 140,
                     child: Image.network(
                       Platform.isAndroid
-                          ? '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}'
+                          ? '${dotenv.env['ANDROID_API_URL']}assets/${item.picturePath}'
                           : '${dotenv.env['API_URL']}assets/${item.picturePath}',
                       errorBuilder: (context, error, stackTrace) =>
                           const Center(child: Text('Error')),

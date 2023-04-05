@@ -20,10 +20,29 @@ class ProductDetailScreen extends StatelessWidget {
     final isCarousel = productArgs.isCarousel;
 
     Future<void> handleAddToCart(String productId) async {
+      bool isErr = false;
       try {
         await Provider.of<Auth>(context, listen: false).addToCart(productId);
       } catch (err) {
         print(err);
+        isErr = true;
+      } finally {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text(
+              !isErr ? 'Added to Cart' : 'An Error Occurred!',
+              textAlign: TextAlign.start,
+            ),
+            action: SnackBarAction(
+              label: 'UNDO',
+              onPressed: () {
+                Provider.of<Auth>(context, listen: false).removeFromCart(productId);
+              },
+            ),
+          ),
+        );
       }
     }
 
@@ -85,7 +104,7 @@ class ProductDetailScreen extends StatelessWidget {
           ]))
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => handleAddToCart(product.id),
         icon: Icon(Icons.add_shopping_cart),

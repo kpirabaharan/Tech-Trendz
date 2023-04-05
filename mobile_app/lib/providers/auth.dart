@@ -265,6 +265,10 @@ class Auth with ChangeNotifier {
         body: json.encode({'productId': productId, 'userId': userId}),
       );
 
+      if (response.statusCode == 500) {
+        throw HttpException('An error occurred!');
+      }
+
       final responseData = json.decode(response.body);
 
       _user = User(
@@ -294,6 +298,7 @@ class Auth with ChangeNotifier {
       notifyListeners();
     } catch (err) {
       print(err);
+      rethrow;
     }
   }
 
