@@ -7,50 +7,37 @@ import 'package:provider/provider.dart';
 import '../models/cart.dart';
 import '../providers/auth.dart';
 
-class CartItem extends StatefulWidget {
+class CartItem extends StatelessWidget {
   final CartProducts item;
 
   CartItem({required this.item});
 
   @override
-  State<CartItem> createState() => _CartItemState();
-}
-
-class _CartItemState extends State<CartItem> {
-  late final CartProducts _item;
-  Future<void> handleAddToCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).addToCart(productId);
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future<void> handleRemoveFromCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  Future<void> handleRemoveAllFromCart(String productId) async {
-    try {
-      await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  @override
-  void initState() {
-    _item = widget.item;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print('Cart Item');
+    Future<void> handleAddToCart(String productId) async {
+      try {
+        await Provider.of<Auth>(context, listen: false).addToCart(productId);
+      } catch (err) {
+        print(err);
+      }
+    }
+
+    Future<void> handleRemoveFromCart(String productId) async {
+      try {
+        await Provider.of<Auth>(context, listen: false).removeFromCart(productId);
+      } catch (err) {
+        print(err);
+      }
+    }
+
+    Future<void> handleRemoveAllFromCart(String productId) async {
+      try {
+        await Provider.of<Auth>(context, listen: false).removeAllFromCart(productId);
+      } catch (err) {
+        print(err);
+      }
+    }
+
     return SizedBox(
         height: 175,
         child: Row(
@@ -66,13 +53,13 @@ class _CartItemState extends State<CartItem> {
                   height: 140,
                   child: Platform.isAndroid
                       ? Image.network(
-                          '${dotenv.env['ANROID_API_URL']}assets/${_item.picturePath}',
+                          '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
                         )
                       : Image.network(
-                          '${dotenv.env['API_URL']}assets/${_item.picturePath}',
+                          '${dotenv.env['API_URL']}assets/${item.picturePath}',
                           errorBuilder: (context, error, stackTrace) =>
                               const Center(child: Text('Error')),
                           fit: BoxFit.contain,
@@ -91,11 +78,11 @@ class _CartItemState extends State<CartItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            _item.name,
+                            item.name,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           TextButton(
-                            onPressed: () => handleRemoveAllFromCart(_item.id),
+                            onPressed: () => handleRemoveAllFromCart(item.id),
                             child: Text(
                               'Remove',
                               style: DefaultTextStyle.of(context).style.apply(color: Colors.red),
@@ -104,7 +91,7 @@ class _CartItemState extends State<CartItem> {
                         ],
                       ),
                       Text(
-                        _item.brand,
+                        item.brand,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const Spacer(),
@@ -114,19 +101,19 @@ class _CartItemState extends State<CartItem> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () => handleRemoveFromCart(_item.id),
+                                onPressed: () => handleRemoveFromCart(item.id),
                                 icon: const Icon(Icons.remove),
                               ),
-                              Text(_item.quantity.toString(),
+                              Text(item.quantity.toString(),
                                   style: Theme.of(context).textTheme.titleMedium),
                               IconButton(
-                                onPressed: () => handleAddToCart(_item.id),
+                                onPressed: () => handleAddToCart(item.id),
                                 icon: const Icon(Icons.add),
                               ),
                             ],
                           ),
                           Text(
-                            '\$${(_item.quantity * _item.cost).toStringAsFixed(2)}',
+                            '\$${(item.quantity * item.cost).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],

@@ -31,7 +31,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('Cart Screen');
     return Scaffold(
       body: FutureBuilder(
         future: _cartFuture,

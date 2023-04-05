@@ -81,8 +81,6 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isAuth = Provider.of<Auth>(context, listen: false).isAuth;
-    print('Products Screen');
     return FutureBuilder(
       future: Future.wait([_productCarouselFuture, _productFuture]),
       builder: (context, snapshot) => Scaffold(
