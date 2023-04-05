@@ -7,6 +7,7 @@ import './providers/products.dart';
 import './providers/orders.dart';
 import './screens/tabs_screen.dart';
 import './screens/auth_screen.dart';
+import './screens/product_detail_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
                 ),
           routes: {
             AuthScreen.routeName: (ctx) => const AuthScreen(),
+            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           },
         ),
       ),

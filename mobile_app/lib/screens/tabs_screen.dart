@@ -72,24 +72,26 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
       body: _pages[_selectedPageIndex]['page'] as Widget,
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 4,
-        onTap: _selectPage,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        currentIndex: _selectedPageIndex,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          )
-        ],
-      ),
+      bottomNavigationBar: isAuth
+          ? BottomNavigationBar(
+              elevation: 4,
+              onTap: _selectPage,
+              unselectedItemColor: Colors.white,
+              selectedItemColor: Theme.of(context).colorScheme.secondary,
+              currentIndex: _selectedPageIndex,
+              type: BottomNavigationBarType.fixed,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Shop',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_cart),
+                  label: 'Cart',
+                )
+              ],
+            )
+          : null,
     );
   }
 }

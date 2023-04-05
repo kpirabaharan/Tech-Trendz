@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/product.dart';
+import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -39,21 +40,32 @@ class ProductItem extends StatelessWidget {
               Text(product.name),
               const Spacer(),
               Center(
-                child: Container(
-                  height: 120,
-                  child: Platform.isAndroid
-                      ? Image.network(
-                          '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Could not load Image')),
-                          fit: BoxFit.contain,
-                        )
-                      : Image.network(
-                          '${dotenv.env['API_URL']}assets/${product.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Could not load Image')),
-                          fit: BoxFit.contain,
-                        ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      ProductDetailScreen.routeName,
+                      arguments: product.id,
+                    );
+                  },
+                  child: Hero(
+                    tag: product.id,
+                    child: Container(
+                      height: 120,
+                      child: Platform.isAndroid
+                          ? Image.network(
+                              '${dotenv.env['ANDROID_API_URL']}assets/${product.picturePath}',
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(child: Text('Could not load Image')),
+                              fit: BoxFit.contain,
+                            )
+                          : Image.network(
+                              '${dotenv.env['API_URL']}assets/${product.picturePath}',
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(child: Text('Could not load Image')),
+                              fit: BoxFit.contain,
+                            ),
+                    ),
+                  ),
                 ),
               ),
               const Spacer(),

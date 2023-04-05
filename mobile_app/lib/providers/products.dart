@@ -15,6 +15,10 @@ class Products with ChangeNotifier {
     return [..._products];
   }
 
+  Product findById(String id) {
+    return _products.firstWhere((prod) => prod.id == id);
+  }
+
   String get mode {
     return _category;
   }

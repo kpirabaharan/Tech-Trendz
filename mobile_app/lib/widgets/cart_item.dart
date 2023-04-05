@@ -49,22 +49,16 @@ class CartItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: SizedBox(
-                  // decoration: BoxDecoration(border: Border.all(width: 1)),
-                  height: 140,
-                  child: Platform.isAndroid
-                      ? Image.network(
-                          '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Error')),
-                          fit: BoxFit.contain,
-                        )
-                      : Image.network(
-                          '${dotenv.env['API_URL']}assets/${item.picturePath}',
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Center(child: Text('Error')),
-                          fit: BoxFit.contain,
-                        ),
-                ),
+                    // decoration: BoxDecoration(border: Border.all(width: 1)),
+                    height: 140,
+                    child: Image.network(
+                      Platform.isAndroid
+                          ? '${dotenv.env['ANROID_API_URL']}assets/${item.picturePath}'
+                          : '${dotenv.env['API_URL']}assets/${item.picturePath}',
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(child: Text('Error')),
+                      fit: BoxFit.contain,
+                    )),
               ),
             ),
             Expanded(
