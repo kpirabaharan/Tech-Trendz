@@ -17,17 +17,23 @@ class OrderProducts {
 }
 
 class Order {
-  List<OrderProducts> orderProducts = [];
-  final double totalAmount;
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String orderDate;
+  final String deliveryDate;
   final int totalQuantity;
-  final String userId;
-  final String date;
+  final double totalAmount;
+  List<OrderProducts> orderProducts = [];
 
   Order({
-    required this.orderProducts,
-    required this.totalAmount,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.orderDate,
+    required this.deliveryDate,
     required this.totalQuantity,
-    required this.userId,
-    required this.date,
+    required this.totalAmount,
+    required this.orderProducts,
   });
 }

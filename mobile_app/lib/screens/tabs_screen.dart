@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import './auth_screen.dart';
 import './product_screen.dart';
 import './cart_screen.dart';
-import './auth_screen.dart';
+import './orders_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -27,6 +28,10 @@ class _TabsScreenState extends State<TabsScreen> {
       {
         'page': const CartScreen(),
         'title': 'Cart',
+      },
+      {
+        'page': const OrdersScreen(),
+        'title': 'Orders',
       }
     ];
     super.initState();
@@ -42,6 +47,10 @@ class _TabsScreenState extends State<TabsScreen> {
       {
         'page': const CartScreen(),
         'title': 'Cart',
+      },
+      {
+        'page': const OrdersScreen(),
+        'title': 'Orders',
       }
     ];
     super.didUpdateWidget(oldWidget);
@@ -88,6 +97,10 @@ class _TabsScreenState extends State<TabsScreen> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.shopping_cart),
                   label: 'Cart',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_bag),
+                  label: 'Orders',
                 )
               ],
             )
