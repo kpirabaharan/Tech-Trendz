@@ -44,13 +44,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
             : RefreshIndicator(
                 onRefresh: () => _obtainOrdersFuture(),
                 child: Consumer<Orders>(builder: (context, orders, child) {
-                  print(orders.orders.length);
                   return CustomScrollView(
                     slivers: [
                       SliverFillRemaining(
                         hasScrollBody: false,
                         child: Column(
-                          children: [...(orders.orders.map((ord) => OrderItem(ord)).toList())],
+                          children: [
+                            ...(orders.orders.map((ord) => OrderItem(ord)).toList()),
+                          ],
                         ),
                       ),
                     ],
