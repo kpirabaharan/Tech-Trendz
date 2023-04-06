@@ -50,7 +50,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         hasScrollBody: false,
                         child: Column(
                           children: [
-                            ...(orders.orders.map((ord) => OrderItem(ord)).toList()),
+                            ...(orders.orders
+                                .map((ord) => OrderItem(key: ValueKey(ord.id), ord))
+                                .toList()),
                           ],
                         ),
                       ),

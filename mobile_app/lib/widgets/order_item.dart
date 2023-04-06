@@ -1,10 +1,10 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/order.dart';
-import '../providers/orders.dart';
 
 class OrderItem extends StatefulWidget {
   final Order orderItem;
@@ -27,9 +27,10 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: _expanded ? _order.orderProducts.length * 22 + 160 : 150,
+      height: _expanded ? min(_order.orderProducts.length * 91 + 208, 438) : 208,
       child: Card(
         margin: const EdgeInsets.all(10),
         child: Padding(
@@ -52,7 +53,7 @@ class _OrderItemState extends State<OrderItem> {
                       ),
                       Text(
                         'Estimated Delivery: ${_order.deliveryDate}',
-                        style: TextStyle(fontSize: 12, color: Colors.green),
+                        style: const TextStyle(fontSize: 12, color: Colors.green),
                       ),
                     ],
                   ),
@@ -70,41 +71,103 @@ class _OrderItemState extends State<OrderItem> {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  height: _expanded ? _order.orderProducts.length * 22 + 12 : 0,
+                  height: _expanded ? min(_order.orderProducts.length * 91, 225) : 0,
                   child: ListView(
                     children: _order.orderProducts
                         .map(
-                          (prod) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                prod.name,
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${prod.quantity}x \$${prod.cost}',
-                                style: TextStyle(fontSize: 18, color: Colors.grey),
-                              )
-                            ],
+                          (prod) => Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5.0),
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height: 75,
+                                  width: 100,
+                                  child: Image.network(
+                                    Platform.isAndroid
+                                        ? '${dotenv.env['ANDROID_API_URL']}assets/${prod.picturePath}'
+                                        : '${dotenv.env['API_URL']}assets/${prod.picturePath}',
+                                    errorBuilder: (context, error, stackTrace) =>
+                                        const Center(child: Text('Error')),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                Text(
+                                  prod.name,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Spacer(),
+                                Text(
+                                  '${prod.quantity}x \$${prod.cost}',
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                )
+                              ],
+                            ),
                           ),
                         )
                         .toList(),
                   ),
                 ),
               ),
-              Divider(),
-              Container(
-                height: 22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Total: \$${_order.totalAmount.toStringAsFixed(2)}',
+              const Divider(
+                thickness: 1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Subtotal:',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Tax:',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 34.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '\$${_order.totalAmount.toStringAsFixed(2)}',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          '+ \$${(_order.totalAmount * 0.13).toStringAsFixed(2)}',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                indent: mediaQuery.width * 0.45,
+                thickness: 1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Total:',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text(
+                      '\$${(_order.totalAmount * 1.13).toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
