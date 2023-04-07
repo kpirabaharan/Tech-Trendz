@@ -5,11 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
 import '../providers/orders.dart';
+import './web_screen.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/cart-screen';
-  const CartScreen({super.key});
+  final Function completeOrder;
+
+  CartScreen({required this.completeOrder, super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -77,6 +80,20 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  Future<void> _launchWebView() async {
+    String userId = Provider.of<Auth>(context, listen: false).userId as String;
+    final url = await Provider.of<Orders>(context, listen: false).postOrder(userId);
+    final String result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => MyWebView(url: url),
+      ),
+    ) as String;
+    if (result == 'Success') {
+      await Provider.of<Orders>(context, listen: false).successfulOrder(userId);
+      widget.completeOrder();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,11 +109,18 @@ class _CartScreenState extends State<CartScreen> {
                   padding: const EdgeInsets.all(8),
                   child: Consumer<Auth>(
                     builder: (context, user, child) => user.isCartEmpty
-                        ? Center(
-                            child: Text(
-                              'Your Cart is Empty',
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            ),
+                        ? CustomScrollView(
+                            slivers: [
+                              SliverFillRemaining(
+                                hasScrollBody: false,
+                                child: Center(
+                                  child: Text(
+                                    'Your Cart is Empty',
+                                    style: Theme.of(context).textTheme.headlineLarge,
+                                  ),
+                                ),
+                              ),
+                            ],
                           )
                         : CustomScrollView(
                             slivers: [
@@ -144,7 +168,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _launchURL,
+        onPressed: _launchWebView,
         label: Text('Checkout'),
         icon: Icon(Icons.shopping_cart_checkout),
       ),

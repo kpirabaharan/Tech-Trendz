@@ -19,7 +19,7 @@ const OrderItem = ({
         className='pt-[22px] leading-[60px] text-[22px] font-opensans font-semibold
          text-[#202020]'
       >
-        Order ID:
+        Order Id:
         <span> {orderId.substring(orderId.length - 9, orderId.length)}</span>
       </p>
       <div className='flex flex-row items-center'>

@@ -27,7 +27,7 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Products',
       },
       {
-        'page': const CartScreen(),
+        'page': CartScreen(completeOrder: _goToOrders),
         'title': 'Cart',
       },
       {
@@ -46,7 +46,7 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Products',
       },
       {
-        'page': const CartScreen(),
+        'page':  CartScreen(completeOrder: _goToOrders),
         'title': 'Cart',
       },
       {
@@ -60,6 +60,12 @@ class _TabsScreenState extends State<TabsScreen> {
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
+    });
+  }
+
+  void _goToOrders() {
+    setState(() {
+      _selectedPageIndex = 2;
     });
   }
 

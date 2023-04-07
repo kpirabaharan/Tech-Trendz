@@ -41,6 +41,56 @@ class Orders with ChangeNotifier {
     }
   }
 
+  Future<void> successfulOrder(String userId) async {
+    var url = Uri.parse('${dotenv.env['API_URL']}order/success');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}order/success');
+    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $_token',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(
+          {'userId': userId},
+        ),
+      );
+
+      List<Order> _extractedOrders;
+
+      final responseData = json.decode(response.body);
+
+      _extractedOrders = (responseData['orders'] as List)
+          .map(
+            (order) => Order(
+                id: order['orderId'],
+                firstName: order['orderFirstName'],
+                lastName: order['orderLastName'],
+                orderDate: order['orderDate'],
+                deliveryDate: order['deliveryDate'],
+                totalQuantity: order['totalQuantity'],
+                totalAmount: order['totalAmount'],
+                orderProducts: (order['products'] as List)
+                    .map((prod) => OrderProducts(
+                          id: prod['productId'],
+                          name: prod['name'],
+                          brand: prod['brand'],
+                          picturePath: prod['picturePath'],
+                          cost: prod['cost'],
+                          quantity: prod['quantity'],
+                        ))
+                    .toList()),
+          )
+          .toList();
+      _orders = _extractedOrders;
+      notifyListeners();
+    } catch (err) {
+      print(err);
+    }
+  }
+
   Future<void> fetchOrders(String userId) async {
     var url = Uri.parse('${dotenv.env['API_URL']}order/$userId');
     if (Platform.isAndroid) {

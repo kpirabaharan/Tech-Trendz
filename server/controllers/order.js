@@ -146,6 +146,9 @@ export const successfulOrder = async (req, res) => {
 
     res.status(201).json({
       orders: formattedOrders,
+      items: user.cart.items,
+      totalAmount: user.cart.totalAmount,
+      totalQuantity: user.cart.totalQuantity,
     });
   } catch (err) {
     console.log(err);
