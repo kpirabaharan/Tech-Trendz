@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
 import '../providers/orders.dart';
-import './web_screen.dart';
+import 'checkout_screen.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _CartScreenState extends State<CartScreen> {
     final url = await Provider.of<Orders>(context, listen: false).postOrder(userId);
     final String result = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => MyWebView(url: url),
+        builder: (_) => CheckoutScreen(url: url),
       ),
     ) as String;
     if (result == 'Success') {
