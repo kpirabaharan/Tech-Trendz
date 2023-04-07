@@ -17,6 +17,30 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<String> postOrder(String userId) async {
+    var url = Uri.parse('${dotenv.env['API_URL']}order/');
+    if (Platform.isAndroid) {
+      url = Uri.parse('${dotenv.env['ANDROID_API_URL']}order/');
+    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $_token',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(
+          {'userId': userId},
+        ),
+      );
+
+      return json.decode(response.body)['url'];
+    } catch (err) {
+      print(err);
+      return "Error";
+    }
+  }
+
   Future<void> fetchOrders(String userId) async {
     var url = Uri.parse('${dotenv.env['API_URL']}order/$userId');
     if (Platform.isAndroid) {
@@ -55,7 +79,6 @@ class Orders with ChangeNotifier {
           )
           .toList();
       _orders = _extractedOrders;
-      print(_orders);
       notifyListeners();
     } catch (err) {
       print(err);

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import '../providers/orders.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
@@ -27,6 +30,51 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     _cartFuture = _obtainCartFuture();
     super.initState();
+  }
+
+  void _startCheckout(BuildContext ctx) {
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: ctx,
+      isScrollControlled: true,
+      builder: (bCtx) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(bCtx).viewInsets.bottom),
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Checkout',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                const SizedBox(height: 10),
+                CardFormField(),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(bCtx).pop(),
+                  child: Text("Pay"),
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _launchURL() async {
+    String userId = Provider.of<Auth>(context, listen: false).userId as String;
+    final url = await Provider.of<Orders>(context, listen: false).postOrder(userId);
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -59,23 +107,28 @@ class _CartScreenState extends State<CartScreen> {
                                     ...(user.cartItems.map((ci) {
                                       return Column(
                                         children: [
-                                          CartItem(item: ci),
-                                          const Divider(),
+                                          CartItem(
+                                            item: ci,
+                                            key: ValueKey(ci.id),
+                                          ),
+                                          const Divider(
+                                            thickness: 1,
+                                          ),
                                         ],
                                       );
                                     }).toList()),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
+                                      padding: const EdgeInsets.fromLTRB(6, 8, 6, 50),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'Total Items: ${(user.totalQuantity)}',
-                                            style: Theme.of(context).textTheme.titleMedium,
+                                            style: Theme.of(context).textTheme.titleLarge,
                                           ),
                                           Text(
                                             'Total Amount: \$${(user.totalAmount).toStringAsFixed(2)}',
-                                            style: Theme.of(context).textTheme.titleMedium,
+                                            style: Theme.of(context).textTheme.titleLarge,
                                           ),
                                         ],
                                       ),
@@ -88,6 +141,12 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _launchURL,
+        label: Text('Checkout'),
+        icon: Icon(Icons.shopping_cart_checkout),
       ),
     );
   }

@@ -10,7 +10,7 @@ import '../providers/auth.dart';
 class CartItem extends StatelessWidget {
   final CartProducts item;
 
-  CartItem({required this.item});
+  CartItem({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {

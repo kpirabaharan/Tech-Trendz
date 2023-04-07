@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import './providers/auth.dart';
 import './providers/products.dart';
@@ -11,6 +12,7 @@ import './screens/product_detail_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
+  Stripe.publishableKey = dotenv.env['STRIPE_PK']!;
   runApp(const MyApp());
 }
 
