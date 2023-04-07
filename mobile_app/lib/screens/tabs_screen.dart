@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
@@ -46,7 +45,7 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Products',
       },
       {
-        'page':  CartScreen(completeOrder: _goToOrders),
+        'page': CartScreen(completeOrder: _goToOrders),
         'title': 'Cart',
       },
       {

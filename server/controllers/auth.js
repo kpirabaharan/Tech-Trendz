@@ -36,7 +36,6 @@ export const register = async (req, res) => {
 
     const savedUser = await newUser.save();
     savedUser.password = undefined;
-    console.log({ Registered: savedUser });
     res.status(201).json(savedUser);
   } catch (err) {
     console.log(err);
@@ -60,7 +59,6 @@ export const login = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     user.password = undefined;
-    console.log({ 'Logged-In': user });
     res.status(200).json({ token, user });
   } catch (err) {
     console.log(err);
