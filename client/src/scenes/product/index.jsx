@@ -48,7 +48,7 @@ const ProductPage = () => {
         />
       </div>
       <div className='flex flex-col sm:flex-row w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
-        <CategoryQuery />
+        {/* <CategoryQuery /> */}
         <ProductGrid />
       </div>
       <div className='w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
