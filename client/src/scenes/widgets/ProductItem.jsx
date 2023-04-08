@@ -22,11 +22,11 @@ const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className='flex flex-col w-[300px]'>
+    <div className='flex flex-col'>
       <Link to={`/product/${product._id}`}>
         <div
-          className='flex justify-center items-center bg-gray-200 rounded-lg w-full 
-        h-[250px]'
+          className='flex justify-center items-center bg-gray-200 rounded-lg 
+          w-full h-[350px] sm:h-[250px]'
         >
           <img
             className='h-[75%] w-[90%] object-contain'

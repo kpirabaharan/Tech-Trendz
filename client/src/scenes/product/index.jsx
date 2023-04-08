@@ -10,7 +10,7 @@ import ProductGrid from '../widgets/ProductGrid';
 import Pagination from '../../components/Pagination';
 import Footer from '../widgets/Footer';
 
-let PageSize = 2;
+let PageSize = 4;
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const ProductPage = () => {
           onModeChange={(mode) => setCurrentMode(mode)}
         />
       </div>
-      <div className='flex flex-col sm:flex-row w-[90%] mx-auto md:h-full pt-2 pb-8 sm:pt-2'>
+      <div className='flex flex-col sm:flex-row w-[95%] mx-auto md:h-full pt-4 pb-8'>
         {/* <CategoryQuery /> */}
         <ProductGrid />
       </div>

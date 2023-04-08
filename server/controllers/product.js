@@ -1,6 +1,6 @@
 import Product from '../models/Product.js';
 
-const PRODUCTS_PER_PAGE = 2;
+const PRODUCTS_PER_PAGE = 4;
 
 export const fetchProducts = async (req, res) => {
   const { mode, page } = req.query;
