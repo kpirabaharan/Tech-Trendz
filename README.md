@@ -45,14 +45,10 @@ This is an E-commerce Full Stack Web and Mobile Application that provides a comp
 7. Start the front-end client.
 8. Access the application through the provided URL or `http://localhost:3000`.
 
+## Contributors
+
+- [Keeshigan Pirabaharan](https://github.com/kpirabaharan/Sociopedia.git)
+
 ## License
 
 This project is licensed under the MIT License Feel free to use, modify, and distribute the code as per the terms of the license.
-
-## Acknowledgements
-
-- Include any acknowledgements or credits to individuals, libraries, or resources that have been used in the project.
-
-## Contact
-
-For any inquiries or further information, please contact [kpirabaharan3@gmail.com](mailto:kpirabaharan3@gmail.com).
