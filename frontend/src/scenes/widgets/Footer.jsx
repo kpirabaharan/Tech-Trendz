@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <div className='flex flex-col sm:flex-row justify-around min-h-[200px] pt-6 px-16 mb-16 h-auto gap-8 bg-cyan-100'>
       <div className='flex flex-col sm:basis-1/3 justify-around'>
-        <p className='text-lg font-bold font-playfair'>E-Commerce</p>
+        <p className='text-lg font-bold font-playfair'>Tech Trendz</p>
         <p className='text-sm'>
           Lorem ipsum dolor sit amet. Et debitis quisquam vel tempore quas a
           dolor debitis sit fugit nobis et quasi natus et error minima. Non

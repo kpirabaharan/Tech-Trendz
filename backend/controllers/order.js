@@ -119,6 +119,8 @@ export const postOrder = async (req, res) => {
       cancel_url: `${process.env.SERVER_URL}/cart`,
     });
 
+    console.log(session.payment_intent);
+
     res.status(201).json({
       url: session.url,
     });

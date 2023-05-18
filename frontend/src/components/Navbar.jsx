@@ -37,7 +37,7 @@ const Navbar = () => {
     <div className={`z-40 w-full fixed ${searchBarBackground} pb-4 sm:pb-0`}>
       <nav className={'flex flex-row justify-between mx-auto w-5/6 top-0 py-3'}>
         <Link to={`/`}>
-          <h4 className='font-playfair text-3xl font-bold'>E-Commerce</h4>
+          <h4 className='font-playfair text-3xl font-bold'>Tech Trendz</h4>
         </Link>
         {isAboveSmallScreens ? (
           <div className='flex justify-between items-center gap-6'>

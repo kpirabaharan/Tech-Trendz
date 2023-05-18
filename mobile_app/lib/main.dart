@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<Auth>(
         builder: (context, auth, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'E-Commerce',
+          title: 'Tech Trendz',
           theme: ThemeData(
             fontFamily: 'Nunito',
             textTheme: const TextTheme(

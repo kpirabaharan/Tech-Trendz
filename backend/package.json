@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Backend Server for E-Commerce Fullstack Project",
+  "description": "Backend Server for Tech Trendz E-Commerce Fullstack Project",
   "main": "app.js",
   "type": "module",
   "scripts": {
