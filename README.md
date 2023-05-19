@@ -1,4 +1,4 @@
-# Tech Trendz Full Stack Web and Mobile Application
+# Tech Trendz (Full Stack E-Commerce App)
 
 This is an E-commerce Full Stack Web and Mobile Application that provides a complete end-to-end solution for online shopping. It is built using modern web technologies and follows a full stack architecture, consisting of a front-end client, back-end server, and a flutter-based mobile application.
 
@@ -36,7 +36,7 @@ This is an E-commerce Full Stack Web and Mobile Application that provides a comp
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/kpirabaharan/E-Commerce.git`
+1. Clone the repository: `git clone https://github.com/kpirabaharan/Tech-Trendz.git`
 2. Set up the back-end server by following the instructions in the `backend/README.md` file.
 3. Set up the front-end client by following the instructions in the `frontend/README.md` file.
 4. Configure the database connection settings in the back-end server.
