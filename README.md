@@ -36,14 +36,14 @@ This is an E-commerce Full Stack Web and Mobile Application that provides a comp
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/kpirabaharan/Tech-Trendz.git`
-2. Set up the back-end server by following the instructions in the `backend/README.md` file.
-3. Set up the front-end client by following the instructions in the `frontend/README.md` file.
+1. Clone the repository: `git clone https://github.com/kpirabaharan/Tech-Trendz.git`.
+2. Set up the back-end server by running 'cd backend' then 'npm start'.
+3. Set up the front-end client by running 'cd frontend' then 'npm run dev'.
 4. Configure the database connection settings in the back-end server.
 5. Set up the payment gateway integration and obtain necessary API keys.
 6. Start the back-end server.
 7. Start the front-end client.
-8. Access the application through the provided URL or `http://localhost:3000`.
+8. Access the application through the provided URL or `http://localhost:5173`.
 
 ## Contributors
 

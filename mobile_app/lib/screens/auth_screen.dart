@@ -89,36 +89,9 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Authenticate'),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color(0xFF3366FF),
-                  Color(0xFF00CCFF),
-                ],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp),
-          ),
-        ),
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(0, 4, 40, 0.5),
-                  Color.fromRGBO(0, 78, 146, 1),
-                  Color.fromRGBO(0, 4, 40, 0.5),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 0.5, 1],
-              ),
-            ),
-          ),
           isLoading
               ? const Center(child: CircularProgressIndicator())
               : CustomScrollView(

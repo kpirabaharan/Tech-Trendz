@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
 import '../providers/orders.dart';
-import 'checkout_screen.dart';
 import '../widgets/cart_item.dart';
+import './checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
   static const routeName = '/cart-screen';

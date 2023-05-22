@@ -36,23 +36,23 @@ This is a frontend e-commerce website built using React.js. It provides a user-f
 
 ### Product Page
 
-![ProductPage](../pictures/frontend/ProductPage.png)
+<img src="https://github.com/kpirabaharan/Tech-Trendz/blob/4dd3c0d4252c4a7c0845a6601bffde2c9c09f4ab/pictures/frontend/ProductPage.png" width="500">
 
 ### Authentication Page
 
-![AuthPage](../pictures/frontend/AuthPage.png)
+<img src="https://github.com/kpirabaharan/Tech-Trendz/blob/4dd3c0d4252c4a7c0845a6601bffde2c9c09f4ab/pictures/frontend/AuthPage.png" width="500">
 
 ### Cart Page
 
-![CartPage](../pictures/frontend/CartPage.png)
+<img src="https://github.com/kpirabaharan/Tech-Trendz/blob/4dd3c0d4252c4a7c0845a6601bffde2c9c09f4ab/pictures/frontend/CartPage.png" width="500">
 
 ### Stripe Checkout
 
-![StripeCheckout](../pictures/frontend/StripeCheckout.png)
+<img src="https://github.com/kpirabaharan/Tech-Trendz/blob/4dd3c0d4252c4a7c0845a6601bffde2c9c09f4ab/pictures/frontend/StripeCheckout.png" width="500">
 
 ### Order Page
 
-![OrderPage](../pictures/frontend/OrderPage.png)  
+<img src="https://github.com/kpirabaharan/Tech-Trendz/blob/4dd3c0d4252c4a7c0845a6601bffde2c9c09f4ab/pictures/frontend/OrderPage.png" width="500">
 
 ## License
 
