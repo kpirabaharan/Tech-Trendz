@@ -1,7 +1,5 @@
 # Tech Trendz React Website
 
-![Project Logo](./logo.png)
-
 ## Introduction
 
 This is a frontend e-commerce website built using React.js. It provides a user-friendly interface for customers to browse and purchase products online. The website includes features such as product listings, product details, shopping cart, user authentication, and order checkout.
@@ -25,27 +23,43 @@ This is a frontend e-commerce website built using React.js. It provides a user-f
 - JavaScript: Programming language for interactive functionality
 - React Router: Library for managing routing within the application
 
+## Installation
+
+1. Navigate to the project directory: `cd frontend`
+2. Make sure Node.js is installed on your development machine.
+3. Install the required dependencies: `npm install`
+4. Set up environment variables for configuration (API endpoints, API keys, etc.).
+5. Start the development server: `npm start`
+6. Open your web browser and visit: http://localhost:5173 to access the application.
+
 ## Screenshots
 
-Include relevant screenshots of the website to showcase its design and features.
+### Product Page
 
-![Screenshot 1](../pictures/frontend/HomePage.png)
+![ProductPage](../pictures/frontend/ProductPage.png)
 
-![Screenshot 2](./screenshots/screenshot2.png)
+### Authentication Page
+
+![AuthPage](../pictures/frontend/AuthPage.png)
+
+### Cart Page
+
+![CartPage](../pictures/frontend/CartPage.png)
+
+### Stripe Checkout
+
+![StripeCheckout](../pictures/frontend/StripeCheckout.png)
+
+### Order Page
+
+![OrderPage](../pictures/frontend/OrderPage.png)  
 
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Contact
+## Contributors
 
-If you have any questions or suggestions, please feel free to reach out to us:
-
-- Email: your-email@example.com
-- Twitter: [@yourusername](https://twitter.com/yourusername)
-
-We appreciate your feedback!
+- [Keeshigan Pirabaharan](https://github.com/kpirabaharan/Sociopedia.git)
 
 ---
-
-Feel free to customize and expand the readme based on your project's specific requirements. Include any additional sections such as testing, deployment instructions, or acknowledgments.
